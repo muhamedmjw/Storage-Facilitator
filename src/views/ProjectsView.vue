@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+// For testing, you can add this temporary project data
+const project = {
+  id: '123',  // This would normally come from your data store
+  title: 'Project Alpha'
+}
+</script>
+
+
 <template>
   <div class="projects-container">
     <div class="projects-header">
@@ -22,7 +34,7 @@
         <p>Tasks: 8/12 complete</p>
         <p>Members: User1, User2, User3</p>
         <div class="project-actions">
-          <button class="btn-view">View Board</button>
+          <button class="btn-view" @click="router.push(`/projects/${project.id}`)">View Board</button>
           <button class="btn-edit">Edit</button>
         </div>
       </div>
@@ -33,17 +45,13 @@
         <p>Tasks: 4/10 complete</p>
         <p>Members: User1, User4</p>
         <div class="project-actions">
-          <button class="btn-view">View Board</button>
+          <button class="btn-view" @click="router.push(`/projects/${project.id}`)">View Board</button>
           <button class="btn-edit">Edit</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Component logic will go here
-</script>
 
 <style scoped>
 .projects-container {

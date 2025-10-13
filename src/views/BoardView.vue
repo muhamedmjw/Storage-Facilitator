@@ -32,12 +32,12 @@
           <h3>TO-DO</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card">
+          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
             <h4>Task 1: UI Design</h4>
             <p class="task-assignee">@User1</p>
             <p class="task-due-date">Oct 15</p>
           </div>
-          <div class="task-card">
+          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
             <h4>Task 2: Research</h4>
             <p class="task-assignee">@User1</p>
             <p class="task-due-date">Oct 18</p>
@@ -50,7 +50,7 @@
           <h3>IN PROGRESS</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card">
+          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
             <h4>Task 4: API Development</h4>
             <p class="task-assignee">@User2</p>
             <p class="task-due-date">Oct 12</p>
@@ -63,7 +63,7 @@
           <h3>DONE</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card">
+          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
             <h4>Task 7: Setup</h4>
             <p class="task-assignee">@User3</p>
             <p class="task-due-date">Oct 5</p>
@@ -75,7 +75,14 @@
 </template>
 
 <script setup lang="ts">
-// Component logic will go here
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+// Temporary test data
+const task = { 
+  id: '42',
+  title: 'Task 1: UI Design'
+}
 </script>
 
 <style scoped>
@@ -137,6 +144,7 @@
   border-radius: 0.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .task-assignee, .task-due-date {
