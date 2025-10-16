@@ -12,10 +12,6 @@
           <h4>Project 1</h4>
           <p>5/12 tasks completed</p>
         </div>
-        <div class="project-card">
-          <h4>Project 2</h4>
-          <p>3/8 tasks completed</p>
-        </div>
       </div>
     </section>
     
@@ -24,9 +20,6 @@
       <div class="task-list">
         <div class="task-item">
           <p>Task 1 - Project X - Today</p>
-        </div>
-        <div class="task-item">
-          <p>Task 2 - Project Y - Oct 15</p>
         </div>
       </div>
     </section>

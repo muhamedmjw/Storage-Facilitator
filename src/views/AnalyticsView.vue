@@ -5,23 +5,38 @@
     <div class="analytics-cards">
       <div class="analytics-card">
         <h3>Task Completion</h3>
-        <p class="analytics-value">65%</p>
-        <p class="analytics-subtitle">Tasks completed this month</p>
+        <p class="analytics-value">
+          65%
+        </p>
+        <p class="analytics-subtitle">
+          Tasks completed this month
+        </p>
         <div class="progress-bar">
-          <div class="progress" style="width: 65%"></div>
+          <div
+            class="progress"
+            style="width: 65%"
+          />
         </div>
       </div>
       
       <div class="analytics-card">
         <h3>Active Projects</h3>
-        <p class="analytics-value">5</p>
-        <p class="analytics-subtitle">Currently in progress</p>
+        <p class="analytics-value">
+          5
+        </p>
+        <p class="analytics-subtitle">
+          Currently in progress
+        </p>
       </div>
       
       <div class="analytics-card">
         <h3>Overdue Tasks</h3>
-        <p class="analytics-value">3</p>
-        <p class="analytics-subtitle">Needs attention</p>
+        <p class="analytics-value">
+          3
+        </p>
+        <p class="analytics-subtitle">
+          Needs attention
+        </p>
       </div>
     </div>
     

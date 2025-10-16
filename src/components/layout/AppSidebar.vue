@@ -3,16 +3,24 @@
     <nav>
       <ul class="nav-links">
         <li>
-          <router-link to="/">Dashboard</router-link>
+          <router-link to="/">
+            Dashboard
+          </router-link>
         </li>
         <li>
-          <router-link to="/projects">Projects</router-link>
+          <router-link to="/projects">
+            Projects
+          </router-link>
         </li>
         <li>
-          <router-link to="/calendar">Calendar</router-link>
+          <router-link to="/calendar">
+            Calendar
+          </router-link>
         </li>
         <li>
-          <router-link to="/analytics">Analytics</router-link>
+          <router-link to="/analytics">
+            Analytics
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -26,7 +34,7 @@
 .sidebar {
   width: 240px;
   background-color: #f5f7fa;
-  border-right: 2px solid #4a6baf;
+  border-right: 2px solid #71a1ff;
   height: 100%; 
   transition: width 0.3s ease;
   position: relative;

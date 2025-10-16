@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface User {
   id: string;
   name: string;
@@ -16,6 +17,7 @@ export interface Project {
   members: string[]; // User IDs
 }
 
+ 
 export enum TaskStatus {
   TODO = 'todo',
   IN_PROGRESS = 'in-progress',

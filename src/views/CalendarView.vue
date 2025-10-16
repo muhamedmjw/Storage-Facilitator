@@ -2,78 +2,126 @@
   <div class="calendar-container">
     <div class="calendar-header">
       <h1>Calendar</h1>
-      <button class="add-event-btn">+ Event</button>
+      <button class="add-event-btn">
+        + Event
+      </button>
     </div>
     
     <div class="view-controls">
       <div class="view-selector">
-        <button class="view-btn active">Month</button>
+        <!-- <button class="view-btn active">Month</button>
         <button class="view-btn">Week</button>
-        <button class="view-btn">Day</button>
+        <button class="view-btn">Day</button> -->
       </div>
       <div class="month-selector">
-        <button class="month-nav">&lt;</button>
+        <button class="month-nav">
+          &lt;
+        </button>
         <span class="current-month">October 2025</span>
-        <button class="month-nav">&gt;</button>
+        <button class="month-nav">
+          &gt;
+        </button>
       </div>
     </div>
     
     <div class="calendar-grid">
       <div class="calendar-header-row">
-        <div class="calendar-cell header-cell">Sun</div>
-        <div class="calendar-cell header-cell">Mon</div>
-        <div class="calendar-cell header-cell">Tue</div>
-        <div class="calendar-cell header-cell">Wed</div>
-        <div class="calendar-cell header-cell">Thu</div>
-        <div class="calendar-cell header-cell">Fri</div>
-        <div class="calendar-cell header-cell">Sat</div>
+        <div class="calendar-cell header-cell">
+          Sun
+        </div>
+        <div class="calendar-cell header-cell">
+          Mon
+        </div>
+        <div class="calendar-cell header-cell">
+          Tue
+        </div>
+        <div class="calendar-cell header-cell">
+          Wed
+        </div>
+        <div class="calendar-cell header-cell">
+          Thu
+        </div>
+        <div class="calendar-cell header-cell">
+          Fri
+        </div>
+        <div class="calendar-cell header-cell">
+          Sat
+        </div>
       </div>
       
       <!-- Week 1 -->
       <div class="calendar-row">
-        <div class="calendar-cell empty-cell"></div>
-        <div class="calendar-cell empty-cell"></div>
+        <div class="calendar-cell empty-cell" />
+        <div class="calendar-cell empty-cell" />
         <div class="calendar-cell">
-          <div class="date-number">1</div>
+          <div class="date-number">
+            1
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">2</div>
+          <div class="date-number">
+            2
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">3</div>
-          <div class="event task-due">Task Due</div>
+          <div class="date-number">
+            3
+          </div>
+          <div class="event task-due">
+            Task Due
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">4</div>
+          <div class="date-number">
+            4
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">5</div>
+          <div class="date-number">
+            5
+          </div>
         </div>
       </div>
       
       <!-- Week 2 -->
       <div class="calendar-row">
         <div class="calendar-cell">
-          <div class="date-number">6</div>
+          <div class="date-number">
+            6
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">7</div>
+          <div class="date-number">
+            7
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">8</div>
+          <div class="date-number">
+            8
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">9</div>
+          <div class="date-number">
+            9
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">10</div>
+          <div class="date-number">
+            10
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">11</div>
-          <div class="event project-due">Project Due</div>
+          <div class="date-number">
+            11
+          </div>
+          <div class="event project-due">
+            Project Due
+          </div>
         </div>
         <div class="calendar-cell">
-          <div class="date-number">12</div>
+          <div class="date-number">
+            12
+          </div>
         </div>
       </div>
       
@@ -82,11 +130,11 @@
     
     <div class="calendar-legend">
       <div class="legend-item">
-        <div class="legend-color task-due"></div>
+        <div class="legend-color task-due" />
         <span>Task Deadline</span>
       </div>
       <div class="legend-item">
-        <div class="legend-color project-due"></div>
+        <div class="legend-color project-due" />
         <span>Project Deadline</span>
       </div>
     </div>

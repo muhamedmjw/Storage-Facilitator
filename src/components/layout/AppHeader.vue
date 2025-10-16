@@ -1,11 +1,17 @@
 <template>
   <header class="app-header">
     <div class="logo">
-      <router-link to="/">Web Application Project</router-link>
+      <router-link to="/">
+        Web Application Project
+      </router-link>
     </div>
     <div class="header-actions">
-      <button class="profile-button">Profile</button>
-      <button class="logout-button">Logout</button>
+      <button class="profile-button">
+        Profile
+      </button>
+      <button class="logout-button">
+        Logout
+      </button>
     </div>
   </header>
 </template>
@@ -20,7 +26,7 @@
   align-items: center;
   padding: 0 1rem;
   height: 60px;
-  background-color: #4a6baf;
+  background-color: #71a1ff;
   color: white;
 }
 

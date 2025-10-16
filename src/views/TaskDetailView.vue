@@ -1,11 +1,16 @@
 <template>
   <div class="task-detail-container">
     <div class="back-navigation">
-      <a href="#" class="back-link">← Back to Project Alpha</a>
+      <a
+        href="#"
+        class="back-link"
+      >← Back to Project Alpha</a>
     </div>
     
     <div class="task-detail-card">
-      <h1 class="task-title">Task #42: Implement Login Page</h1>
+      <h1 class="task-title">
+        Task #42: Implement Login Page
+      </h1>
       
       <div class="task-properties">
         <div class="property-row">
@@ -28,7 +33,11 @@
         
         <div class="property-row">
           <span class="property-label">Due Date:</span>
-          <input type="date" class="property-value" value="2025-10-15" />
+          <input
+            type="date"
+            class="property-value"
+            value="2025-10-15"
+          >
         </div>
         
         <div class="property-row">
@@ -36,7 +45,9 @@
           <div class="property-value labels-container">
             <span class="label">UI</span>
             <span class="label">High Priority</span>
-            <button class="add-label-btn">+</button>
+            <button class="add-label-btn">
+              +
+            </button>
           </div>
         </div>
       </div>
@@ -44,7 +55,9 @@
       <div class="task-description">
         <h3>Description:</h3>
         <p>Create the login page with email and password fields. Include validation and error messages.</p>
-        <button class="edit-btn">Edit</button>
+        <button class="edit-btn">
+          Edit
+        </button>
       </div>
       
       <div class="task-comments">
@@ -54,7 +67,9 @@
             <span class="comment-author">User2</span>
             <span class="comment-date">Oct 8, 2025</span>
           </div>
-          <p class="comment-content">Let's use the new form component library for this.</p>
+          <p class="comment-content">
+            Let's use the new form component library for this.
+          </p>
         </div>
         
         <div class="comment">
@@ -62,12 +77,16 @@
             <span class="comment-author">User1</span>
             <span class="comment-date">Oct 9, 2025</span>
           </div>
-          <p class="comment-content">Good idea. I'll look into it.</p>
+          <p class="comment-content">
+            Good idea. I'll look into it.
+          </p>
         </div>
         
         <div class="new-comment">
-          <textarea placeholder="Write a comment..."></textarea>
-          <button class="submit-comment-btn">Submit</button>
+          <textarea placeholder="Write a comment..." />
+          <button class="submit-comment-btn">
+            Submit
+          </button>
         </div>
       </div>
     </div>

@@ -2,7 +2,9 @@
   <div class="board-container">
     <div class="board-header">
       <h1>Project Alpha</h1>
-      <button class="add-task-btn">+ New Task</button>
+      <button class="add-task-btn">
+        + New Task
+      </button>
     </div>
     
     <div class="board-filters">
@@ -32,15 +34,29 @@
           <h3>TO-DO</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
+          <div
+            class="task-card"
+            @click="router.push(`/tasks/${task.id}`)"
+          >
             <h4>Task 1: UI Design</h4>
-            <p class="task-assignee">@User1</p>
-            <p class="task-due-date">Oct 15</p>
+            <p class="task-assignee">
+              @User1
+            </p>
+            <p class="task-due-date">
+              Oct 15
+            </p>
           </div>
-          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
+          <div
+            class="task-card"
+            @click="router.push(`/tasks/${task.id}`)"
+          >
             <h4>Task 2: Research</h4>
-            <p class="task-assignee">@User1</p>
-            <p class="task-due-date">Oct 18</p>
+            <p class="task-assignee">
+              @User1
+            </p>
+            <p class="task-due-date">
+              Oct 18
+            </p>
           </div>
         </div>
       </div>
@@ -50,10 +66,17 @@
           <h3>IN PROGRESS</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
+          <div
+            class="task-card"
+            @click="router.push(`/tasks/${task.id}`)"
+          >
             <h4>Task 4: API Development</h4>
-            <p class="task-assignee">@User2</p>
-            <p class="task-due-date">Oct 12</p>
+            <p class="task-assignee">
+              @User2
+            </p>
+            <p class="task-due-date">
+              Oct 12
+            </p>
           </div>
         </div>
       </div>
@@ -63,10 +86,17 @@
           <h3>DONE</h3>
         </div>
         <div class="column-tasks">
-          <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
+          <div
+            class="task-card"
+            @click="router.push(`/tasks/${task.id}`)"
+          >
             <h4>Task 7: Setup</h4>
-            <p class="task-assignee">@User3</p>
-            <p class="task-due-date">Oct 5</p>
+            <p class="task-assignee">
+              @User3
+            </p>
+            <p class="task-due-date">
+              Oct 5
+            </p>
           </div>
         </div>
       </div>

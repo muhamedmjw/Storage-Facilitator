@@ -9,11 +9,11 @@
 
 <style scoped>
 .app-footer {
-  background-color: #4a6baf;
-  border-top: 1px solid #4a6baf;
+  background-color: #f5f7fa;
+  border-top: 1px solid #71a1ff;
   padding: 1rem;
   text-align: center;
-  color: #ffffff;
+  color: #000000;
   font-size: 1rem;
   font-weight: 500;
 }

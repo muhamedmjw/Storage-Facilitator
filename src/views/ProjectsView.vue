@@ -1,30 +1,33 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-const router = useRouter()
-
-// For testing, you can add this temporary project data
-const project = {
-  id: '123',  // This would normally come from your data store
-  title: 'Project Alpha'
-}
+// Removed unused test variables - will be implemented when connecting to backend
 </script>
-
 
 <template>
   <div class="projects-container">
     <div class="projects-header">
       <h1>Projects</h1>
-      <button class="create-project-btn">+ New Project</button>
+      <button class="create-project-btn">
+        + New Project
+      </button>
     </div>
     
     <div class="search-bar">
-      <input type="text" placeholder="Search projects..." />
+      <input
+        type="text"
+        placeholder="Search projects..."
+      >
     </div>
     
     <div class="filter-tabs">
-      <button class="filter-tab active">All</button>
-      <button class="filter-tab">Active</button>
-      <button class="filter-tab">Archived</button>
+      <button class="filter-tab active">
+        All
+      </button>
+      <button class="filter-tab">
+        Active
+      </button>
+      <button class="filter-tab">
+        Archived
+      </button>
     </div>
     
     <div class="project-list">
@@ -34,8 +37,12 @@ const project = {
         <p>Tasks: 8/12 complete</p>
         <p>Members: User1, User2, User3</p>
         <div class="project-actions">
-          <button class="btn-view" @click="router.push(`/projects/${project.id}`)">View Board</button>
-          <button class="btn-edit">Edit</button>
+          <button class="btn-view">
+            View Board
+          </button>
+          <button class="btn-edit">
+            Edit
+          </button>
         </div>
       </div>
       
@@ -45,8 +52,12 @@ const project = {
         <p>Tasks: 4/10 complete</p>
         <p>Members: User1, User4</p>
         <div class="project-actions">
-          <button class="btn-view" @click="router.push(`/projects/${project.id}`)">View Board</button>
-          <button class="btn-edit">Edit</button>
+          <button class="btn-view">
+            View Board
+          </button>
+          <button class="btn-edit">
+            Edit
+          </button>
         </div>
       </div>
     </div>
