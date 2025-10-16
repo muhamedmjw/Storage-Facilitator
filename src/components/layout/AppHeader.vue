@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <div class="logo">
-      <router-link to="/">VueWork</router-link>
+      <router-link to="/">Web Application Project</router-link>
     </div>
     <div class="header-actions">
       <button class="profile-button">Profile</button>
@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-// TypeScript component setup
 </script>
 
 <style scoped>
@@ -42,7 +41,7 @@
 
 .header-actions button {
   background: none;
-  border: 1px solid white;
+  border: 2px solid white;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;

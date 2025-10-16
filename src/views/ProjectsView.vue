@@ -29,7 +29,7 @@ const project = {
     
     <div class="project-list">
       <div class="project-item">
-        <h3>Project Alpha</h3>
+        <h3>Project 1</h3>
         <p>Created: Oct 1, 2025</p>
         <p>Tasks: 8/12 complete</p>
         <p>Members: User1, User2, User3</p>
@@ -40,8 +40,8 @@ const project = {
       </div>
       
       <div class="project-item">
-        <h3>Project Beta</h3>
-        <p>Created: Sep 15, 2025</p>
+        <h3>Project 2</h3>
+        <p>Created: Oct 2, 2025</p>
         <p>Tasks: 4/10 complete</p>
         <p>Members: User1, User4</p>
         <div class="project-actions">

@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar" :class="{ 'sidebar-collapsed': isCollapsed }">
+  <aside class="sidebar">
     <nav>
       <ul class="nav-links">
         <li>
@@ -16,30 +16,21 @@
         </li>
       </ul>
     </nav>
-    <button class="collapse-button" @click="toggleCollapse">
-      {{ isCollapsed ? '→' : '←' }}
-    </button>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const isCollapsed = ref<boolean>(false)
-
-function toggleCollapse(): void {
-  isCollapsed.value = !isCollapsed.value
-}
 </script>
 
 <style scoped>
 .sidebar {
   width: 240px;
   background-color: #f5f7fa;
-  border-right: 1px solid #e2e8f0;
-  height: 100%;
+  border-right: 2px solid #4a6baf;
+  height: 100%; 
   transition: width 0.3s ease;
   position: relative;
+  overflow-y: auto;
 }
 
 .sidebar-collapsed {
@@ -70,21 +61,6 @@ function toggleCollapse(): void {
   background-color: #e2e8f0;
 }
 
-.collapse-button {
-  position: absolute;
-  bottom: 1rem;
-  right: 0.5rem;
-  background: none;
-  border: 1px solid #e2e8f0;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -103,8 +79,5 @@ function toggleCollapse(): void {
     padding: 0;
   }
   
-  .collapse-button {
-    display: none;
-  }
 }
 </style>

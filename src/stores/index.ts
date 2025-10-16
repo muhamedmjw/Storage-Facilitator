@@ -7,7 +7,7 @@ interface AppState {
   currentUser: User | null;
 }
 
-// Example basic store setup with TypeScript
+
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
     isLoading: false,

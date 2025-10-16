@@ -22,17 +22,20 @@ import AppFooter from './AppFooter.vue'
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
+  overflow: hidden; 
 }
 
 .app-content {
   display: flex;
   flex: 1;
+  overflow: hidden; 
 }
 
 .main-content {
   flex: 1;
   padding: 1rem;
-  overflow-y: auto;
+  overflow-y: auto; 
 }
 
 /* Responsive adjustments */
