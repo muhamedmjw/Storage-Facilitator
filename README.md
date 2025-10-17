@@ -4,9 +4,8 @@
 Small teams often struggle with project management due to complex or expensive tools that don't fit their needs. They need a lightweight, intuitive application that combines task management, scheduling, and collaboration features without overwhelming users with enterprise features they'll never use.
 
 ## Target Users
-- Small teams (5-20 people)
+- Small teams (5-15 people)
 - Startups and small businesses
-- Remote/distributed teams
 - Project managers in small organizations
 - Teams without dedicated project management resources
 
@@ -15,8 +14,8 @@ Small teams often struggle with project management due to complex or expensive t
 - Team members can track their assigned tasks efficiently
 - Project progress is visible at a glance through the Kanban board
 - Calendar view helps with resource planning and deadline management
-- Reduced meeting time needed for status updates
-- 90% of team members log in at least 3 times per week
+- Average task completion time tracked and improving monthly
+- User satisfaction score of 4/5 or higher
 
 ## User Stories
 
@@ -40,43 +39,100 @@ Small teams often struggle with project management due to complex or expensive t
 
 10. As a user, I want to receive notifications about tasks assigned to me or upcoming deadlines so I don't miss important information.
 
+## Wireframes
+
+Low-fidelity wireframes for key views:
+
+### 1. Home/Dashboard View
+- Welcome message with user name
+- Recent projects section (cards with progress)
+- Tasks due soon list
+- Quick action buttons
+
+### 2. Projects List View
+- Search bar at top
+- Filter tabs (All/Active/Archived)
+- Project cards showing:
+  - Project name
+  - Creation date
+  - Task completion ratio
+  - Team members
+  - Actions (View Board, Edit)
+
+### 3. Kanban Board View
+- Project title and "New Task" button
+- Filter dropdowns (assignee, labels)
+- Three columns: TO-DO, IN PROGRESS, DONE
+- Task cards with title, assignee, due date
+- Drag-and-drop functionality (to be implemented)
+
+### 4. Task Detail View
+- Back navigation to project
+- Task title and ID
+- Editable properties:
+  - Status dropdown
+  - Assignee dropdown
+  - Due date picker
+  - Labels with add/remove
+- Description section with edit button
+- Comments section with new comment input
+
+### 5. Calendar View
+- Month/Week/Day view selector
+- Month navigation controls
+- Grid layout showing:
+  - Task deadlines
+  - Project deadlines
+- Legend for event types
+- "Add Event" button
+
+**Note:** Actual wireframe images/mockups to be added in `/docs/wireframes/` directory.
+
 ## Non-Goals
-- Real-time chat functionality (teams can use existing tools like Slack)
-- Advanced reporting and analytics (beyond basic completion trends)
+
+- Real-time chat functionality
+- Advanced reporting and analytics
 - Time tracking features
 - Client billing or invoicing
 - Gantt chart views
-- Public API
+- Public API (for Milestone 1)
 - Mobile native apps (though the web app will be responsive)
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 16+
+- Node.js 20+
 - npm or yarn
 
 ### Installation
 1. Clone the repository
-```
-git clone https://github.com/yourusername/vuework.git
-cd vuework
+```bash
+git clone https://github.com/muhamedmjw/Web-Application-Milestone-Project
+cd Web-Application-Milestone-Project
 ```
 
 2. Install dependencies
-```
+```bash
 npm install
 # or
 yarn
 ```
 
 3. Start the development server
-```
+```bash
 npm run dev
 # or
 yarn dev
 ```
 
-4. Open http://localhost:3000 in your browser
+4. Open http://localhost:5173 in your browser
+
+### Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run type-check` - Run TypeScript type checking
+- `npm run lint` - Lint and fix code
 
 ## Tech Stack
 - Vue 3 with Composition API
@@ -86,3 +142,20 @@ yarn dev
 - Pinia for state management
 - Axios for API requests
 - ESLint + Prettier for code quality
+
+## Project Structure
+```
+src/
+├── assets/          # Styles and static assets
+├── components/      # Reusable Vue components
+│   └── layout/      # Layout components (Header, Sidebar, Footer)
+├── router/          # Vue Router configuration
+├── stores/          # Pinia stores
+├── types/           # TypeScript type definitions
+├── views/           # Page components
+├── App.vue          # Root component
+└── main.ts          # Application entry point
+```
+
+## License
+MIT
