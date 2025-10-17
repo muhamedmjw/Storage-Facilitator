@@ -9,26 +9,6 @@
           © 2025 Web Application Project - All rights reserved
         </p>
       </div>
-      
-      <div class="footer-center">
-        <a
-          href="#"
-          class="footer-link"
-        >About</a>
-        <a
-          href="#"
-          class="footer-link"
-        >Privacy</a>
-        <a
-          href="#"
-          class="footer-link"
-        >Terms</a>
-        <a
-          href="#"
-          class="footer-link"
-        >Support</a>
-      </div>
-      
       <div class="footer-right">
         <span class="version-badge">v1.0.0</span>
         <div class="social-links">
@@ -60,7 +40,7 @@
 .app-footer {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border-top: 1px solid #e2e8f0;
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 2rem;
   margin-top: auto;
 }
 
