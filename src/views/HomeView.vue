@@ -2,7 +2,8 @@
   <div class="home-container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Dashboard</h1>
+        <h1 class="page-title">Home</h1>
+        <p class="page-subtitle">Welcome back! Here's an overview of your projects and tasks.</p>
       </div>
     </div>
 
