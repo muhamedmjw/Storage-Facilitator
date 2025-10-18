@@ -39,55 +39,6 @@ Small teams often struggle with project management due to complex or expensive t
 
 10. As a user, I want to receive notifications about tasks assigned to me or upcoming deadlines so I don't miss important information.
 
-## Wireframes
-
-Low-fidelity wireframes for key views:
-
-### 1. Home/Dashboard View
-- Welcome message with user name
-- Recent projects section (cards with progress)
-- Tasks due soon list
-- Quick action buttons
-
-### 2. Projects List View
-- Search bar at top
-- Filter tabs (All/Active/Archived)
-- Project cards showing:
-  - Project name
-  - Creation date
-  - Task completion ratio
-  - Team members
-  - Actions (View Board, Edit)
-
-### 3. Kanban Board View
-- Project title and "New Task" button
-- Filter dropdowns (assignee, labels)
-- Three columns: TO-DO, IN PROGRESS, DONE
-- Task cards with title, assignee, due date
-- Drag-and-drop functionality (to be implemented)
-
-### 4. Task Detail View
-- Back navigation to project
-- Task title and ID
-- Editable properties:
-  - Status dropdown
-  - Assignee dropdown
-  - Due date picker
-  - Labels with add/remove
-- Description section with edit button
-- Comments section with new comment input
-
-### 5. Calendar View
-- Month/Week/Day view selector
-- Month navigation controls
-- Grid layout showing:
-  - Task deadlines
-  - Project deadlines
-- Legend for event types
-- "Add Event" button
-
-**Note:** Actual wireframe images/mockups to be added in `/docs/wireframes/` directory.
-
 ## Non-Goals
 
 - Real-time chat functionality
