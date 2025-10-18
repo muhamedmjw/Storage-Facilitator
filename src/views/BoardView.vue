@@ -2,7 +2,7 @@
   <div class="board-container">
     <div class="board-header">
       <div>
-        <h1>Project Alpha</h1>
+        <h1>Project 1</h1>
         <p class="board-subtitle">Kanban board for task management</p>
       </div>
       <button class="add-task-btn">
@@ -22,25 +22,12 @@
         </svg>
         <select class="filter-select">
           <option>All Assignees</option>
-          <option>User 1</option>
-          <option>User 2</option>
-        </select>
-      </div>
-      
-      <div class="filter-group">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-          <line x1="7" y1="7" x2="7.01" y2="7"/>
-        </svg>
-        <select class="filter-select">
-          <option>All Labels</option>
-          <option>UI</option>
-          <option>Backend</option>
-          <option>Urgent</option>
+          <option>User A</option>
+          <option>User B</option>
         </select>
       </div>
     </div>
-    
+  
     <div class="kanban-board">
       <div class="board-column">
         <div class="column-header todo">
@@ -55,30 +42,24 @@
         </div>
         <div class="column-tasks">
           <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
-            <div class="task-labels">
-              <span class="label ui">UI</span>
-            </div>
-            <h4>Task 1: UI Design</h4>
-            <p class="task-description">Design the new dashboard layout</p>
+            <h4>Task 1: Lorem ipsum sit amet.</h4>
+            <p class="task-description">Lorem ipsum sit amet.</p>
             <div class="task-footer">
               <div class="task-assignee">
-                <div class="avatar">U1</div>
-                <span>@User1</span>
+                <div class="avatar">A</div>
+                <span>@A</span>
               </div>
               <span class="task-date">Oct 15</span>
             </div>
           </div>
           
           <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
-            <div class="task-labels">
-              <span class="label research">Research</span>
-            </div>
-            <h4>Task 2: Research</h4>
-            <p class="task-description">Competitive analysis</p>
+            <h4>Task 2: Lorem ipsum dolor sit.</h4>
+            <p class="task-description">Lorem ipsum dolor sit</p>
             <div class="task-footer">
               <div class="task-assignee">
-                <div class="avatar">U1</div>
-                <span>@User1</span>
+                <div class="avatar">B</div>
+                <span>@B</span>
               </div>
               <span class="task-date">Oct 18</span>
             </div>
@@ -99,16 +80,12 @@
         </div>
         <div class="column-tasks">
           <div class="task-card" @click="router.push(`/tasks/${task.id}`)">
-            <div class="task-labels">
-              <span class="label backend">Backend</span>
-              <span class="label urgent">Urgent</span>
-            </div>
-            <h4>Task 4: API Development</h4>
-            <p class="task-description">Implement REST endpoints</p>
+            <h4>Task 4: Lorem ipsum dolor sit</h4>
+            <p class="task-description">Lorem ipsum dolor sit</p>
             <div class="task-footer">
               <div class="task-assignee">
-                <div class="avatar">U2</div>
-                <span>@User2</span>
+                <div class="avatar">C</div>
+                <span>@C</span>
               </div>
               <span class="task-date">Oct 12</span>
             </div>
@@ -129,15 +106,12 @@
         </div>
         <div class="column-tasks">
           <div class="task-card completed" @click="router.push(`/tasks/${task.id}`)">
-            <div class="task-labels">
-              <span class="label setup">Setup</span>
-            </div>
-            <h4>Task 7: Setup</h4>
-            <p class="task-description">Initial project configuration</p>
+            <h4>Task 3: Lorem ipsum dolor sit</h4>
+            <p class="task-description">Lorem ipsum dolor sit</p>
             <div class="task-footer">
               <div class="task-assignee">
-                <div class="avatar">U3</div>
-                <span>@User3</span>
+                <div class="avatar">B</div>
+                <span>@B</span>
               </div>
               <span class="task-date">Oct 5</span>
             </div>
@@ -153,8 +127,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const task = { 
-  id: '42',
-  title: 'Task 1: UI Design'
+  id: '1',
+  title: 'Task 1: Task 1'
 }
 </script>
 
