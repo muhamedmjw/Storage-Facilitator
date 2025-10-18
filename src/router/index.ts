@@ -21,16 +21,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'task',
     component: () => import('@/views/TaskDetailView.vue')
   },
-  {
-    path: '/calendar',
-    name: 'calendar',
-    component: () => import('@/views/CalendarView.vue')
-  },
-  {
-    path: '/analytics',
-    name: 'analytics',
-    component: () => import('@/views/AnalyticsView.vue')
-  }
 ]
 
 const router = createRouter({
