@@ -4,7 +4,7 @@
 
 Storage is a lightweight and intuitive **storage facility management system** designed to simplify the day-to-day operations of small to medium-sized storage businesses. Many facilities still rely on outdated spreadsheets or paper records to track unit availability, rental agreements, and payments — which often leads to inefficiency, data loss, and errors. This project aims to provide a **modern web-based solution** that streamlines these processes without overwhelming users with unnecessary complexity.
 
-The system allows managers and staff to easily view all storage units, assign them to customers, track payments, and access detailed records — all from a single dashboard. By combining a clean interface with essential functionality, this project helps businesses **save time, reduce errors, and improve customer service**.
+The system allows managers and staff to easily view all storage units, assign them to customers, track payments, and access detailed records all from a single dashboard. By combining a clean interface with essential functionality, this project helps businesses **save time, reduce errors, and improve customer service**.
 
 Built with **Vue 3**, **TypeScript**, and **Vite**, the project emphasizes maintainability, scalability, and performance. Its modular design ensures that features like analytics, reporting, and online customer access can be easily added in future milestones. This project is part of an academic milestone.
 
