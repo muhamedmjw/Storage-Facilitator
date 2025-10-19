@@ -24,7 +24,7 @@
 
         <li>
           <router-link
-            to="/projects"
+            to="/storages"
             class="nav-item"
           >
             <svg
@@ -35,15 +35,18 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
             </svg>
-            <span>Projects</span>
+            <span>Storage Units</span>
           </router-link>
         </li> 
         
         <li>
           <router-link
-            to="/calendar"
+            to="/customers"
             class="nav-item"
           >
             <svg
@@ -54,40 +57,16 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <rect
-                x="3"
-                y="4"
-                width="18"
-                height="18"
-                rx="2"
-                ry="2"
-              />
-              <line
-                x1="16"
-                y1="2"
-                x2="16"
-                y2="6"
-              />
-              <line
-                x1="8"
-                y1="2"
-                x2="8"
-                y2="6"
-              />
-              <line
-                x1="3"
-                y1="10"
-                x2="21"
-                y2="10"
-              />
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
             </svg>
-            <span>Calendar</span>
+            <span>Customers</span>
           </router-link>
         </li>
 
         <li>
           <router-link
-            to="/analytics"
+            to="/reports"
             class="nav-item"
           >
             <svg
@@ -117,7 +96,7 @@
                 y2="16"
               />
             </svg>
-            <span>Analytics</span>
+            <span>Reports</span>
           </router-link>
         </li>
       </ul>
@@ -131,8 +110,8 @@
 <style scoped>
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-right: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
+  border-right: 1px solid #e7e5e4;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -154,7 +133,7 @@
 
 .nav-item {
   text-decoration: none;
-  color: #475569;
+  color: #57534e;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -170,15 +149,15 @@
 }
 
 .nav-item:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  color: #667eea;
+  background: linear-gradient(135deg, rgba(0, 81, 255, 0.3) 0%, rgba(0, 18, 97, 0.377) 100%);
+  color: #002e5f;
   transform: translateX(4px);
 }
 
 .nav-item.router-link-active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e1e1e 0%, #002e5f 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 6, 94, 0.3);
 }
 
 .nav-item.router-link-active::before {
@@ -189,57 +168,8 @@
   transform: translateY(-50%);
   width: 4px;
   height: 24px;
-  background: #667eea;
+  background: #002e5f;
   border-radius: 0 4px 4px 0;
-}
-
-.sidebar-footer {
-  padding: 1rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.upgrade-card {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  padding: 1.25rem;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
-}
-
-.upgrade-icon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.upgrade-card h4 {
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0 0 0.25rem 0;
-}
-
-.upgrade-card p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.75rem;
-  margin: 0 0 0.75rem 0;
-}
-
-.upgrade-btn {
-  background: white;
-  color: #f59e0b;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  width: 100%;
-}
-
-.upgrade-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
@@ -247,7 +177,7 @@
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e7e5e4;
     flex-direction: row;
   }
   
@@ -274,10 +204,6 @@
   }
   
   .nav-item.router-link-active::before {
-    display: none;
-  }
-  
-  .sidebar-footer {
     display: none;
   }
 }

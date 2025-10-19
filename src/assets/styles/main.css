@@ -1,13 +1,16 @@
-/* Base styles for VueWork */
+/* Base styles for Storage */
 
 :root {
-  --color-primary: #4a6baf;
-  --color-secondary: #334155;
-  --color-background: #f8fafc;
+  --color-primary: #1E1E1E;
+  --color-secondary: #002e5f;
+  --color-background: #fafaf9;
   --color-surface: #ffffff;
-  --color-error: #ef4444;
-  --color-success: #22c55e;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
   --color-warning: #eab308;
+  --color-info: #0891b2;
+  --color-text: #292524;
+  --color-text-light: #78716c;
 }
 
 * {
@@ -19,7 +22,7 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--color-background);
-  color: var(--color-secondary);
+  color: var(--color-text);
   line-height: 1.6;
 }
 

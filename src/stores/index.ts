@@ -3,7 +3,7 @@ import { User } from '@/types'
 
 interface AppState {
   isLoading: boolean;
-  theme: 'light' | 'dark';
+  theme: 'light';
   currentUser: User | null;
 }
 
@@ -19,14 +19,13 @@ export const useAppStore = defineStore('app', {
       this.isLoading = status
     },
     toggleTheme(): void {
-      this.theme = this.theme === 'light' ? 'dark' : 'light'
+      this.theme = 'light'
     },
     setCurrentUser(user: User | null): void {
       this.currentUser = user
     }
   },
   getters: {
-    isDarkTheme: (state): boolean => state.theme === 'dark',
     isLoggedIn: (state): boolean => state.currentUser !== null,
     isAdmin: (state): boolean => state.currentUser?.role === 'admin'
   }

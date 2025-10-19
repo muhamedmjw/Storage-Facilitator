@@ -4,48 +4,81 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
-  role: 'admin' | 'member';
+  role: 'admin' | 'staff';
 }
 
-export interface Project {
+export interface Customer {
   id: string;
-  title: string;
-  description: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
   createdAt: string;
-  dueDate?: string;
-  status: 'active' | 'archived' | 'completed';
-  members: string[]; // User IDs
+  notes?: string;
 }
 
- 
-export enum TaskStatus {
-  TODO = 'todo',
-  IN_PROGRESS = 'in-progress',
-  DONE = 'done'
-}
-
-export interface Task {
+export interface Building {
   id: string;
-  projectId: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  assigneeId?: string; // User ID
-  dueDate?: string;
+  name: string;
+  address: string;
+  totalUnits: number;
+  occupiedUnits: number;
   createdAt: string;
-  labels: string[];
 }
 
-export interface Comment {
+export enum UnitStatus {
+  AVAILABLE = 'available',
+  OCCUPIED = 'occupied',
+  RESERVED = 'reserved'
+}
+
+export enum UnitSize {
+  SMALL = '5x5',
+  MEDIUM = '5x10',
+  LARGE = '10x10',
+  XLARGE = '10x20'
+}
+
+export interface StorageUnit {
   id: string;
-  taskId: string;
+  buildingId: string;
+  unitNumber: string;
+  size: UnitSize;
+  price: number;
+  status: UnitStatus;
+  customerId?: string;
+}
+
+export enum PaymentStatus {
+  PAID = 'paid',
+  OVERDUE = 'overdue'
+}
+
+export interface Rental {
+  id: string;
+  unitId: string;
+  customerId: string;
+  startDate: string;
+  endDate?: string;
+  monthlyPayment: number;
+  paymentStatus: PaymentStatus;
+  nextPaymentDue: string;
+  notes?: string;
+}
+
+export interface Payment {
+  id: string;
+  rentalId: string;
+  amount: number;
+  date: string;
+  method: 'cash' | 'card';
+  notes?: string;
+}
+
+export interface Note {
+  id: string;
+  customerId: string;
   userId: string;
   content: string;
   createdAt: string;
-}
-
-export interface Label {
-  id: string;
-  name: string;
-  color: string;
 }

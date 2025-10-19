@@ -3,10 +3,10 @@
     <div class="footer-content">
       <div class="footer-left">
         <div class="footer-logo">
-          <span class="footer-text">Web Application Project</span>
+          <span class="footer-text">Storage</span>
         </div>
         <p class="copyright">
-          © 2025 Web Application Project - All rights reserved
+          © 2025 Storage - All rights reserved
         </p>
       </div>
       <div class="footer-right">
@@ -38,8 +38,8 @@
 
 <style scoped>
 .app-footer {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-top: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
+  border-top: 1px solid #e7e5e4;
   padding: 0.5rem 2rem;
   margin-top: auto;
 }
@@ -68,51 +68,16 @@
 .footer-text {
   font-weight: 700;
   font-size: 1.125rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #002e5f 0%, #002e5f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .copyright {
-  color: #64748b;
+  color: #78716c;
   font-size: 0.875rem;
   margin: 0;
-}
-
-.footer-center {
-  display: flex;
-  gap: 2rem;
-  flex: 1;
-  justify-content: center;
-}
-
-.footer-link {
-  color: #64748b;
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.footer-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  transition: width 0.2s;
-}
-
-.footer-link:hover {
-  color: #667eea;
-}
-
-.footer-link:hover::after {
-  width: 100%;
 }
 
 .footer-right {
@@ -122,13 +87,13 @@
 }
 
 .version-badge {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  color: #667eea;
+  background: linear-gradient(135deg, rgba(41, 39, 38, 0.1) 0%, rgba(0, 8, 78, 0.1) 100%);
+  color: #002e5f;
   padding: 0.375rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(1, 0, 77, 0.2);
 }
 
 .social-links {
@@ -140,20 +105,20 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(1, 0, 73, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #667eea;
+  color: #002e5f;
   transition: all 0.2s;
   text-decoration: none;
 }
 
 .social-icon:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(8, 0, 82, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -165,11 +130,6 @@
   
   .footer-left {
     align-items: center;
-  }
-  
-  .footer-center {
-    flex-wrap: wrap;
-    gap: 1rem;
   }
   
   .footer-right {

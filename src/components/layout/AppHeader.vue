@@ -17,11 +17,10 @@
               fill-opacity="0.2"
             />
             <path
-              d="M8 16L14 22L24 10"
+              d="M8 12h16M8 16h16M8 20h16M6 8h20v16H6z"
               stroke="white"
-              stroke-width="2.5"
+              stroke-width="2"
               stroke-linecap="round"
-              stroke-linejoin="round"
             />
           </svg>
         </div>
@@ -29,8 +28,8 @@
           to="/"
           class="logo-text"
         >
-          <span class="logo-main">Web Application Project</span>
-          <span class="logo-sub">Task and Project Manager</span>
+          <span class="logo-main">Storage</span>
+          <span class="logo-sub">Facility Management System</span>
         </router-link>
       </div>
       <div class="header-actions">
@@ -71,7 +70,7 @@
 
 <style scoped>
 .app-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 0;
@@ -126,44 +125,6 @@
   gap: 0.75rem;
 }
 
-.icon-button {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.icon-button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-}
-
-.notification-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #ef4444;
-  color: white;
-  font-size: 0.65rem;
-  font-weight: 600;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #667eea;
-}
-
 .profile-button {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
@@ -196,9 +157,9 @@
 }
 
 .logout-button {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(243, 43, 43, 0.2);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(236, 42, 42, 0.3);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -210,7 +171,7 @@
 }
 
 .logout-button:hover {
-  background: rgba(239, 68, 68, 0.3);
+  background: rgba(220, 38, 38, 0.3);
   transform: translateY(-2px);
 }
 

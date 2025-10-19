@@ -7,20 +7,20 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/HomeView.vue')
   },
   {
-    path: '/projects',
-    name: 'projects',
-    component: () => import('@/views/ProjectsView.vue')
+    path: '/storages',
+    name: 'storages',
+    component: () => import('@/views/StoragesView.vue')
   },
   {
-    path: '/projects/:id',
-    name: 'board',
-    component: () => import('@/views/BoardView.vue')
+    path: '/storages/:id',
+    name: 'storage-details',
+    component: () => import('@/views/StorageDetailView.vue')
   },
   {
-    path: '/tasks/:id',
-    name: 'task',
-    component: () => import('@/views/TaskDetailView.vue')
-  },
+  path: '/add-unit',
+  name: 'add-unit',
+  component: () => import('@/views/AddStorageView.vue')
+  }
 ]
 
 const router = createRouter({
