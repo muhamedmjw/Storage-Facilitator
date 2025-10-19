@@ -71,7 +71,7 @@ export interface Payment {
   rentalId: string;
   amount: number;
   date: string;
-  method: 'cash' | 'card';
+  method: 'cash';
   notes?: string;
 }
 

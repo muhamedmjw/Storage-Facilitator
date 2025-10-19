@@ -1,53 +1,62 @@
-# VueWork - Team Tasks & Scheduling App
+# Storage - Storage Facility Management System
 
 ## Problem Statement
-Small teams often struggle with project management due to complex or expensive tools that don't fit their needs. They need a lightweight, intuitive application that combines task management, scheduling, and collaboration features without overwhelming users with enterprise features they'll never use.
+Storage facility operators struggle with managing units, tracking rentals, monitoring payments, and maintaining customer records using outdated paper systems or complex enterprise software. These methods are time-consuming, error-prone, and lack real-time visibility into unit status. They need an intuitive, lightweight application that helps with facilitating operations without overwhelming staff with unnecessary features. This project is a modern, web-based platform designed to simplify the daily operations of self-storage facilities. It helps facility managers, staff, and owners efficiently manage unit availability, customer records, and rental payments — all within a clean, intuitive interface built for speed and usability.
+
+This project is developed using Vue 3, TypeScript, and Vite, ensuring scalability, maintainability, and exceptional performance.
+
+---
 
 ## Target Users
-- Small teams (5-15 people)
-- Startups and small businesses
-- Project managers in small organizations
-- Teams without dedicated project management resources
+- Small to medium storage facility operators
+- Facility managers and staff
+- Self-storage businesses
+- Storage facilities without dedicated IT resources
+
+---
 
 ## Success Criteria
-- Users can create and manage projects from start to finish
-- Team members can track their assigned tasks efficiently
-- Project progress is visible at a glance through the Kanban board
-- Calendar view helps with resource planning and deadline management
-- Average task completion time tracked and improving monthly
-- User satisfaction score of 4/5 or higher
+- Staff can manage unit availability and assignments efficiently
+- Rental agreements and customer information are easily accessible
+- Payment tracking and overdue notices are automated
+- Unit occupancy are visible at a glance
+- Average rental duration tracked and improving monthly
+
+---
 
 ## User Stories
 
-1. As a team lead, I want to create new projects with descriptions and deadlines so that my team knows what we're working on and when it's due.
+1. As a facility manager, I want to view all storage units in one dashboard with clear indicators of whether they are available, occupied, or under maintenance, so that I can quickly identify which units can be rented out and which need attention.
 
-2. As a team member, I want to view all my assigned tasks across projects in one place so I can prioritize my work efficiently.
+2. As a staff member, I want to create and manage customer profiles that include contact details, rental history, and current storage unit assignments. This will allow me to efficiently handle new rentals, renew existing ones, and answer customer questions about their rental agreements or payment records without searching through paper files.
 
-3. As a project manager, I want to move tasks between status columns (To-Do/In-Progress/Done) so I can track progress visually.
+3. As a facility manager, I want the system to track and display the payment status of each customer—including due dates, overdue balances, and completed payments—so that I can identify accounts that require reminders or follow-up and ensure the facility maintains steady cash flow without manually reviewing financial logs.
 
-4. As a team member, I want to add comments to tasks so I can clarify requirements or provide updates without scheduling a meeting.
+4. As a staff member, I want to view customer information and rental history so I can provide better service and answer questions.
 
-5. As a team lead, I want to assign tasks to specific team members so everyone knows their responsibilities.
+5. As a business owner, I want to analyze occupancy rates, revenue trends, and average rental durations over time so I can make informed business decisions, such as when to expand the facility, adjust pricing, or introduce promotional offers during low-occupancy months.
 
-6. As a user, I want to filter tasks by label, assignee, or due date so I can focus on relevant information.
+6. As a staff user, I want to filter and search storage units by criteria such as size, type, or status so that I can quickly find an appropriate unit for a new customer without scrolling through the entire list.
 
-7. As a team member, I want to view a calendar of all project deadlines and task due dates so I can plan my work schedule.
+7. As a facility manager, I want to view a calendar of lease expirations and payment due dates so I can plan follow-ups.
 
-8. As an admin, I want to manage user roles so I can control who has permission to create projects or modify settings.
+8. As an administrator, I want to assign different user roles (e.g., manager, staff, or viewer) with specific permissions, ensuring that sensitive actions—like editing rental prices or viewing financial data—are restricted to authorized personnel only.
 
-9. As a stakeholder, I want to view basic analytics about project progress so I can report on team performance.
+9. As a staff member, I want to add notes to customer accounts so I can track communications and special requests.
 
-10. As a user, I want to receive notifications about tasks assigned to me or upcoming deadlines so I don't miss important information.
+---
 
 ## Non-Goals
 
-- Real-time chat functionality
-- Advanced reporting and analytics
-- Time tracking features
-- Client billing or invoicing
-- Gantt chart views
-- Public API (for Milestone 1)
-- Mobile native apps (though the web app will be responsive)
+- Online customer portal
+- Automated payment processing
+- Complex financial reporting
+- Gate access control integration
+- Insurance policy management
+- Public API
+- Mobile native apps
+
+---
 
 ## Getting Started
 
@@ -107,6 +116,3 @@ src/
 ├── App.vue          # Root component
 └── main.ts          # Application entry point
 ```
-
-## License
-MIT
