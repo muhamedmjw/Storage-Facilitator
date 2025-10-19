@@ -1,9 +1,17 @@
 # Storage - Storage Facility Management System
 
-## Problem Statement
-Storage facility operators struggle with managing units, tracking rentals, monitoring payments, and maintaining customer records using outdated paper systems or complex enterprise software. These methods are time-consuming, error-prone, and lack real-time visibility into unit status. They need an intuitive, lightweight application that helps with facilitating operations without overwhelming staff with unnecessary features. This project is a modern, web-based platform designed to simplify the daily operations of self-storage facilities. It helps facility managers, staff, and owners efficiently manage unit availability, customer records, and rental payments — all within a clean, intuitive interface built for speed and usability.
+## Introduction
 
-This project is developed using Vue 3, TypeScript, and Vite, ensuring scalability, maintainability, and exceptional performance.
+Storage is a lightweight and intuitive **storage facility management system** designed to simplify the day-to-day operations of small to medium-sized storage businesses. Many facilities still rely on outdated spreadsheets or paper records to track unit availability, rental agreements, and payments — which often leads to inefficiency, data loss, and errors. This project aims to provide a **modern web-based solution** that streamlines these processes without overwhelming users with unnecessary complexity.
+
+The system allows managers and staff to easily view all storage units, assign them to customers, track payments, and access detailed records — all from a single dashboard. By combining a clean interface with essential functionality, this project helps businesses **save time, reduce errors, and improve customer service**.
+
+Built with **Vue 3**, **TypeScript**, and **Vite**, the project emphasizes maintainability, scalability, and performance. Its modular design ensures that features like analytics, reporting, and online customer access can be easily added in future milestones. This project is part of an academic milestone.
+
+---
+
+## Problem Statement
+Storage facility operators struggle with managing units, tracking rentals, monitoring payments, and maintaining customer records using outdated paper systems or complex enterprise software. These methods are time-consuming, error-prone, and lack real-time visibility into unit status. They need an intuitive, lightweight application that helps with facilitating operations without overwhelming staff with unnecessary features. This project is a modern, web-based platform designed to simplify the daily operations of self-storage facilities. It helps facility managers, staff, and owners efficiently manage unit availability, customer records, and rental payments all within a clean, intuitive interface built for speed and usability.
 
 ---
 
@@ -43,6 +51,18 @@ This project is developed using Vue 3, TypeScript, and Vite, ensuring scalabilit
 8. As an administrator, I want to assign different user roles (e.g., manager, staff, or viewer) with specific permissions, ensuring that sensitive actions—like editing rental prices or viewing financial data—are restricted to authorized personnel only.
 
 9. As a staff member, I want to add notes to customer accounts so I can track communications and special requests.
+
+---
+
+## Low-Fidelity Wireframes
+You can view the initial interface sketches here:  
+
+These wireframes show the early design concepts for the application layout, including:
+- Header, footer, sidebar, and main content layout structure [General Layout](./docs/wireframes/General_layout.png)
+- Home route [Home](./docs/wireframes/Home.png)
+- Storage route [Storage](./docs/wireframes/storage.png)
+- Add storage [Add Storage](./docs/wireframes/add_storage.png)
+- View storage details [View Storage Details](./docs/wireframes/view_storage_details.png)
 
 ---
 
