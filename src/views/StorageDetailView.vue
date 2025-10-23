@@ -8,6 +8,7 @@
         </svg>
         Back to Units
       </router-link>
+
       <div class="header-actions">
         <button class="action-btn secondary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -19,135 +20,152 @@
       </div>
     </div>
 
-    <div class="unit-detail-content">
+    <!-- Loading & Error States -->
+    <div v-if="isLoading" class="loading-text">Loading unit details...</div>
+    <div v-else-if="error" class="error-text">{{ error }}</div>
+
+    <!-- Main Content -->
+    <div v-else class="unit-detail-content">
       <div class="unit-main">
+        <!-- Unit Info -->
         <div class="unit-title-section">
           <div class="unit-header-row">
-            <h1 class="unit-title">Unit A-1</h1>
-            <div class="status-badge occupied">Occupied</div>
+            <h1 class="unit-title">{{ unit?.unitNumber || 'Unknown Unit' }}</h1>
+            <div class="status-badge" :class="unit?.status || 'available'">
+              {{ unit?.status || 'available' }}
+            </div>
           </div>
           <div class="unit-specs">
             <div class="spec-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <rect x="3" y="3" width="18" height="18" rx="2" />
               </svg>
-              <span>30x30 meters</span>
+              <span>{{ unit?.size || 'Unknown size' }}</span>
             </div>
             <div class="spec-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2v20M2 12h20"/>
+                <path d="M12 2v20M2 12h20" />
               </svg>
-              <span>Unit 1  |  Building A</span>
+              <span>{{ unit?.building || '—' }}</span>
             </div>
           </div>
         </div>
 
+        <!-- Customer Info -->
         <div class="customer-section">
           <div class="section-header">
             <h3 class="section-title">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
               </svg>
               Customer Information
             </h3>
           </div>
+
           <div class="customer-card">
             <div class="customer-header">
-              <div class="customer-avatar-large">TU</div>
+              <div class="customer-avatar-large">
+                {{ (unit?.customer || 'NA').slice(0, 2).toUpperCase() }}
+              </div>
               <div class="customer-info-main">
-                <h4 class="customer-name">Test User</h4>
-                <p class="customer-id">Customer ID: #TU-291004</p>
+                <h4 class="customer-name">{{ unit?.customer || 'No Customer' }}</h4>
+                <p class="customer-id">
+                  Customer ID: #{{ unit?.id || '000' }}
+                </p>
               </div>
             </div>
+
             <div class="customer-details-grid">
               <div class="detail-item">
                 <span class="detail-label">Email</span>
-                <span class="detail-value">test.user@gmail.com</span>
+                <span class="detail-value">{{ unit?.email || 'test.user@gmail.com' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Phone</span>
-                <span class="detail-value">(+964) 123 456 7890</span>
+                <span class="detail-value">{{ unit?.phone || '(+964) 000 000 0000' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Address</span>
-                <span class="detail-value">X Y, Z</span>
+                <span class="detail-value">{{ unit?.address || 'Unknown' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Customer Since</span>
-                <span class="detail-value">July 28, 2025</span>
+                <span class="detail-value">{{ unit?.createdAt || '—' }}</span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Rental Info -->
         <div class="rental-section">
           <div class="section-header">
             <h3 class="section-title">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
               </svg>
               Rental Details
             </h3>
           </div>
+
           <div class="rental-details-card">
             <div class="rental-grid">
               <div class="rental-item">
                 <span class="rental-label">Start Date</span>
-                <span class="rental-value">October 15, 2025</span>
+                <span class="rental-value">{{ unit?.startDate || 'Unknown' }}</span>
               </div>
               <div class="rental-item">
                 <span class="rental-label">Monthly Rate</span>
-                <span class="rental-value price">$150.00</span>
+                <span class="rental-value price">${{ unit?.monthlyRate ?? 0 }}</span>
               </div>
               <div class="rental-item">
                 <span class="rental-label">Next Payment Due</span>
-                <span class="rental-value">November 15, 2025</span>
+                <span class="rental-value">{{ unit?.nextPayment || '—' }}</span>
               </div>
               <div class="rental-item">
                 <span class="rental-label">Payment Status</span>
-                <span class="payment-badge paid">Paid</span>
+                <span class="payment-badge" :class="unit?.status || 'available'">
+                  {{ unit?.status || 'available' }}
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Sidebar (Notes + Activity Log) -->
       <div class="unit-sidebar">
         <div class="sidebar-card">
           <h3 class="sidebar-title">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10 9 9 9 8 9"/>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
             </svg>
             Notes
           </h3>
+
           <div class="notes-list">
             <div class="note-item">
               <div class="note-header">
                 <span class="note-author">User 1</span>
                 <span class="note-date">Oct 15, 2025</span>
               </div>
-              <p class="note-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatem unde ex eligendi incidunt assumenda tenetur, ullam autem iste veniam id!</p>
-            </div>
-            <div class="note-item">
-              <div class="note-header">
-                <span class="note-author">User 2</span>
-                <span class="note-date">Oct 14, 2025</span>
-              </div>
-              <p class="note-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus repellat molestias harum id!</p>
+              <p class="note-text">
+                This section can later display notes fetched from an endpoint.
+              </p>
             </div>
           </div>
+
           <button class="add-note-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
             Add Note
           </button>
@@ -156,28 +174,16 @@
         <div class="sidebar-card">
           <h3 class="sidebar-title">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
             Activity Log
           </h3>
           <div class="activity-list">
             <div class="activity-item">
               <div class="activity-content">
-                <p><strong>Payment received</strong> - $150.00</p>
-                <span class="activity-time">Oct 15, 2025 at 10:30 AM</span>
-              </div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-content">
-                <p><strong>Unit assigned</strong> to User 2</p>
-                <span class="activity-time">Oct 15, 2025 at 9:00 AM</span>
-              </div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-content">
-                <p><strong>Unit details</strong> updated</p>
-                <span class="activity-time">Oct 14, 2025 at 3:45 PM</span>
+                <p><strong>Payment received</strong> - ${{ unit?.monthlyRate ?? 0 }}</p>
+                <span class="activity-time">Recent Activity</span>
               </div>
             </div>
           </div>
@@ -188,7 +194,30 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+
+const route = useRoute()
+const unit = ref<any | null>(null)
+const isLoading = ref(true)
+const error = ref<string | null>(null)
+
+onMounted(async () => {
+  try {
+    const id = route.params.id
+    const res = await axios.get(`http://localhost:4000/storageUnits/${id}`)
+    unit.value = res.data
+  } catch (err) {
+    console.error('Error fetching unit:', err)
+    error.value = 'Failed to load unit data.'
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
+
+
 
 <style scoped>
 .unit-detail-container {
