@@ -15,7 +15,8 @@
     </div>
 
     <div class="form-container">
-      <form class="storage-form">
+      <form class="storage-form" @submit.prevent="createUnit">
+
         <!-- Basic Information Section -->
         <div class="form-section">
           <div class="section-header">
@@ -177,18 +178,46 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+import { ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-  const formData = ref({
-    unitNumber: '',
-    size: '',
-    monthlyRate: '',
-    status: 'available',
-    building: '',
-    unit: '',
-    accessInstructions: '',
-    description: '',
-  })
+const router = useRouter()
+
+const formData = ref({
+  unitNumber: '',
+  size: '',
+  monthlyRate: '',
+  status: 'available',
+  building: '',
+  unit: '',
+  accessInstructions: '',
+  description: ''
+})
+
+const createUnit = async () => {
+  try {
+    // Map your camelCase keys to match the API schema
+    const payload = {
+      unit_number: formData.value.unitNumber,
+      size: formData.value.size,
+      monthly_rate: formData.value.monthlyRate,
+      status: formData.value.status,
+      building: formData.value.building,
+      unit: formData.value.unit,
+      access_instructions: formData.value.accessInstructions,
+      description: formData.value.description
+    }
+
+    await axios.post('/storageUnits', payload)
+    alert('Storage unit created successfully!')
+    router.push('/storages')
+  } catch (error) {
+    console.error('Error creating unit:', error)
+    alert('Failed to create storage unit.')
+  }
+}
+
 
 </script>
 
