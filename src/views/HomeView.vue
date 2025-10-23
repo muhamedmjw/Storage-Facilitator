@@ -3,7 +3,36 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">Home</h1>
-        <p class="page-subtitle">Welcome back! Here's an overview of your storage facility.</p>
+        <p class="page-subtitle">
+          Welcome back! Here's an overview of your storage facility.
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-content">
+          <h2 class="stat-value">{{ totalUnits }}</h2>
+          <p class="stat-label">Total Units</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-content">
+          <h2 class="stat-value">{{ availableUnits }}</h2>
+          <p class="stat-label">Available</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-content">
+          <h2 class="stat-value">{{ occupiedUnits }}</h2>
+          <p class="stat-label">Occupied</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-content">
+          <h2 class="stat-value">{{ overdueUnits }}</h2>
+          <p class="stat-label">Overdue</p>
+        </div>
       </div>
     </div>
 
@@ -17,36 +46,30 @@
         </div>
 
         <div class="unit-cards">
-          <div class="unit-card">
+          <div
+            v-for="(unit, i) in recentUnits"
+            :key="unit?.id ?? i"
+            class="unit-card"
+          >
             <div class="unit-card-header">
-              <div class="unit-badge occupied">Unit #A-1</div>
-              <span class="unit-size">10x10</span>
+              <div class="unit-badge occupied">
+                Unit #{{ unit?.unitNumber || `U-${i + 1}` }}
+              </div>
+              <span class="unit-size">{{ unit?.size || 'Unknown' }}</span>
             </div>
-            <p class="unit-customer">AAA BBB</p>
+            <p class="unit-customer">
+              {{ unit?.customer || 'No Customer' }}
+            </p>
             <div class="unit-info">
-              <span class="info-item">$150/month</span>
-              <span class="info-item">Rented: Oct 15, 2025</span>
-            </div>
-            <div class="unit-status">
-              <span class="status-badge paid">Paid</span>
-              <span class="next-payment">Next: Nov 15</span>
+              <span class="info-item">${{ unit?.monthlyRate ?? 0 }}/month</span>
+              <span class="info-item">
+                {{ unit?.status || 'available' }}
+              </span>
             </div>
           </div>
 
-          <div class="unit-card">
-            <div class="unit-card-header">
-              <div class="unit-badge occupied">Unit #B-2</div>
-              <span class="unit-size">5x10</span>
-            </div>
-            <p class="unit-customer">CCC DDD</p>
-            <div class="unit-info">
-              <span class="info-item">$95/month</span>
-              <span class="info-item">Rented: Oct 12, 2025</span>
-            </div>
-            <div class="unit-status">
-              <span class="status-badge paid">Paid</span>
-              <span class="next-payment">Next: Nov 12</span>
-            </div>
+          <div v-if="recentUnits.length === 0" class="empty-state">
+            <p>No recent rentals found.</p>
           </div>
         </div>
       </section>
@@ -56,28 +79,24 @@
           <h2 class="section-title">Overdue Payments</h2>
         </div>
         <div class="overdue-list">
-          <div class="overdue-item urgent">
+          <div
+            v-for="(unit, i) in overdueList"
+            :key="unit?.id ?? i"
+            class="overdue-item"
+          >
             <div class="overdue-content">
-              <h4 class="overdue-title">Unit #C-30 - Test User</h4>
-              <p class="overdue-meta">$180/month • 15 days overdue</p>
+              <h4 class="overdue-title">
+                Unit #{{ unit?.unitNumber || `U-${i + 1}` }} - {{ unit?.customer || 'Unknown' }}
+              </h4>
+              <p class="overdue-meta">
+                ${{ unit?.monthlyRate ?? 0 }}/month • Overdue
+              </p>
             </div>
-            <div class="overdue-amount">$180</div>
+            <div class="overdue-amount">${{ unit?.monthlyRate ?? 0 }}</div>
           </div>
 
-          <div class="overdue-item">
-            <div class="overdue-content">
-              <h4 class="overdue-title">Unit #A-12 - Test User</h4>
-              <p class="overdue-meta">$150/month • 7 days overdue</p>
-            </div>
-            <div class="overdue-amount">$150</div>
-          </div>
-
-          <div class="overdue-item">
-            <div class="overdue-content">
-              <h4 class="overdue-title">Unit #D-27 - Test User</h4>
-              <p class="overdue-meta">$210/month • 3 days overdue</p>
-            </div>
-            <div class="overdue-amount">$210</div>
+          <div v-if="overdueList.length === 0" class="empty-state">
+            <p>No overdue payments 🎉</p>
           </div>
         </div>
       </section>
@@ -86,7 +105,41 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+
+const units = ref<any[]>([])
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('/storageUnits')
+    const data = Array.isArray(res.data)
+      ? res.data
+      : res.data.storageUnits || res.data.units || []
+    units.value = data
+  } catch (err) {
+    console.error('Error fetching data:', err)
+    units.value = []
+  }
+})
+
+const totalUnits = computed(() => units.value.length)
+const availableUnits = computed(() =>
+  units.value.filter(u => (u.status || '').toLowerCase() === 'available').length
+)
+const occupiedUnits = computed(() =>
+  units.value.filter(u => (u.status || '').toLowerCase() === 'occupied').length
+)
+const overdueUnits = computed(() =>
+  units.value.filter(u => (u.status || '').toLowerCase() === 'overdue').length
+)
+
+const recentUnits = computed(() => units.value.slice(-3).reverse())
+const overdueList = computed(() =>
+  units.value.filter(u => (u.status || '').toLowerCase() === 'overdue')
+)
 </script>
+
 
 <style scoped>
 .home-container {
