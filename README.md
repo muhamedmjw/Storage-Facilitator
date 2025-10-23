@@ -78,6 +78,44 @@ These wireframes show the early design concepts for the application layout, incl
 
 ---
 
+## Data Structure
+
+### Entity Types
+
+All type definitions are located in `src/types/index.ts`.
+
+#### Core Entities
+
+**User** - Staff members who manage the facility
+- Roles: `admin` or `staff`
+- Includes authentication and profile information
+
+**Customer** - Clients who rent storage units
+- Contact details, address, and account notes
+- Linked to rentals and payments
+
+**Building** - Physical storage facilities
+- Tracks total units and occupancy
+- Contains multiple storage units
+
+**StorageUnit** - Individual rental units
+- Size options: 5x5, 5x10, 10x10, 10x20
+- Status: Available, Occupied, or Reserved
+- Monthly rate and optional description
+
+**Rental** - Active rental agreements
+- Links customers to storage units
+- Tracks payment status and due dates
+
+**Payment** - Payment transaction records
+- Records payment amount, date, and method
+- Links to rental agreements
+
+**Note** - Internal staff notes about customers
+- Helps staff track communications and special requests
+
+---
+
 ## Getting Started
 
 ### Prerequisites
