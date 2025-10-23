@@ -1,0 +1,10 @@
+{
+  "storage_units": [
+    { "id": "1", "unit_number": "A1", "size": "10x10", "status": "available", "price_per_month": 50 }
+  ],
+  "customers": [
+    { "id": "1", "name": "John Doe", "phone": "123456789" }
+  ],
+  "rentals": [],
+  "payments": [] 
+}
