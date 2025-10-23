@@ -80,6 +80,22 @@ These wireframes show the early design concepts for the application layout, incl
 
 ## Data Structure
 
+### Entity Relationship Diagram
+
+![Storage Facilitator ER Diagram](./docs/diagram/erd.png)
+
+*The diagram above shows the relationships between all 7 core entities in the Storage Facilitator system.*
+
+**Key Relationships:**
+- One Building contains many Storage Units (1:M)
+- One Customer can have multiple Rentals over time (1:M)
+- One Storage Unit can have multiple Rentals over time (1:M)
+- One Rental generates multiple Payments (1:M)
+- One Customer can have multiple Notes (1:M)
+- Staff members (Users) create Notes about customers (1:M)
+
+---
+
 ### Entity Types
 
 All type definitions are located in `src/types/index.ts`.
