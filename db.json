@@ -1,10 +1,111 @@
 {
-  "storage_units": [
-    { "id": "1", "unit_number": "A1", "size": "10x10", "status": "available", "price_per_month": 50 }
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "role": "admin",
+      "email": "admin@storage.com"
+    },
+    {
+      "id": "2",
+      "name": "Staff User",
+      "role": "staff",
+      "email": "staff@storage.com"
+    }
   ],
   "customers": [
-    { "id": "1", "name": "John Doe", "phone": "123456789" }
+    {
+      "id": "1",
+      "name": "John Doe",
+      "phone": "123456789",
+      "email": "john@example.com",
+      "address": "Erbil, Iraq"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "phone": "987654321",
+      "email": "jane@example.com",
+      "address": "Soran, Iraq"
+    }
   ],
-  "rentals": [],
-  "payments": [] 
+  "buildings": [
+    {
+      "id": "1",
+      "name": "Main Facility",
+      "location": "Erbil Downtown",
+      "total_units": 10
+    },
+    {
+      "id": "2",
+      "name": "North Wing",
+      "location": "Ainkawa",
+      "total_units": 5
+    }
+  ],
+  "storageUnits": [
+    {
+      "id": "1",
+      "building_id": 1,
+      "unit_number": "A1",
+      "size": "5x5",
+      "status": "available",
+      "monthly_rate": 50
+    },
+    {
+      "id": "2",
+      "building_id": 1,
+      "unit_number": "A2",
+      "size": "10x10",
+      "status": "occupied",
+      "monthly_rate": 80
+    },
+    {
+      "id": "3",
+      "building_id": 2,
+      "unit_number": "B1",
+      "size": "5x10",
+      "status": "available",
+      "monthly_rate": 60
+    },
+    {
+      "id": "582c",
+      "unit_number": "A-255",
+      "size": "30x30",
+      "monthly_rate": 1500,
+      "status": "available",
+      "building": "Building A",
+      "unit": "3",
+      "access_instructions": "YO",
+      "description": ""
+    }
+  ],
+  "rentals": [
+    {
+      "id": "1",
+      "customer_id": 1,
+      "unit_id": 2,
+      "start_date": "2025-10-01",
+      "end_date": "2026-10-01",
+      "status": "active"
+    }
+  ],
+  "payments": [
+    {
+      "id": "1",
+      "rental_id": 1,
+      "amount": 80,
+      "date": "2025-10-05",
+      "method": "cash"
+    }
+  ],
+  "notes": [
+    {
+      "id": "1",
+      "customer_id": 1,
+      "user_id": 2,
+      "content": "Customer requested invoice copy.",
+      "date": "2025-10-10"
+    }
+  ]
 }
