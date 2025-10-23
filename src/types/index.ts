@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+
+// User 
 export interface User {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface User {
   role: 'admin' | 'staff';
 }
 
+// Customer
 export interface Customer {
   id: string;
   name: string;
@@ -17,6 +20,7 @@ export interface Customer {
   notes?: string;
 }
 
+// Building
 export interface Building {
   id: string;
   name: string;
@@ -26,6 +30,7 @@ export interface Building {
   createdAt: string;
 }
 
+// Storage Unit
 export enum UnitStatus {
   AVAILABLE = 'available',
   OCCUPIED = 'occupied',
@@ -44,16 +49,28 @@ export interface StorageUnit {
   buildingId: string;
   unitNumber: string;
   size: UnitSize;
-  price: number;
+  monthlyRate: number;
   status: UnitStatus;
   customerId?: string;
+  description?: string;
 }
 
+// Payment
 export enum PaymentStatus {
   PAID = 'paid',
   OVERDUE = 'overdue'
 }
 
+export interface Payment {
+  id: string;
+  rentalId: string;
+  amount: number;
+  date: string;
+  method: 'cash';
+  notes?: string;
+}
+
+// Rental
 export interface Rental {
   id: string;
   unitId: string;
@@ -66,19 +83,23 @@ export interface Rental {
   notes?: string;
 }
 
-export interface Payment {
-  id: string;
-  rentalId: string;
-  amount: number;
-  date: string;
-  method: 'cash';
-  notes?: string;
-}
-
+// Note
 export interface Note {
   id: string;
   customerId: string;
   userId: string;
   content: string;
   createdAt: string;
+}
+
+// API Response Wrapper
+export interface ApiResponse<T> {
+  data: T;
+  message?: string;
+}
+
+// Error Interface
+export interface ApiError {
+  message: string;
+  statusCode: number;
 }
