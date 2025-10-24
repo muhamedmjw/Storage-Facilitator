@@ -1,0 +1,100 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "role": "admin",
+      "email": "admin@storage.com"
+    },
+    {
+      "id": "2",
+      "name": "Staff User",
+      "role": "staff",
+      "email": "staff@storage.com"
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "phone": "123456789",
+      "email": "john@example.com",
+      "address": "Erbil, Iraq"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "phone": "987654321",
+      "email": "jane@example.com",
+      "address": "Soran, Iraq"
+    }
+  ],
+  "buildings": [
+    {
+      "id": "1",
+      "name": "Main Facility",
+      "location": "Erbil Downtown",
+      "total_units": 10
+    },
+    {
+      "id": "2",
+      "name": "North Wing",
+      "location": "Ainkawa",
+      "total_units": 5
+    }
+  ],
+  "storageUnits": [{
+      "id": 1,
+      "unitNumber": "A-1",
+      "size": "10x10",
+      "monthlyRate": 150,
+      "status": "occupied",
+      "customer": "AAA BBB"
+    },
+    {
+      "id": 2,
+      "unitNumber": "B-2",
+      "size": "5x10",
+      "monthlyRate": 95,
+      "status": "available",
+      "customer": ""
+    },
+    {
+      "id": 3,
+      "unitNumber": "C-3",
+      "size": "15x15",
+      "monthlyRate": 200,
+      "status": "overdue",
+      "customer": "Test User"
+    }
+  
+  ],
+  "rentals": [
+    {
+      "id": "1",
+      "customer_id": 1,
+      "unit_id": 2,
+      "start_date": "2025-10-01",
+      "end_date": "2026-10-01",
+      "status": "active"
+    }
+  ],
+  "payments": [
+    {
+      "id": "1",
+      "rental_id": 1,
+      "amount": 80,
+      "date": "2025-10-05",
+      "method": "cash"
+    }
+  ],
+  "notes": [
+    {
+      "id": "1",
+      "customer_id": 1,
+      "user_id": 2,
+      "content": "Customer requested invoice copy.",
+      "date": "2025-10-10"
+    }
+  ]
+}

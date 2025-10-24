@@ -2,13 +2,37 @@
   <div class="units-container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Storage Units</h1>
-        <p class="page-subtitle">Manage all storage units and rental assignments</p>
+        <h1 class="page-title">
+          Storage Units
+        </h1>
+        <p class="page-subtitle">
+          Manage all storage units and rental assignments
+        </p>
       </div>
-      <button class="add-unit-btn" @click="router.push('/add-unit')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
+      <button
+        class="add-unit-btn"
+        @click="router.push('/add-unit')"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line
+            x1="12"
+            y1="5"
+            x2="12"
+            y2="19"
+          />
+          <line
+            x1="5"
+            y1="12"
+            x2="19"
+            y2="12"
+          />
         </svg>
         Add Unit
       </button>
@@ -16,11 +40,23 @@
 
     <div class="controls-section">
       <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+          <path d="m21 21-4.35-4.35" />
         </svg>
         <input
+          v-model="search"
           type="text"
           placeholder="Search units by number or customer..."
           class="search-input"
@@ -29,260 +65,178 @@
     </div>
 
     <div class="units-grid">
-      <div class="unit-card occupied">
+      <div
+        v-for="(unit, i) in filteredUnits"
+        :key="unit?.id ?? i"
+        class="unit-card"
+        :class="unit?.status || 'available'"
+      >
         <div class="unit-card-header">
-          <div class="unit-number">A-1</div>
-          <div class="status-indicator occupied">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="12" cy="12" r="10"/>
+          <div class="unit-number">
+            {{ unit?.unitNumber || `U-${i + 1}` }}
+          </div>
+          <div
+            class="status-indicator"
+            :class="unit?.status || 'available'"
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
             </svg>
-            Occupied
+            {{ unit?.status || 'available' }}
           </div>
         </div>
 
         <div class="unit-card-body">
           <div class="unit-size-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="2"
+              />
             </svg>
-            <span class="size-label">30x30 meters</span>
-            <span class="size-badge">Large</span>
-          </div>
-
-          <div class="customer-info">
-            <div class="customer-avatar">A</div>
-            <div class="customer-details">
-              <h4 class="customer-name">AAA</h4>
-              <p class="customer-contact">(+964) 123 456 7890</p>
-            </div>
+            <span class="size-label">{{ unit?.size || 'Unknown size' }}</span>
+            <span class="size-badge">{{ unit?.size || 'N/A' }}</span>
           </div>
 
           <div class="rental-info">
             <div class="info-row">
-              <span class="info-label">Monthly Payment:</span>
-              <span class="info-value price">$150</span>
+              <span class="info-label">Monthly Rate:</span>
+              <span class="info-value price">
+                ${{ unit?.monthlyRate ?? 0 }}
+              </span>
             </div>
             <div class="info-row">
-              <span class="info-label">Next Payment:</span>
-              <span class="info-value">Nov 15, 2025</span>
+              <span class="info-label">Building:</span>
+              <span class="info-value">{{ unit?.building || '—' }}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Current Payment Status:</span>
-              <span class="payment-badge paid">Paid</span>
+              <span class="info-label">Unit:</span>
+              <span class="info-value">{{ unit?.unitNumber || '—' }}</span>
             </div>
           </div>
         </div>
 
         <div class="unit-card-footer">
-          <button class="action-btn secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit
-          </button>
-          <button class="action-btn primary" @click="router.push(`/storages/${unit.id}`)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
+          <button
+            class="action-btn primary"
+            @click="router.push(`/storages/${unit?.id ?? i + 1}`)"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
             </svg>
             View Details
           </button>
         </div>
       </div>
 
-      <div class="unit-card occupied">
-        <div class="unit-card-header">
-          <div class="unit-number">B-2</div>
-          <div class="status-indicator occupied">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="12" cy="12" r="10"/>
-            </svg>
-            Occupied
-          </div>
-        </div>
-
-        <div class="unit-card-body">
-          <div class="unit-size-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-            </svg>
-            <span class="size-label">15x30 meters</span>
-            <span class="size-badge">Medium</span>
-          </div>
-
-          <div class="customer-info">
-            <div class="customer-avatar">B</div>
-            <div class="customer-details">
-              <h4 class="customer-name">B</h4>
-              <p class="customer-contact">(+964) 098 765 4321</p>
-            </div>
-          </div>
-
-          <div class="rental-info">
-            <div class="info-row">
-              <span class="info-label">Monthly Payment:</span>
-              <span class="info-value price">$95</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Next Payment:</span>
-              <span class="info-value">Nov 12, 2025</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Current Payment Status:</span>
-              <span class="payment-badge paid">Paid</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="unit-card-footer">
-          <button class="action-btn secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit
-          </button>
-          <button class="action-btn primary" @click="router.push(`/storages/${unit.id}`)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-            View Details
-          </button>
-        </div>
-      </div>
-
-      <div class="unit-card available">
-        <div class="unit-card-header">
-          <div class="unit-number">C-37</div>
-          <div class="status-indicator available">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="12" cy="12" r="10"/>
-            </svg>
-            Available
-          </div>
-        </div>
-
-        <div class="unit-card-body">
-          <div class="unit-size-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-            </svg>
-            <span class="size-label">30x60 meters</span>
-            <span class="size-badge">X-Large</span>
-          </div>
-
-          <div class="empty-state">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <line x1="3" y1="9" x2="21" y2="9"/>
-              <line x1="9" y1="21" x2="9" y2="9"/>
-            </svg>
-            <p>Unit available for rent</p>
-          </div>
-
-          <div class="rental-info">
-            <div class="info-row">
-              <span class="info-label">Monthly Payment:</span>
-              <span class="info-value price">$210</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="unit-card-footer">
-          <button class="action-btn secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit
-          </button>
-          <button class="action-btn primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="8.5" cy="7" r="4"></circle>
-              <line x1="20" y1="8" x2="20" y2="14"></line>
-              <line x1="23" y1="11" x2="17" y2="11"></line>
-            </svg>
-            Assign Customer
-          </button>
-        </div>
-      </div>
-
-      <div class="unit-card overdue">
-        <div class="unit-card-header">
-          <div class="unit-number">C-12</div>
-          <div class="status-indicator overdue">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="12" cy="12" r="10"/>
-            </svg>
-            Overdue
-          </div>
-        </div>
-
-        <div class="unit-card-body">
-          <div class="unit-size-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-            </svg>
-            <span class="size-label">30x45 meters</span>
-            <span class="size-badge">Large</span>
-          </div>
-
-          <div class="customer-info">
-            <div class="customer-avatar warning">TU</div>
-            <div class="customer-details">
-              <h4 class="customer-name">Test User</h4>
-              <p class="customer-contact">(+41) 123 456 7890</p>
-            </div>
-          </div>
-
-          <div class="rental-info">
-            <div class="info-row">
-              <span class="info-label">Monthly Payment:</span>
-              <span class="info-value price">$180</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Payment Due:</span>
-              <span class="info-value overdue-text">Oct 5, 2025</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Days Overdue:</span>
-              <span class="payment-badge overdue">15 days</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="unit-card-footer">
-          <button class="action-btn secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-            Send Reminder
-          </button>
-          <button class="action-btn primary" @click="router.push(`/storages/${unit.id}`)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-            View Details
-          </button>
-        </div>
+      <div
+        v-if="filteredUnits.length === 0"
+        class="empty-state"
+      >
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2"
+          />
+          <line
+            x1="3"
+            y1="9"
+            x2="21"
+            y2="9"
+          />
+          <line
+            x1="9"
+            y1="21"
+            x2="9"
+            y2="9"
+          />
+        </svg>
+        <p>No storage units found.</p>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
-const router = useRouter()
 
-const unit = { 
-  id: '1',
-  number: 'A-1'
-}
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import type { AxiosResponse } from 'axios'
+import { storageService, type StorageUnit } from '@/services/storageService'
+
+const router = useRouter()
+const units = ref<StorageUnit[]>([])
+const search = ref('')
+
+onMounted(async () => {
+  try {
+    const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
+    if (Array.isArray(res.data)) {
+      units.value = res.data
+    } else {
+      units.value = []
+    }
+    if (import.meta.env.DEV) {
+      console.log('Server returned:', res.data)
+    }
+  } catch (err: unknown) {
+    if (import.meta.env.DEV) {
+      console.error('Could not load units:', err)
+    }
+    units.value = []
+  }
+})
+
+const filteredUnits = computed(() => {
+  const term = search.value.toLowerCase()
+  return units.value.filter(u =>
+    (u.unitNumber || '').toLowerCase().includes(term)
+  )
+})
 </script>
+
+
 
 <style scoped>
 .units-container {

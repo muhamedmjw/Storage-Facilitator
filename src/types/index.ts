@@ -45,15 +45,16 @@ export enum UnitSize {
 }
 
 export interface StorageUnit {
-  id: string;
-  buildingId: string;
-  unitNumber: string;
-  size: UnitSize;
-  monthlyRate: number;
-  status: UnitStatus;
-  customerId?: string;
-  description?: string;
+  id: number
+  unitNumber: string
+  size: string
+  monthlyRate: number
+  status: 'available' | 'occupied' | 'overdue' | string
+  building?: string
+  unit?: string
+  customer?: string
 }
+
 
 // Payment
 export enum PaymentStatus {
