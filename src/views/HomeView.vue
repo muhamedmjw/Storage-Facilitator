@@ -2,7 +2,9 @@
   <div class="home-container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Home</h1>
+        <h1 class="page-title">
+          Home
+        </h1>
         <p class="page-subtitle">
           Welcome back! Here's an overview of your storage facility.
         </p>
@@ -12,26 +14,42 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-content">
-          <h2 class="stat-value">{{ totalUnits }}</h2>
-          <p class="stat-label">Total Units</p>
+          <h2 class="stat-value">
+            {{ totalUnits }}
+          </h2>
+          <p class="stat-label">
+            Total Units
+          </p>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-content">
-          <h2 class="stat-value">{{ availableUnits }}</h2>
-          <p class="stat-label">Available</p>
+          <h2 class="stat-value">
+            {{ availableUnits }}
+          </h2>
+          <p class="stat-label">
+            Available
+          </p>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-content">
-          <h2 class="stat-value">{{ occupiedUnits }}</h2>
-          <p class="stat-label">Occupied</p>
+          <h2 class="stat-value">
+            {{ occupiedUnits }}
+          </h2>
+          <p class="stat-label">
+            Occupied
+          </p>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-content">
-          <h2 class="stat-value">{{ overdueUnits }}</h2>
-          <p class="stat-label">Overdue</p>
+          <h2 class="stat-value">
+            {{ overdueUnits }}
+          </h2>
+          <p class="stat-label">
+            Overdue
+          </p>
         </div>
       </div>
     </div>
@@ -39,8 +57,13 @@
     <div class="content-grid">
       <section class="section-card recent-units">
         <div class="section-header">
-          <h2 class="section-title">Recent Rentals</h2>
-          <router-link to="/storages" class="view-all-link">
+          <h2 class="section-title">
+            Recent Rentals
+          </h2>
+          <router-link
+            to="/storages"
+            class="view-all-link"
+          >
             View all →
           </router-link>
         </div>
@@ -68,7 +91,10 @@
             </div>
           </div>
 
-          <div v-if="recentUnits.length === 0" class="empty-state">
+          <div
+            v-if="recentUnits.length === 0"
+            class="empty-state"
+          >
             <p>No recent rentals found.</p>
           </div>
         </div>
@@ -76,7 +102,9 @@
 
       <section class="section-card overdue-section">
         <div class="section-header">
-          <h2 class="section-title">Overdue Payments</h2>
+          <h2 class="section-title">
+            Overdue Payments
+          </h2>
         </div>
         <div class="overdue-list">
           <div
@@ -92,10 +120,15 @@
                 ${{ unit?.monthlyRate ?? 0 }}/month • Overdue
               </p>
             </div>
-            <div class="overdue-amount">${{ unit?.monthlyRate ?? 0 }}</div>
+            <div class="overdue-amount">
+              ${{ unit?.monthlyRate ?? 0 }}
+            </div>
           </div>
 
-          <div v-if="overdueList.length === 0" class="empty-state">
+          <div
+            v-if="overdueList.length === 0"
+            class="empty-state"
+          >
             <p>No overdue payments 🎉</p>
           </div>
         </div>

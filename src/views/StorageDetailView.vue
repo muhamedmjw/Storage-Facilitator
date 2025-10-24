@@ -1,19 +1,41 @@
 <template>
   <div class="unit-detail-container">
     <div class="unit-detail-header">
-      <router-link to="/storages" class="back-link">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
+      <router-link
+        to="/storages"
+        class="back-link"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line
+            x1="19"
+            y1="12"
+            x2="5"
+            y2="12"
+          />
+          <polyline points="12 19 5 12 12 5" />
         </svg>
         Back to Units
       </router-link>
 
       <div class="header-actions">
         <button class="action-btn secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
           </svg>
           Edit Unit
         </button>
@@ -21,29 +43,67 @@
     </div>
 
     <!-- Loading & Error States -->
-    <div v-if="isLoading" class="loading-text">Loading unit details...</div>
-    <div v-else-if="error" class="error-text">{{ error }}</div>
+    <div
+      v-if="isLoading"
+      class="loading-text"
+    >
+      Loading unit details...
+    </div>
+    <div
+      v-else-if="error"
+      class="error-text"
+    >
+      {{ error }}
+    </div>
 
     <!-- Main Content -->
-    <div v-else class="unit-detail-content">
+    <div
+      v-else
+      class="unit-detail-content"
+    >
       <div class="unit-main">
         <!-- Unit Info -->
         <div class="unit-title-section">
           <div class="unit-header-row">
-            <h1 class="unit-title">{{ unit?.unitNumber || 'Unknown Unit' }}</h1>
-            <div class="status-badge" :class="unit?.status || 'available'">
+            <h1 class="unit-title">
+              {{ unit?.unitNumber || 'Unknown Unit' }}
+            </h1>
+            <div
+              class="status-badge"
+              :class="unit?.status || 'available'"
+            >
               {{ unit?.status || 'available' }}
             </div>
           </div>
           <div class="unit-specs">
             <div class="spec-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect
+                  x="3"
+                  y="3"
+                  width="18"
+                  height="18"
+                  rx="2"
+                />
               </svg>
               <span>{{ unit?.size || 'Unknown size' }}</span>
             </div>
             <div class="spec-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M12 2v20M2 12h20" />
               </svg>
               <span>{{ unit?.building || '—' }}</span>
@@ -55,9 +115,20 @@
         <div class="customer-section">
           <div class="section-header">
             <h3 class="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
+                <circle
+                  cx="12"
+                  cy="7"
+                  r="4"
+                />
               </svg>
               Customer Information
             </h3>
@@ -69,7 +140,9 @@
                 {{ (unit?.customer || 'NA').slice(0, 2).toUpperCase() }}
               </div>
               <div class="customer-info-main">
-                <h4 class="customer-name">{{ unit?.customer || 'No Customer' }}</h4>
+                <h4 class="customer-name">
+                  {{ unit?.customer || 'No Customer' }}
+                </h4>
                 <p class="customer-id">
                   Customer ID: #{{ unit?.id || '000' }}
                 </p>
@@ -101,11 +174,40 @@
         <div class="rental-section">
           <div class="section-header">
             <h3 class="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="18"
+                  rx="2"
+                  ry="2"
+                />
+                <line
+                  x1="16"
+                  y1="2"
+                  x2="16"
+                  y2="6"
+                />
+                <line
+                  x1="8"
+                  y1="2"
+                  x2="8"
+                  y2="6"
+                />
+                <line
+                  x1="3"
+                  y1="10"
+                  x2="21"
+                  y2="10"
+                />
               </svg>
               Rental Details
             </h3>
@@ -127,7 +229,10 @@
               </div>
               <div class="rental-item">
                 <span class="rental-label">Payment Status</span>
-                <span class="payment-badge" :class="unit?.status || 'available'">
+                <span
+                  class="payment-badge"
+                  :class="unit?.status || 'available'"
+                >
                   {{ unit?.status || 'available' }}
                 </span>
               </div>
@@ -140,11 +245,28 @@
       <div class="unit-sidebar">
         <div class="sidebar-card">
           <h3 class="sidebar-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
+              <line
+                x1="16"
+                y1="13"
+                x2="8"
+                y2="13"
+              />
+              <line
+                x1="16"
+                y1="17"
+                x2="8"
+                y2="17"
+              />
               <polyline points="10 9 9 9 8 9" />
             </svg>
             Notes
@@ -163,9 +285,26 @@
           </div>
 
           <button class="add-note-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line
+                x1="12"
+                y1="5"
+                x2="12"
+                y2="19"
+              />
+              <line
+                x1="5"
+                y1="12"
+                x2="19"
+                y2="12"
+              />
             </svg>
             Add Note
           </button>
@@ -173,8 +312,19 @@
 
         <div class="sidebar-card">
           <h3 class="sidebar-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
               <polyline points="12 6 12 12 16 14" />
             </svg>
             Activity Log

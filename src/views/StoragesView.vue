@@ -2,13 +2,37 @@
   <div class="units-container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Storage Units</h1>
-        <p class="page-subtitle">Manage all storage units and rental assignments</p>
+        <h1 class="page-title">
+          Storage Units
+        </h1>
+        <p class="page-subtitle">
+          Manage all storage units and rental assignments
+        </p>
       </div>
-      <button class="add-unit-btn" @click="router.push('/add-unit')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
+      <button
+        class="add-unit-btn"
+        @click="router.push('/add-unit')"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line
+            x1="12"
+            y1="5"
+            x2="12"
+            y2="19"
+          />
+          <line
+            x1="5"
+            y1="12"
+            x2="19"
+            y2="12"
+          />
         </svg>
         Add Unit
       </button>
@@ -16,16 +40,27 @@
 
     <div class="controls-section">
       <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+          <path d="m21 21-4.35-4.35" />
         </svg>
         <input
-          type="text"
           v-model="search"
+          type="text"
           placeholder="Search units by number or customer..."
           class="search-input"
-        />
+        >
       </div>
     </div>
 
@@ -40,9 +75,21 @@
           <div class="unit-number">
             {{ unit?.unitNumber || `U-${i + 1}` }}
           </div>
-          <div class="status-indicator" :class="unit?.status || 'available'">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="12" cy="12" r="10" />
+          <div
+            class="status-indicator"
+            :class="unit?.status || 'available'"
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
             </svg>
             {{ unit?.status || 'available' }}
           </div>
@@ -50,8 +97,21 @@
 
         <div class="unit-card-body">
           <div class="unit-size-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="2"
+              />
             </svg>
             <span class="size-label">{{ unit?.size || 'Unknown size' }}</span>
             <span class="size-badge">{{ unit?.size || 'N/A' }}</span>
@@ -80,20 +140,57 @@
             class="action-btn primary"
             @click="router.push(`/storages/${unit?.id ?? i + 1}`)"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
             </svg>
             View Details
           </button>
         </div>
       </div>
 
-      <div v-if="filteredUnits.length === 0" class="empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <line x1="3" y1="9" x2="21" y2="9" />
-          <line x1="9" y1="21" x2="9" y2="9" />
+      <div
+        v-if="filteredUnits.length === 0"
+        class="empty-state"
+      >
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2"
+          />
+          <line
+            x1="3"
+            y1="9"
+            x2="21"
+            y2="9"
+          />
+          <line
+            x1="9"
+            y1="21"
+            x2="9"
+            y2="9"
+          />
         </svg>
         <p>No storage units found.</p>
       </div>
