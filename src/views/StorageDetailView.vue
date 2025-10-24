@@ -42,15 +42,9 @@
       </div>
     </div>
 
-    <!-- Loading & Error States -->
+    <!-- Error State -->
     <div
-      v-if="isLoading"
-      class="loading-text"
-    >
-      Loading unit details...
-    </div>
-    <div
-      v-else-if="error"
+      v-if="error"
       class="error-text"
     >
       {{ error }}
@@ -343,33 +337,38 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import type { AxiosResponse } from 'axios'
 import { storageService } from '@/services/storageService'
 import type { StorageUnit } from '@/services/storageService'
+import { useToast } from '@/composables/useToast'
+import { useLoading } from '@/composables/useLoading'
 
 const route = useRoute()
 const unit = ref<StorageUnit | null>(null)
-const isLoading = ref(true)
 const error = ref<string | null>(null)
+const { showToast } = useToast()
+const { startLoading, stopLoading } = useLoading()
 
 onMounted(async () => {
+  startLoading()
   try {
     const id = route.params.id as string
     const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(id)
     unit.value = res.data
+    showToast(`Loaded details for unit ${unit.value.unitNumber}`, 'success')
   } catch (err: unknown) {
-    if (import.meta.env.DEV) {
-      console.error('Error fetching unit:', err)
-    }
     error.value = err instanceof Error ? err.message : 'Failed to load unit data.'
+    showToast('Failed to load unit details.', 'error')
   } finally {
-    isLoading.value = false
+    stopLoading()
   }
 })
 </script>
+
 
 
 
