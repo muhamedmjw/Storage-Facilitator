@@ -196,7 +196,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import axios from 'axios'
+import { storageService } from '@/services/storageService'
 
 const route = useRoute()
 const unit = ref<any | null>(null)
@@ -206,16 +206,17 @@ const error = ref<string | null>(null)
 onMounted(async () => {
   try {
     const id = route.params.id
-    const res = await axios.get(`http://localhost:4000/storageUnits/${id}`)
+    const res = await storageService.getUnitById(id as string)
     unit.value = res.data
-  } catch (err) {
+  } catch (err: any) {
     console.error('Error fetching unit:', err)
-    error.value = 'Failed to load unit data.'
+    error.value = typeof err === 'string' ? err : 'Failed to load unit data.'
   } finally {
     isLoading.value = false
   }
 })
 </script>
+
 
 
 

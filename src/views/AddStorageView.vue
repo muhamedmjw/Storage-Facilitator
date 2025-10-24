@@ -178,48 +178,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+import { storageService, type StorageUnit } from "@/services/storageService"
 
 const router = useRouter()
 
 const formData = ref({
-  unitNumber: '',
-  size: '',
-  monthlyRate: '',
-  status: 'available',
-  building: '',
-  unit: '',
-  accessInstructions: '',
-  description: ''
+  unitNumber: "",
+  size: "",
+  monthlyRate: "",
+  status: "available" as "available" | "occupied" | "overdue", // ✅ strict type
+  building: "",
+  unit: "",
+  accessInstructions: "",
+  description: "",
 })
 
 const createUnit = async () => {
   try {
-    // Map your camelCase keys to match the API schema
-    const payload = {
-      unit_number: formData.value.unitNumber,
-      size: formData.value.size,
-      monthly_rate: formData.value.monthlyRate,
-      status: formData.value.status,
-      building: formData.value.building,
-      unit: formData.value.unit,
-      access_instructions: formData.value.accessInstructions,
-      description: formData.value.description
-    }
-
-    await axios.post('/storageUnits', payload)
-    alert('Storage unit created successfully!')
-    router.push('/storages')
-  } catch (error) {
-    console.error('Error creating unit:', error)
-    alert('Failed to create storage unit.')
-  }
+   const payload: Partial<StorageUnit> = {
+  unitNumber: formData.value.unitNumber,
+  size: formData.value.size,
+  monthlyRate: Number(formData.value.monthlyRate),
+  status: formData.value.status,
+  building: formData.value.building || "",
+  accessInstructions: formData.value.accessInstructions || "",
+  description: formData.value.description || "",
 }
 
 
+    await storageService.addUnit(payload)
+    alert("✅ Storage unit created successfully!")
+    router.push("/storages")
+  } catch (error) {
+    console.error("❌ Error creating unit:", error)
+    alert("Failed to create storage unit.")
+  }
+}
 </script>
+
 
 <style scoped>
 .add-storage-container {

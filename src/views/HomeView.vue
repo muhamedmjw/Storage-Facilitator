@@ -106,20 +106,22 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import { storageService } from '@/services/storageService'
 
 const units = ref<any[]>([])
+const isLoading = ref(true)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await axios.get('/storageUnits')
-    const data = Array.isArray(res.data)
-      ? res.data
-      : res.data.storageUnits || res.data.units || []
-    units.value = data
-  } catch (err) {
-    console.error('Error fetching data:', err)
+    const res = await storageService.getUnits()
+    units.value = Array.isArray(res.data) ? res.data : []
+  } catch (err: any) {
+    console.error('Error fetching units:', err)
+    error.value = typeof err === 'string' ? err : 'Failed to fetch units.'
     units.value = []
+  } finally {
+    isLoading.value = false
   }
 })
 
@@ -139,6 +141,7 @@ const overdueList = computed(() =>
   units.value.filter(u => (u.status || '').toLowerCase() === 'overdue')
 )
 </script>
+
 
 
 <style scoped>

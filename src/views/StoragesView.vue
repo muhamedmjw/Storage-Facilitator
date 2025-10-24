@@ -25,7 +25,7 @@
           v-model="search"
           placeholder="Search units by number or customer..."
           class="search-input"
-        >
+        />
       </div>
     </div>
 
@@ -38,7 +38,7 @@
       >
         <div class="unit-card-header">
           <div class="unit-number">
-            {{ unit?.unitNumber || unit?.unit_number || `U-${i + 1}` }}
+            {{ unit?.unitNumber || `U-${i + 1}` }}
           </div>
           <div class="status-indicator" :class="unit?.status || 'available'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -61,7 +61,7 @@
             <div class="info-row">
               <span class="info-label">Monthly Rate:</span>
               <span class="info-value price">
-                ${{ unit?.monthlyRate ?? unit?.monthly_rate ?? 0 }}
+                ${{ unit?.monthlyRate ?? 0 }}
               </span>
             </div>
             <div class="info-row">
@@ -70,7 +70,7 @@
             </div>
             <div class="info-row">
               <span class="info-label">Unit:</span>
-              <span class="info-value">{{ unit?.unit || '—' }}</span>
+              <span class="info-value">{{ unit?.unitNumber || '—' }}</span>
             </div>
           </div>
         </div>
@@ -101,37 +101,24 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { storageService, type StorageUnit } from '@/services/storageService'
 
 const router = useRouter()
-const units = ref<any[]>([])
+const units = ref<StorageUnit[]>([])
 const search = ref('')
 
 onMounted(async () => {
   try {
-    const res = await axios.get('/storageUnits')
+    const res = await storageService.getUnits()
     console.log('Server returned:', res.data)
-
-    // handle any shape of response (array, object, or nested)
-    const rawData = Array.isArray(res.data)
-      ? res.data
-      : res.data.storageUnits || res.data.units || []
-
-    units.value = rawData.map((u: any, i: number) => ({
-      id: u.id ?? i + 1,
-      unitNumber: u.unitNumber ?? u.unit_number ?? `U-${i + 1}`,
-      size: u.size ?? 'Unknown',
-      monthlyRate: u.monthlyRate ?? u.monthly_rate ?? 0,
-      status: u.status ?? 'available',
-      building: u.building ?? '',
-      unit: u.unit ?? ''
-    }))
+    units.value = res.data
   } catch (err) {
     console.error('Could not load units:', err)
-    units.value = [] // still render cleanly
+    units.value = []
   }
 })
 
@@ -142,6 +129,7 @@ const filteredUnits = computed(() => {
   )
 })
 </script>
+
 
 
 <style scoped>
