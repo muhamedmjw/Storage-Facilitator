@@ -5,17 +5,6 @@ import tsparser from '@typescript-eslint/parser'
 import vueParser from 'vue-eslint-parser'
 
 export default [
-  {
-    rules: {
-      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'no-alert': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'no-undef': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-    },
-  },
-]
-
-export default [
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   {
@@ -27,33 +16,45 @@ export default [
       parserOptions: {
         parser: tsparser,
         ecmaVersion: 2021,
-        sourceType: 'module'
+        sourceType: 'module',
       },
       globals: {
         browser: true,
         node: true,
-        es2021: true
-      }
+        es2021: true,
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      vue: pluginVue
+      vue: pluginVue,
     },
     rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'vue/require-default-prop': 'off',
-    'vue/multi-word-component-names': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/no-unused-vars': 'warn',
-    'no-unused-vars': ['error', { 
-    varsIgnorePattern: '^_',
-    argsIgnorePattern: '^_',
-    ignoreRestSiblings: true 
-  }]
-}
+      // General rules
+      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-alert': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-undef': 'off',
+
+      // Vue-specific
+      'vue/require-default-prop': 'off',
+      'vue/multi-word-component-names': 'off',
+
+      // TypeScript
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+
+      // Unused variables (with ignore pattern)
+      'no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
   },
   {
-    ignores: ['dist/**', 'node_modules/**', '*.config.js', '*.config.ts']
-  }
+    ignores: ['dist/**', 'node_modules/**', '*.config.js', '*.config.ts'],
+  },
 ]
