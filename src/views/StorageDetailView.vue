@@ -196,26 +196,31 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import type { AxiosResponse } from 'axios'
 import { storageService } from '@/services/storageService'
+import type { StorageUnit } from '@/services/storageService'
 
 const route = useRoute()
-const unit = ref<any | null>(null)
+const unit = ref<StorageUnit | null>(null)
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
   try {
-    const id = route.params.id
-    const res = await storageService.getUnitById(id as string)
+    const id = route.params.id as string
+    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(id)
     unit.value = res.data
-  } catch (err: any) {
-    console.error('Error fetching unit:', err)
-    error.value = typeof err === 'string' ? err : 'Failed to load unit data.'
+  } catch (err: unknown) {
+    if (import.meta.env.DEV) {
+      console.error('Error fetching unit:', err)
+    }
+    error.value = err instanceof Error ? err.message : 'Failed to load unit data.'
   } finally {
     isLoading.value = false
   }
 })
 </script>
+
 
 
 

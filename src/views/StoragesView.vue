@@ -105,6 +105,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import type { AxiosResponse } from 'axios'
 import { storageService, type StorageUnit } from '@/services/storageService'
 
 const router = useRouter()
@@ -113,11 +114,19 @@ const search = ref('')
 
 onMounted(async () => {
   try {
-    const res = await storageService.getUnits()
-    console.log('Server returned:', res.data)
-    units.value = res.data
-  } catch (err) {
-    console.error('Could not load units:', err)
+    const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
+    if (Array.isArray(res.data)) {
+      units.value = res.data
+    } else {
+      units.value = []
+    }
+    if (import.meta.env.DEV) {
+      console.log('Server returned:', res.data)
+    }
+  } catch (err: unknown) {
+    if (import.meta.env.DEV) {
+      console.error('Could not load units:', err)
+    }
     units.value = []
   }
 })
