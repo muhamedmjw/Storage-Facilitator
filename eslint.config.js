@@ -5,6 +5,17 @@ import tsparser from '@typescript-eslint/parser'
 import vueParser from 'vue-eslint-parser'
 
 export default [
+  {
+    rules: {
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+      'no-alert': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+      'no-undef': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
+]
+
+export default [
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   {
