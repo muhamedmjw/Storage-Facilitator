@@ -161,6 +161,10 @@ yarn dev
 
 4. Open http://localhost:5173 in your browser
 
+
+5. Run the backend server
+`npx json-server --watch db.json --port 4000`
+
 ### Available Scripts
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
