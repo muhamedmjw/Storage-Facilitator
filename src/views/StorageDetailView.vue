@@ -44,10 +44,10 @@
 
     <!-- Error State -->
     <div
-      v-if="error"
+      v-if="_error"
       class="error-text"
     >
-      {{ error }}
+      {{ _error }}
     </div>
 
     <!-- Main Content -->
@@ -349,7 +349,7 @@ import { useLoading } from '@/composables/useLoading'
 
 const route = useRoute()
 const unit = ref<StorageUnit | null>(null)
-const error = ref<string | null>(null)
+const _error = ref<string | null>(null)
 const { showToast } = useToast()
 const { startLoading, stopLoading } = useLoading()
 
@@ -361,7 +361,7 @@ onMounted(async () => {
     unit.value = res.data
     showToast(`Loaded details for unit ${unit.value.unitNumber}`, 'success')
   } catch (err: unknown) {
-    error.value = err instanceof Error ? err.message : 'Failed to load unit data.'
+    _error.value = err instanceof Error ? err.message : 'Failed to load unit data.'
     showToast('Failed to load unit details.', 'error')
   } finally {
     stopLoading()

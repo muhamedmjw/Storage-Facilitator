@@ -146,7 +146,7 @@ import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 
 const units = ref<StorageUnit[]>([])
-const error = ref<string | null>(null)
+const _error = ref<string | null>(null)
 const { showToast } = useToast()
 const { startLoading, stopLoading } = useLoading()
 
@@ -157,7 +157,7 @@ onMounted(async () => {
     units.value = Array.isArray(res.data) ? res.data : []
     showToast('Units loaded successfully!', 'success')
   } catch (err: unknown) {
-    error.value = err instanceof Error ? err.message : 'Failed to fetch units.'
+    _error.value = err instanceof Error ? err.message : 'Failed to fetch units.'
     showToast('Failed to load storage units.', 'error')
   } finally {
     stopLoading()
