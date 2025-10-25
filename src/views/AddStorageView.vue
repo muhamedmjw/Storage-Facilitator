@@ -328,6 +328,7 @@ const formData = ref({
   description: "",
 })
 
+
 const createUnit = async () => {
   startLoading()
   try {
@@ -344,7 +345,7 @@ const createUnit = async () => {
     await storageService.addUnit(payload)
     showToast("✅ Storage unit created successfully!", "success")
     router.push("/storages")
-  } catch (error) {
+  } catch  {
     showToast("❌ Failed to create storage unit.", "error")
   } finally {
     stopLoading()
