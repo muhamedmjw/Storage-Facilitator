@@ -370,10 +370,6 @@ onMounted(async () => {
 </script>
 
 
-
-
-
-
 <style scoped>
 .unit-detail-container {
   max-width: 1400px;
