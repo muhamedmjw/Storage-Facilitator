@@ -306,45 +306,52 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
-import { ref } from "vue"
-import { useRouter } from "vue-router"
-import { storageService, type StorageUnit } from "@/services/storageService"
+  import { ref } from "vue"
+  import { useRouter } from "vue-router"
+  import { storageService, type StorageUnit } from "@/services/storageService"
+  import { useToast } from "@/composables/useToast"
+  import { useLoading } from "@/composables/useLoading"
 
-const router = useRouter()
+  const router = useRouter()
+  const { showToast } = useToast()
+  const { startLoading, stopLoading } = useLoading()
 
-const formData = ref({
-  unitNumber: "",
-  size: "",
-  monthlyRate: "",
-  status: "available" as "available" | "occupied" | "overdue", // ✅ strict type
-  building: "",
-  unit: "",
-  accessInstructions: "",
-  description: "",
-})
-
-const createUnit = async () => {
-  try {
-   const payload: Partial<StorageUnit> = {
-  unitNumber: formData.value.unitNumber,
-  size: formData.value.size,
-  monthlyRate: Number(formData.value.monthlyRate),
-  status: formData.value.status,
-  building: formData.value.building || "",
-  accessInstructions: formData.value.accessInstructions || "",
-  description: formData.value.description || "",
-}
+  const formData = ref({
+    unitNumber: "",
+    size: "",
+    monthlyRate: "",
+    status: "available" as "available" | "occupied" | "overdue",
+    building: "",
+    unit: "",
+    accessInstructions: "",
+    description: "",
+  })
 
 
-    await storageService.addUnit(payload)
-    alert("✅ Storage unit created successfully!")
-    router.push("/storages")
-  } catch (error) {
-    console.error("❌ Error creating unit:", error)
-    alert("Failed to create storage unit.")
+  const createUnit = async () => {
+    startLoading()
+    try {
+      const payload: Partial<StorageUnit> = {
+        unitNumber: formData.value.unitNumber,
+        size: formData.value.size,
+        monthlyRate: Number(formData.value.monthlyRate),
+        status: formData.value.status,
+        building: formData.value.building || "",
+        accessInstructions: formData.value.accessInstructions || "",
+        description: formData.value.description || "",
+      }
+
+      await storageService.addUnit(payload)
+      showToast("Storage unit created successfully!", "success")
+      router.push("/storages")
+    } catch  {
+      showToast("Failed to create storage unit.", "error")
+    } finally {
+      stopLoading()
+    }
   }
-}
 </script>
 
 

@@ -137,53 +137,50 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import type { AxiosResponse } from 'axios'
-import { storageService } from '@/services/storageService'
-import type { StorageUnit } from '@/services/storageService' // ✅ use your defined type
+  import { ref, computed, onMounted } from 'vue'
+  import type { AxiosResponse } from 'axios'
+  import { storageService } from '@/services/storageService'
+  import type { StorageUnit } from '@/services/storageService'
+  import { useToast } from '@/composables/useToast'
+  import { useLoading } from '@/composables/useLoading'
 
-const units = ref<StorageUnit[]>([])
-const isLoading = ref(true)
-const error = ref<string | null>(null)
+  const units = ref<StorageUnit[]>([])
+  const _error = ref<string | null>(null)
+  const { showToast } = useToast()
+  const { startLoading, stopLoading } = useLoading()
 
-onMounted(async () => {
-  try {
-    const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
-    units.value = Array.isArray(res.data) ? res.data : []
-  } catch (err: unknown) {
-    if (import.meta.env.DEV) {
-      console.error('Error fetching units:', err)
+  onMounted(async () => {
+    startLoading()
+    try {
+      const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
+      units.value = Array.isArray(res.data) ? res.data : []
+      showToast('Home page loaded successfully!', 'success')
+    } catch (err: unknown) {
+      _error.value = err instanceof Error ? err.message : 'Failed to fetch units.'
+      showToast('Failed to load storage units.', 'error')
+    } finally {
+      stopLoading()
     }
-    error.value = err instanceof Error ? err.message : 'Failed to fetch units.'
-    units.value = []
-  } finally {
-    isLoading.value = false
-  }
-})
+  })
 
-const totalUnits = computed(() => units.value.length)
+  const totalUnits = computed(() => units.value.length)
+  const availableUnits = computed(() =>
+    units.value.filter(u => (u.status || '').toLowerCase() === 'available').length
+  )
+  const occupiedUnits = computed(() =>
+    units.value.filter(u => (u.status || '').toLowerCase() === 'occupied').length
+  )
+  const overdueUnits = computed(() =>
+    units.value.filter(u => (u.status || '').toLowerCase() === 'overdue').length
+  )
 
-const availableUnits = computed(() =>
-  units.value.filter(u => (u.status || '').toLowerCase() === 'available').length
-)
-
-const occupiedUnits = computed(() =>
-  units.value.filter(u => (u.status || '').toLowerCase() === 'occupied').length
-)
-
-const overdueUnits = computed(() =>
-  units.value.filter(u => (u.status || '').toLowerCase() === 'overdue').length
-)
-
-const recentUnits = computed(() => units.value.slice(-3).reverse())
-
-const overdueList = computed(() =>
-  units.value.filter(u => (u.status || '').toLowerCase() === 'overdue')
-)
+  const recentUnits = computed(() => units.value.slice(-3).reverse())
+  const overdueList = computed(() =>
+    units.value.filter(u => (u.status || '').toLowerCase() === 'overdue')
+  )
 </script>
-
-
 
 
 <style scoped>
