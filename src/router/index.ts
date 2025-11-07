@@ -20,7 +20,13 @@ const routes: Array<RouteRecordRaw> = [
   path: '/add-unit',
   name: 'add-unit',
   component: () => import('@/views/AddStorageView.vue')
+  },
+  {
+    path: '/customers',
+    name: 'customers',
+    component: () => import('@/views/CustomersView.vue')
   }
+
 ]
 
 const router = createRouter({

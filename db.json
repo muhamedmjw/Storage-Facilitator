@@ -16,17 +16,10 @@
   "customers": [
     {
       "id": "1",
-      "name": "John Doe",
+      "name": "AAA BBB",
       "phone": "123456789",
-      "email": "john@example.com",
+      "email": "test@example.com",
       "address": "Erbil, Iraq"
-    },
-    {
-      "id": "2",
-      "name": "Jane Smith",
-      "phone": "987654321",
-      "email": "jane@example.com",
-      "address": "Soran, Iraq"
     }
   ],
   "buildings": [
