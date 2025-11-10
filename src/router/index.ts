@@ -20,6 +20,16 @@ const routes: Array<RouteRecordRaw> = [
   path: '/add-unit',
   name: 'add-unit',
   component: () => import('@/views/AddStorageView.vue')
+  },
+  {
+    path: '/customers',
+    name: 'customers',
+    component: () => import('@/views/CustomersView.vue')
+  },
+  {
+    path: '/customers/:id',
+    name: 'customer-details',
+    component: () => import('@/views/CustomerDetailView.vue')
   }
 ]
 
