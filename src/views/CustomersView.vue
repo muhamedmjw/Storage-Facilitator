@@ -252,17 +252,6 @@ const viewCustomer = (customerId: string) => {
   router.push(`/customers/${customerId}`)
 }
 
-const editCustomer = (customer: Customer) => {
-  editingCustomerId.value = customer.id
-  editForm.value = {
-    name: customer.name,
-    email: customer.email,
-    phone: customer.phone,
-    address: customer.address
-  }
-  showEditModal.value = true
-}
-
 const updateCustomer = async () => {
   if (!editingCustomerId.value) return
 
