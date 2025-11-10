@@ -154,10 +154,6 @@
               <span class="stat-label">Total Units</span>
               <span class="stat-value">{{ assignedUnits.length }}</span>
             </div>
-            <div class="stat-item">
-              <span class="stat-label">Member Since</span>
-              <span class="stat-value">{{ customer?.createdAt || 'N/A' }}</span>
-            </div>
           </div>
         </div>
       </div>

@@ -20,6 +20,13 @@
       "phone": "123456789",
       "email": "test@example.com",
       "address": "Erbil, Iraq"
+    },
+    {
+      "id": "728c",
+      "name": "TEST",
+      "email": "TEST@gmail.com",
+      "phone": "123123123",
+      "address": "TEST"
     }
   ],
   "buildings": [
