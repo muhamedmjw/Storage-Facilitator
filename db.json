@@ -45,28 +45,32 @@
   ],
   "storageUnits": [
     {
-      "id": "1",
       "unitNumber": "A-1",
-      "size": "10x10",
-      "monthlyRate": 150,
+      "size": "20 * 20",
+      "monthlyRate": 250,
       "status": "occupied",
-      "customer": "AAA BBB"
+      "building": "A",
+      "accessInstructions": "31",
+      "description": "",
+      "customer": "TEST",
+      "email": "TEST@gmail.com",
+      "phone": "123123123",
+      "address": "TEST",
+      "id": "1"
     },
     {
-      "id": "2",
       "unitNumber": "B-2",
-      "size": "5x10",
-      "monthlyRate": 95,
-      "status": "available",
-      "customer": ""
-    },
-    {
-      "id": "3",
-      "unitNumber": "C-3",
-      "size": "15x15",
-      "monthlyRate": 200,
-      "status": "overdue",
-      "customer": "Test User"
+      "size": "5 * 10",
+      "monthlyRate": 100,
+      "status": "occupied",
+      "building": "B",
+      "accessInstructions": "23",
+      "description": "",
+      "customer": "AAA BBB",
+      "email": "test@example.com",
+      "phone": "123456789",
+      "address": "Erbil, Iraq",
+      "id": "2"
     }
   ],
   "rentals": [

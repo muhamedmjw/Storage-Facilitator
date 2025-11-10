@@ -25,7 +25,10 @@
       </router-link>
 
       <div class="header-actions">
-        <button class="action-btn secondary">
+        <button 
+          class="action-btn secondary"
+          @click="openEditModal"
+        >
           <svg
             width="18"
             height="18"
@@ -38,6 +41,25 @@
             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
           </svg>
           Edit Unit
+        </button>
+        <button 
+          class="action-btn danger"
+          @click="handleDeleteUnit"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+          </svg>
+          Delete Unit
         </button>
       </div>
     </div>
@@ -108,24 +130,45 @@
         <!-- Customer Info -->
         <div class="customer-section">
           <div class="section-header">
-            <h3 class="section-title">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
+            <div class="section-header-content">
+              <h3 class="section-title">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle
+                    cx="12"
+                    cy="7"
+                    r="4"
+                  />
+                </svg>
+                Customer Information
+              </h3>
+              <button 
+                class="assign-customer-btn"
+                @click="openAssignCustomerModal"
               >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle
-                  cx="12"
-                  cy="7"
-                  r="4"
-                />
-              </svg>
-              Customer Information
-            </h3>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="8.5" cy="7" r="4" />
+                  <line x1="20" y1="8" x2="20" y2="14" />
+                  <line x1="23" y1="11" x2="17" y2="11" />
+                </svg>
+                Assign Customer
+              </button>
+            </div>
           </div>
 
           <div class="customer-card">
@@ -146,15 +189,15 @@
             <div class="customer-details-grid">
               <div class="detail-item">
                 <span class="detail-label">Email</span>
-                <span class="detail-value">{{ unit?.email || 'test.user@gmail.com' }}</span>
+                <span class="detail-value">{{ unit?.email || 'N/A' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Phone</span>
-                <span class="detail-value">{{ unit?.phone || '(+964) 000 000 0000' }}</span>
+                <span class="detail-value">{{ unit?.phone || 'N/A' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Address</span>
-                <span class="detail-value">{{ unit?.address || 'Unknown' }}</span>
+                <span class="detail-value">{{ unit?.address || 'N/A' }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Customer Since</span>
@@ -334,24 +377,250 @@
         </div>
       </div>
     </div>
+
+    <!-- Edit Unit Modal -->
+    <div v-if="showEditModal" class="modal-overlay" @click="closeEditModal">
+      <div class="modal-container" @click.stop>
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Storage Unit</h2>
+          <button class="modal-close" @click="closeEditModal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <form @submit.prevent="handleUpdateUnit" class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Unit Number</label>
+              <input
+                v-model="editForm.unitNumber"
+                type="text"
+                class="form-input"
+                placeholder="e.g., A-101"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Size</label>
+              <input
+                v-model="editForm.size"
+                type="text"
+                class="form-input"
+                placeholder="e.g., 5x10 ft"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Monthly Rate ($)</label>
+              <input
+                v-model="editForm.monthlyRate"
+                type="number"
+                class="form-input"
+                placeholder="0.00"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select v-model="editForm.status" class="form-input">
+                <option value="available">Available</option>
+                <option value="occupied">Occupied</option>
+                <option value="overdue">Overdue</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Building</label>
+              <input
+                v-model="editForm.building"
+                type="text"
+                class="form-input"
+                placeholder="e.g., Building A"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Access Instructions</label>
+              <input
+                v-model="editForm.accessInstructions"
+                type="text"
+                class="form-input"
+                placeholder="e.g., Gate code: 1234"
+              />
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Description</label>
+            <textarea
+              v-model="editForm.description"
+              class="form-textarea"
+              rows="3"
+              placeholder="Additional details..."
+            ></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" @click="closeEditModal">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Assign Customer Modal -->
+    <div v-if="showAssignCustomerModal" class="modal-overlay" @click="closeAssignCustomerModal">
+      <div class="modal-container" @click.stop>
+        <div class="modal-header">
+          <h2 class="modal-title">Assign Customer</h2>
+          <button class="modal-close" @click="closeAssignCustomerModal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="search-box-modal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input
+              v-model="customerSearch"
+              type="text"
+              placeholder="Search customers by name or email..."
+              class="search-input-modal"
+            />
+          </div>
+
+          <div class="customer-list">
+            <div
+              v-for="customer in filteredCustomers"
+              :key="customer.id"
+              class="customer-item"
+              @click="selectCustomer(customer)"
+            >
+              <div class="customer-checkbox">
+                <input
+                  type="radio"
+                  :id="`customer-${customer.id}`"
+                  :value="customer.id"
+                  v-model="selectedCustomerId"
+                  class="checkbox-input"
+                />
+                <label :for="`customer-${customer.id}`" class="checkbox-label"></label>
+              </div>
+              <div class="customer-avatar">
+                {{ (customer.name || 'NA').slice(0, 2).toUpperCase() }}
+              </div>
+              <div class="customer-details">
+                <div class="customer-name-text">{{ customer.name }}</div>
+                <div class="customer-email">{{ customer.email }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="filteredCustomers.length === 0" class="empty-customers">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <p>No customers found</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" @click="closeAssignCustomerModal">
+              Cancel
+            </button>
+            <button 
+              type="button" 
+              class="btn-primary" 
+              @click="handleAssignCustomer"
+              :disabled="!selectedCustomerId"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Assign Customer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 import type { AxiosResponse } from 'axios'
 import { storageService } from '@/services/storageService'
 import type { StorageUnit } from '@/services/storageService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 
+// Define Customer type to match your db.json
+interface Customer {
+  id: string
+  name: string
+  email: string
+  phone: string
+  address: string
+  createdAt?: string
+}
+
 const route = useRoute()
+const router = useRouter()
 const unit = ref<StorageUnit | null>(null)
 const _error = ref<string | null>(null)
 const { showToast } = useToast()
 const { startLoading, stopLoading } = useLoading()
+
+// Edit Modal
+const showEditModal = ref(false)
+const editForm = ref({
+  unitNumber: '',
+  size: '',
+  monthlyRate: 0,
+  status: 'available' as 'available' | 'occupied' | 'overdue',
+  building: '',
+  accessInstructions: '',
+  description: ''
+})
+
+// Assign Customer Modal
+const showAssignCustomerModal = ref(false)
+const customers = ref<Customer[]>([])
+const customerSearch = ref('')
+const selectedCustomerId = ref<string | null>(null)
+
+const filteredCustomers = computed(() => {
+  if (!customerSearch.value) {
+    return customers.value
+  }
+  const search = customerSearch.value.toLowerCase()
+  return customers.value.filter(customer =>
+    customer.name.toLowerCase().includes(search) ||
+    customer.email.toLowerCase().includes(search)
+  )
+})
 
 onMounted(async () => {
   startLoading()
@@ -367,6 +636,161 @@ onMounted(async () => {
     stopLoading()
   }
 })
+
+// Load customers from db.json via API
+const loadCustomers = async () => {
+  try {
+    const response = await axios.get('http://localhost:4000/customers')
+    customers.value = response.data
+  } catch (error) {
+    console.error('Failed to load customers:', error)
+    showToast('Failed to load customers.', 'error')
+    customers.value = []
+  }
+}
+
+// Edit Modal Functions
+const openEditModal = () => {
+  if (unit.value) {
+    editForm.value = {
+      unitNumber: unit.value.unitNumber || '',
+      size: unit.value.size || '',
+      monthlyRate: unit.value.monthlyRate || 0,
+      status: unit.value.status || 'available',
+      building: unit.value.building || '',
+      accessInstructions: unit.value.accessInstructions || '',
+      description: unit.value.description || ''
+    }
+  }
+  showEditModal.value = true
+}
+
+const closeEditModal = () => {
+  showEditModal.value = false
+}
+
+const handleUpdateUnit = async () => {
+  if (!unit.value?.id) {
+    showToast('Cannot update unit: Invalid unit ID', 'error')
+    return
+  }
+
+  startLoading()
+  try {
+    // Preserve existing customer data when updating unit
+    const payload: Partial<StorageUnit> = {
+      unitNumber: editForm.value.unitNumber,
+      size: editForm.value.size,
+      monthlyRate: Number(editForm.value.monthlyRate),
+      status: editForm.value.status,
+      building: editForm.value.building,
+      accessInstructions: editForm.value.accessInstructions,
+      description: editForm.value.description,
+      // Preserve customer information
+      customer: unit.value.customer,
+      email: unit.value.email,
+      phone: unit.value.phone,
+      address: unit.value.address
+    }
+
+    await storageService.updateUnit(unit.value.id, payload)
+    
+    // Reload unit data
+    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(unit.value.id.toString())
+    unit.value = res.data
+    
+    showToast('Storage unit updated successfully!', 'success')
+    closeEditModal()
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to update storage unit.'
+    showToast(errorMessage, 'error')
+  } finally {
+    stopLoading()
+  }
+}
+
+// Assign Customer Modal Functions
+const openAssignCustomerModal = async () => {
+  await loadCustomers()
+  showAssignCustomerModal.value = true
+}
+
+const closeAssignCustomerModal = () => {
+  showAssignCustomerModal.value = false
+  customerSearch.value = ''
+  selectedCustomerId.value = null
+}
+
+const selectCustomer = (customer: Customer) => {
+  selectedCustomerId.value = customer.id
+}
+
+const handleAssignCustomer = async () => {
+  if (!selectedCustomerId.value || !unit.value?.id) {
+    showToast('Please select a customer', 'error')
+    return
+  }
+
+  startLoading()
+  try {
+    const selectedCustomer = customers.value.find(c => c.id === selectedCustomerId.value)
+    
+    if (!selectedCustomer) {
+      showToast('Customer not found', 'error')
+      return
+    }
+
+    // Update ONLY the customer fields, preserving all other unit data
+    const payload: Partial<StorageUnit> = {
+      customer: selectedCustomer.name,
+      email: selectedCustomer.email,
+      phone: selectedCustomer.phone || '',
+      address: selectedCustomer.address || '',
+      status: 'occupied'
+    }
+
+    // Use PATCH instead of PUT to only update specified fields
+    await axios.patch(`http://localhost:4000/storageUnits/${unit.value.id}`, payload)
+    
+    // Reload unit data
+    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(unit.value.id.toString())
+    unit.value = res.data
+    
+    showToast(`Customer ${selectedCustomer.name} assigned successfully!`, 'success')
+    closeAssignCustomerModal()
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to assign customer.'
+    showToast(errorMessage, 'error')
+  } finally {
+    stopLoading()
+  }
+}
+
+// Handle Delete Unit
+const handleDeleteUnit = async () => {
+  if (!unit.value?.id) {
+    showToast('Cannot delete unit: Invalid unit ID', 'error')
+    return
+  }
+
+  const confirmed = confirm(`Are you sure you want to delete unit ${unit.value.unitNumber}? This action cannot be undone.`)
+  
+  if (!confirmed) {
+    return
+  }
+
+  startLoading()
+  try {
+    await storageService.deleteUnit(unit.value.id)
+    showToast('Storage unit deleted successfully!', 'success')
+    router.push('/storages')
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to delete storage unit.'
+    showToast(errorMessage, 'error')
+  } finally {
+    stopLoading()
+  }
+}
 </script>
 
 
@@ -429,6 +853,19 @@ onMounted(async () => {
   transform: translateY(-2px);
 }
 
+.action-btn.danger {
+  background: white;
+  border: 2px solid #fca5a5;
+  color: #dc2626;
+}
+
+.action-btn.danger:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: white;
+  transform: translateY(-2px);
+}
+
 .unit-detail-content {
   display: grid;
   grid-template-columns: 1fr 400px;
@@ -474,6 +911,16 @@ onMounted(async () => {
   color: #16a34a;
 }
 
+.status-badge.available {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.status-badge.overdue {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
 .unit-specs {
   display: flex;
   flex-wrap: wrap;
@@ -507,6 +954,12 @@ onMounted(async () => {
   border-bottom: 2px solid #f5f5f4;
 }
 
+.section-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .section-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -519,6 +972,27 @@ onMounted(async () => {
 
 .section-title svg {
   color: #002e5f;
+}
+
+.assign-customer-btn {
+  padding: 0.625rem 1rem;
+  background: #002e5f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.assign-customer-btn:hover {
+  background: #001a3d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 46, 95, 0.3);
 }
 
 .customer-card {
@@ -643,45 +1117,6 @@ onMounted(async () => {
   color: #16a34a;
 }
 
-.payment-history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.payment-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: linear-gradient(180deg, #fafaf9 0%, #ffffff 100%);
-  border: 1px solid #e7e5e4;
-  border-radius: 10px;
-}
-
-.payment-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.payment-date {
-  font-weight: 600;
-  color: #292524;
-  font-size: 0.9375rem;
-}
-
-.payment-method {
-  color: #78716c;
-  font-size: 0.875rem;
-}
-
-.payment-amount {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #16a34a;
-}
-
 .unit-sidebar {
   display: flex;
   flex-direction: column;
@@ -780,26 +1215,6 @@ onMounted(async () => {
   gap: 0.75rem;
 }
 
-.activity-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.activity-icon.paid {
-  background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
-}
-
-.activity-icon.info {
-  background: rgba(8, 145, 178, 0.1);
-  color: #0891b2;
-}
-
 .activity-content {
   flex: 1;
 }
@@ -819,6 +1234,315 @@ onMounted(async () => {
 .activity-time {
   color: #a8a29e;
   font-size: 0.75rem;
+}
+
+.error-text {
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-container {
+  background: white;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #f5f5f4;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #292524;
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #78716c;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f5f5f4;
+  color: #292524;
+}
+
+.modal-body {
+  padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #292524;
+  font-size: 0.875rem;
+}
+
+.form-input,
+.form-textarea {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  color: #292524;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #002e5f;
+  box-shadow: 0 0 0 3px rgba(0, 46, 95, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f5f5f4;
+}
+
+.btn-secondary,
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background: white;
+  border: 2px solid #e7e5e4;
+  color: #78716c;
+}
+
+.btn-secondary:hover {
+  border-color: #d6d3d1;
+  background: #fafaf9;
+}
+
+.btn-primary {
+  background: #002e5f;
+  border: 2px solid #002e5f;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #001a3d;
+  border-color: #001a3d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 46, 95, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Customer List Styles */
+.search-box-modal {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #f5f5f4;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.search-box-modal svg {
+  color: #78716c;
+  flex-shrink: 0;
+}
+
+.search-input-modal {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.9375rem;
+  color: #292524;
+}
+
+.search-input-modal::placeholder {
+  color: #a8a29e;
+}
+
+.customer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+}
+
+.customer-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fafaf9;
+  border: 2px solid #e7e5e4;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.customer-item:hover {
+  border-color: #002e5f;
+  background: #f5f5f4;
+}
+
+.customer-checkbox {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #002e5f;
+}
+
+.customer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.customer-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.customer-name-text {
+  font-weight: 600;
+  color: #292524;
+  font-size: 0.9375rem;
+  margin-bottom: 0.25rem;
+}
+
+.customer-email {
+  color: #78716c;
+  font-size: 0.875rem;
+}
+
+.empty-customers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #78716c;
+}
+
+.empty-customers svg {
+  margin-bottom: 1rem;
+  color: #d6d3d1;
+}
+
+.empty-customers p {
+  margin: 0;
+  font-size: 0.9375rem;
 }
 
 @media (max-width: 1024px) {
@@ -842,6 +1566,16 @@ onMounted(async () => {
     gap: 1rem;
   }
 
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .unit-title-section {
     padding: 1.5rem;
   }
@@ -853,6 +1587,41 @@ onMounted(async () => {
   .customer-details-grid,
   .rental-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .assign-customer-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-container {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>

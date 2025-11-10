@@ -3,7 +3,7 @@
     <div class="page-header">
       <div class="header-left">
         <router-link
-          to="/projects"
+          to="/storages"
           class="back-link"
         >
           <svg
