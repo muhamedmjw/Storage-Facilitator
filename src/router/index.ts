@@ -25,8 +25,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/customers',
     name: 'customers',
     component: () => import('@/views/CustomersView.vue')
+  },
+  {
+    path: '/customers/:id',
+    name: 'customer-details',
+    component: () => import('@/views/CustomerDetailView.vue')
   }
-
 ]
 
 const router = createRouter({

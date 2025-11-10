@@ -36,8 +36,9 @@
       "total_units": 5
     }
   ],
-  "storageUnits": [{
-      "id": 1,
+  "storageUnits": [
+    {
+      "id": "1",
       "unitNumber": "A-1",
       "size": "10x10",
       "monthlyRate": 150,
@@ -45,7 +46,7 @@
       "customer": "AAA BBB"
     },
     {
-      "id": 2,
+      "id": "2",
       "unitNumber": "B-2",
       "size": "5x10",
       "monthlyRate": 95,
@@ -53,14 +54,13 @@
       "customer": ""
     },
     {
-      "id": 3,
+      "id": "3",
       "unitNumber": "C-3",
       "size": "15x15",
       "monthlyRate": 200,
       "status": "overdue",
       "customer": "Test User"
     }
-  
   ],
   "rentals": [
     {

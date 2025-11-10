@@ -71,7 +71,7 @@
         </div>
 
         <div class="customer-card-footer">
-          <button class="action-btn secondary" @click="viewCustomer(customer)">
+          <button class="action-btn secondary" @click="viewCustomer(customer.id)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx="12" cy="12" r="3" />
@@ -133,12 +133,52 @@
         </form>
       </div>
     </div>
+
+    <!-- Edit Customer Modal -->
+    <div v-if="showEditModal" class="modal-overlay" @click="showEditModal = false">
+      <div class="modal-content" @click.stop>
+        <div class="modal-header">
+          <h2>Edit Customer</h2>
+          <button class="close-btn" @click="showEditModal = false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <form @submit.prevent="updateCustomer" class="modal-form">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input v-model="editForm.name" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input v-model="editForm.email" type="email" required>
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input v-model="editForm.phone" type="tel" required>
+          </div>
+          <div class="form-group">
+            <label>Address *</label>
+            <input v-model="editForm.address" type="text" required>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" @click="showEditModal = false">Cancel</button>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useToast } from '@/composables/useToast'
+import { useLoading } from '@/composables/useLoading'
 
 interface Customer {
   id: string
@@ -148,9 +188,16 @@ interface Customer {
   address: string
 }
 
+const router = useRouter()
+const { showToast } = useToast()
+const { startLoading, stopLoading } = useLoading()
+
 const customers = ref<Customer[]>([])
 const search = ref('')
 const showAddModal = ref(false)
+const showEditModal = ref(false)
+const editingCustomerId = ref<string | null>(null)
+
 const newCustomer = ref({
   name: '',
   email: '',
@@ -158,14 +205,30 @@ const newCustomer = ref({
   address: ''
 })
 
+const editForm = ref({
+  name: '',
+  email: '',
+  phone: '',
+  address: ''
+})
+
 onMounted(async () => {
+  await loadCustomers()
+})
+
+const loadCustomers = async () => {
+  startLoading()
   try {
     const response = await axios.get('http://localhost:4000/customers')
     customers.value = response.data
+    showToast('Customers loaded successfully!', 'success')
   } catch (error) {
     console.error('Failed to load customers:', error)
+    showToast('Failed to load customers.', 'error')
+  } finally {
+    stopLoading()
   }
-})
+}
 
 const filteredCustomers = computed(() => {
   const term = search.value.toLowerCase()
@@ -177,24 +240,61 @@ const filteredCustomers = computed(() => {
 })
 
 const addCustomer = async () => {
+  startLoading()
   try {
     const response = await axios.post('http://localhost:4000/customers', newCustomer.value)
     customers.value.push(response.data)
     showAddModal.value = false
     newCustomer.value = { name: '', email: '', phone: '', address: '' }
+    showToast('Customer added successfully!', 'success')
   } catch (error) {
     console.error('Failed to add customer:', error)
+    showToast('Failed to add customer.', 'error')
+  } finally {
+    stopLoading()
   }
 }
 
-const viewCustomer = (customer: Customer) => {
-  console.log('View customer:', customer)
-  // Navigate to customer detail page
+const viewCustomer = (customerId: string) => {
+  router.push(`/customers/${customerId}`)
 }
 
 const editCustomer = (customer: Customer) => {
-  console.log('Edit customer:', customer)
-  // Open edit modal
+  editingCustomerId.value = customer.id
+  editForm.value = {
+    name: customer.name,
+    email: customer.email,
+    phone: customer.phone,
+    address: customer.address
+  }
+  showEditModal.value = true
+}
+
+const updateCustomer = async () => {
+  if (!editingCustomerId.value) return
+
+  startLoading()
+  try {
+    const response = await axios.put(
+      `http://localhost:4000/customers/${editingCustomerId.value}`,
+      editForm.value
+    )
+    
+    // Update the customer in the list
+    const index = customers.value.findIndex(c => c.id === editingCustomerId.value)
+    if (index !== -1) {
+      customers.value[index] = response.data
+    }
+
+    showEditModal.value = false
+    editingCustomerId.value = null
+    showToast('Customer updated successfully!', 'success')
+  } catch (error) {
+    console.error('Failed to update customer:', error)
+    showToast('Failed to update customer.', 'error')
+  } finally {
+    stopLoading()
+  }
 }
 </script>
 
