@@ -15,18 +15,11 @@
   ],
   "customers": [
     {
-      "id": "1",
-      "name": "AAA BBB",
-      "phone": "123456789",
-      "email": "test@example.com",
-      "address": "Erbil, Iraq"
-    },
-    {
-      "id": "728c",
-      "name": "TEST",
-      "email": "TEST@gmail.com",
-      "phone": "123123123",
-      "address": "TEST"
+      "name": "First Last",
+      "email": "First_Last@gmail.com",
+      "phone": "07501231234",
+      "address": "TEST",
+      "id": "b4ab"
     }
   ],
   "buildings": [
@@ -46,31 +39,20 @@
   "storageUnits": [
     {
       "unitNumber": "A-1",
-      "size": "20 * 20",
-      "monthlyRate": 250,
+      "size": "5x5",
+      "monthlyRate": 150,
       "status": "occupied",
-      "building": "A",
-      "accessInstructions": "31",
+      "paymentStatus": "paid",
+      "building": "Building A",
+      "accessInstructions": "Alpha One",
       "description": "",
-      "customer": "TEST",
-      "email": "TEST@gmail.com",
-      "phone": "123123123",
+      "customer": "First Last",
+      "email": "First_Last@gmail.com",
+      "phone": "07501231234",
       "address": "TEST",
-      "id": "1"
-    },
-    {
-      "unitNumber": "B-2",
-      "size": "5 * 10",
-      "monthlyRate": 100,
-      "status": "occupied",
-      "building": "B",
-      "accessInstructions": "23",
-      "description": "",
-      "customer": "AAA BBB",
-      "email": "test@example.com",
-      "phone": "123456789",
-      "address": "Erbil, Iraq",
-      "id": "2"
+      "startDate": "2025-11-10",
+      "nextPayment": "2025-12-10",
+      "id": "f10b"
     }
   ],
   "rentals": [

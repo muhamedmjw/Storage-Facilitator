@@ -268,9 +268,9 @@
                 <span class="rental-label">Payment Status</span>
                 <span
                   class="payment-badge"
-                  :class="unit?.status || 'available'"
+                  :class="unit?.paymentStatus || 'available'"
                 >
-                  {{ unit?.status || 'available' }}
+                  {{ unit?.paymentStatus || unit?.status || 'available' }}
                 </span>
               </div>
             </div>
@@ -280,73 +280,6 @@
 
       <!-- Sidebar (Notes + Activity Log) -->
       <div class="unit-sidebar">
-        <div class="sidebar-card">
-          <h3 class="sidebar-title">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line
-                x1="16"
-                y1="13"
-                x2="8"
-                y2="13"
-              />
-              <line
-                x1="16"
-                y1="17"
-                x2="8"
-                y2="17"
-              />
-              <polyline points="10 9 9 9 8 9" />
-            </svg>
-            Notes
-          </h3>
-
-          <div class="notes-list">
-            <div class="note-item">
-              <div class="note-header">
-                <span class="note-author">User 1</span>
-                <span class="note-date">Oct 15, 2025</span>
-              </div>
-              <p class="note-text">
-                This section can later display notes fetched from an endpoint.
-              </p>
-            </div>
-          </div>
-
-          <button class="add-note-btn">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-              />
-            </svg>
-            Add Note
-          </button>
-        </div>
-
         <div class="sidebar-card">
           <h3 class="sidebar-title">
             <svg
@@ -436,6 +369,15 @@
             </div>
 
             <div class="form-group">
+              <label class="form-label">Payment Status</label>
+              <select v-model="editForm.paymentStatus" class="form-input">
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="overdue">Overdue</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label class="form-label">Building</label>
               <input
                 v-model="editForm.building"
@@ -481,11 +423,14 @@
       </div>
     </div>
 
-    <!-- Assign Customer Modal -->
-    <div v-if="showAssignCustomerModal" class="modal-overlay" @click="closeAssignCustomerModal">
+    <!-- Assign Customer Modal - Step 1/2 -->
+    <div v-if="showAssignCustomerModal && assignmentStep === 1" class="modal-overlay" @click="closeAssignCustomerModal">
       <div class="modal-container" @click.stop>
         <div class="modal-header">
-          <h2 class="modal-title">Assign Customer</h2>
+          <div>
+            <h2 class="modal-title">Assign Customer</h2>
+            <p class="modal-subtitle">Step 1/2 - Select Customer</p>
+          </div>
           <button class="modal-close" @click="closeAssignCustomerModal">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -550,16 +495,85 @@
             <button 
               type="button" 
               class="btn-primary" 
-              @click="handleAssignCustomer"
+              @click="goToStep2"
               :disabled="!selectedCustomerId"
             >
+              Next
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assign Customer Modal - Step 2/2 -->
+    <div v-if="showAssignCustomerModal && assignmentStep === 2" class="modal-overlay" @click="closeAssignCustomerModal">
+      <div class="modal-container" @click.stop>
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title">Assign Customer</h2>
+            <p class="modal-subtitle">Step 2/2 - Rental Details</p>
+          </div>
+          <button class="modal-close" @click="closeAssignCustomerModal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <form @submit.prevent="handleAssignCustomer" class="modal-body">
+          <div class="selected-customer-info">
+            <div class="customer-avatar">
+              {{ (selectedCustomerData?.name || 'NA').slice(0, 2).toUpperCase() }}
+            </div>
+            <div>
+              <div class="customer-name-text">{{ selectedCustomerData?.name }}</div>
+              <div class="customer-email">{{ selectedCustomerData?.email }}</div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Start Date *</label>
+              <input
+                v-model="rentalDetails.startDate"
+                type="date"
+                class="form-input"
+                required
+                @change="calculateNextPayment"
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Next Payment Due</label>
+              <input
+                v-model="rentalDetails.nextPayment"
+                type="date"
+                class="form-input"
+                readonly
+              />
+              <span class="form-hint">Automatically calculated as 1 month from start date</span>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" @click="goToStep1">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              Back
+            </button>
+            <button type="submit" class="btn-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
               Assign Customer
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -600,6 +614,7 @@ const editForm = ref({
   size: '',
   monthlyRate: 0,
   status: 'available' as 'available' | 'occupied' | 'overdue',
+  paymentStatus: 'available' as string,
   building: '',
   accessInstructions: '',
   description: ''
@@ -607,9 +622,15 @@ const editForm = ref({
 
 // Assign Customer Modal
 const showAssignCustomerModal = ref(false)
+const assignmentStep = ref(1)
 const customers = ref<Customer[]>([])
 const customerSearch = ref('')
 const selectedCustomerId = ref<string | null>(null)
+const selectedCustomerData = ref<Customer | null>(null)
+const rentalDetails = ref({
+  startDate: '',
+  nextPayment: ''
+})
 
 const filteredCustomers = computed(() => {
   if (!customerSearch.value) {
@@ -649,6 +670,16 @@ const loadCustomers = async () => {
   }
 }
 
+// Calculate next payment date (1 month from start date)
+const calculateNextPayment = () => {
+  if (rentalDetails.value.startDate) {
+    const startDate = new Date(rentalDetails.value.startDate)
+    const nextPayment = new Date(startDate)
+    nextPayment.setMonth(nextPayment.getMonth() + 1)
+    rentalDetails.value.nextPayment = nextPayment.toISOString().split('T')[0]
+  }
+}
+
 // Edit Modal Functions
 const openEditModal = () => {
   if (unit.value) {
@@ -657,6 +688,7 @@ const openEditModal = () => {
       size: unit.value.size || '',
       monthlyRate: unit.value.monthlyRate || 0,
       status: unit.value.status || 'available',
+      paymentStatus: unit.value.paymentStatus || unit.value.status || 'available',
       building: unit.value.building || '',
       accessInstructions: unit.value.accessInstructions || '',
       description: unit.value.description || ''
@@ -683,6 +715,7 @@ const handleUpdateUnit = async () => {
       size: editForm.value.size,
       monthlyRate: Number(editForm.value.monthlyRate),
       status: editForm.value.status,
+      paymentStatus: editForm.value.paymentStatus,
       building: editForm.value.building,
       accessInstructions: editForm.value.accessInstructions,
       description: editForm.value.description,
@@ -690,7 +723,9 @@ const handleUpdateUnit = async () => {
       customer: unit.value.customer,
       email: unit.value.email,
       phone: unit.value.phone,
-      address: unit.value.address
+      address: unit.value.address,
+      startDate: unit.value.startDate,
+      nextPayment: unit.value.nextPayment
     }
 
     await storageService.updateUnit(unit.value.id, payload)
@@ -712,22 +747,54 @@ const handleUpdateUnit = async () => {
 // Assign Customer Modal Functions
 const openAssignCustomerModal = async () => {
   await loadCustomers()
+  assignmentStep.value = 1
   showAssignCustomerModal.value = true
 }
 
 const closeAssignCustomerModal = () => {
   showAssignCustomerModal.value = false
+  assignmentStep.value = 1
   customerSearch.value = ''
   selectedCustomerId.value = null
+  selectedCustomerData.value = null
+  rentalDetails.value = {
+    startDate: '',
+    nextPayment: ''
+  }
 }
 
 const selectCustomer = (customer: Customer) => {
   selectedCustomerId.value = customer.id
 }
 
+const goToStep2 = () => {
+  if (!selectedCustomerId.value) {
+    showToast('Please select a customer', 'error')
+    return
+  }
+  
+  selectedCustomerData.value = customers.value.find(c => c.id === selectedCustomerId.value) || null
+  
+  // Set default start date to today
+  const today = new Date()
+  rentalDetails.value.startDate = today.toISOString().split('T')[0]
+  calculateNextPayment()
+  
+  assignmentStep.value = 2
+}
+
+const goToStep1 = () => {
+  assignmentStep.value = 1
+}
+
 const handleAssignCustomer = async () => {
   if (!selectedCustomerId.value || !unit.value?.id) {
     showToast('Please select a customer', 'error')
+    return
+  }
+
+  if (!rentalDetails.value.startDate) {
+    showToast('Please select a start date', 'error')
     return
   }
 
@@ -740,13 +807,17 @@ const handleAssignCustomer = async () => {
       return
     }
 
-    // Update ONLY the customer fields, preserving all other unit data
+    // Update ONLY the customer and rental fields, preserving all other unit data
     const payload: Partial<StorageUnit> = {
       customer: selectedCustomer.name,
       email: selectedCustomer.email,
       phone: selectedCustomer.phone || '',
       address: selectedCustomer.address || '',
-      status: 'occupied'
+      status: 'occupied',
+      paymentStatus: 'paid',
+      startDate: rentalDetails.value.startDate,
+      nextPayment: rentalDetails.value.nextPayment,
+      createdAt: new Date().toISOString().split('T')[0]
     }
 
     // Use PATCH instead of PUT to only update specified fields
@@ -1110,11 +1181,27 @@ const handleDeleteUnit = async () => {
   font-size: 0.75rem;
   font-weight: 600;
   width: fit-content;
+  text-transform: capitalize;
 }
 
 .payment-badge.paid {
   background: rgba(22, 163, 74, 0.1);
   color: #16a34a;
+}
+
+.payment-badge.pending {
+  background: rgba(251, 191, 36, 0.1);
+  color: #f59e0b;
+}
+
+.payment-badge.overdue {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.payment-badge.available {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
 }
 
 .unit-sidebar {
@@ -1308,6 +1395,13 @@ const handleDeleteUnit = async () => {
   margin: 0;
 }
 
+.modal-subtitle {
+  font-size: 0.875rem;
+  color: #78716c;
+  margin: 0.25rem 0 0;
+  font-weight: 500;
+}
+
 .modal-close {
   background: transparent;
   border: none;
@@ -1355,6 +1449,12 @@ const handleDeleteUnit = async () => {
   font-size: 0.875rem;
 }
 
+.form-hint {
+  font-size: 0.75rem;
+  color: #78716c;
+  font-style: italic;
+}
+
 .form-input,
 .form-textarea {
   padding: 0.75rem 1rem;
@@ -1371,6 +1471,11 @@ const handleDeleteUnit = async () => {
   outline: none;
   border-color: #002e5f;
   box-shadow: 0 0 0 3px rgba(0, 46, 95, 0.1);
+}
+
+.form-input:read-only {
+  background: #f5f5f4;
+  cursor: pointer;
 }
 
 .form-textarea {
@@ -1424,7 +1529,7 @@ const handleDeleteUnit = async () => {
 
 .btn-primary:disabled {
   opacity: 0.5;
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 /* Customer List Styles */
@@ -1543,6 +1648,18 @@ const handleDeleteUnit = async () => {
 .empty-customers p {
   margin: 0;
   font-size: 0.9375rem;
+}
+
+/* Selected Customer Info in Step 2 */
+.selected-customer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid #002e5f;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
 }
 
 @media (max-width: 1024px) {
