@@ -13,7 +13,7 @@ export interface StorageUnit {
   nextPayment?: string
   accessInstructions?: string
   description?: string
-  
+  paymentStatus?: string
   email?: string
   phone?: string
   address?: string
