@@ -204,25 +204,8 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
+import type { Customer, StorageUnit } from '@/types'
 
-interface Customer {
-  id: string
-  name: string
-  email: string
-  phone: string
-  address: string
-  createdAt?: string
-}
-
-interface StorageUnit {
-  id: number
-  unitNumber: string
-  size: string
-  status: string
-  monthlyRate: number
-  building?: string
-  customer?: string
-}
 
 const route = useRoute()
 const router = useRouter()

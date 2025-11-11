@@ -589,16 +589,10 @@ import { storageService } from '@/services/storageService'
 import type { StorageUnit } from '@/services/storageService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
+import type { Customer } from '@/types'
 
 // Define Customer type to match your db.json
-interface Customer {
-  id: string
-  name: string
-  email: string
-  phone: string
-  address: string
-  createdAt?: string
-}
+
 
 const route = useRoute()
 const router = useRouter()

@@ -6,7 +6,7 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
-  role: 'admin' | 'staff';
+  role: 'admin' | 'staff' | 'member'; 
 }
 
 // Customer
