@@ -858,12 +858,13 @@ const handleDeleteUnit = async () => {
 }
 </script>
 
-
 <style scoped>
 .unit-detail-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .unit-detail-header {
@@ -877,7 +878,7 @@ const handleDeleteUnit = async () => {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #002e5f;
+  color: var(--color-secondary);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.875rem;
@@ -885,7 +886,7 @@ const handleDeleteUnit = async () => {
 }
 
 .back-link:hover {
-  color: #002e5f;
+  color: var(--color-secondary);
   transform: translateX(-4px);
 }
 
@@ -907,27 +908,27 @@ const handleDeleteUnit = async () => {
 }
 
 .action-btn.secondary {
-  background: white;
-  border: 2px solid #e7e5e4;
-  color: #78716c;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-light);
 }
 
 .action-btn.secondary:hover {
-  border-color: #002e5f;
-  color: #002e5f;
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
   transform: translateY(-2px);
 }
 
 .action-btn.danger {
-  background: white;
-  border: 2px solid #fca5a5;
-  color: #dc2626;
+  background: var(--color-surface);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  color: var(--color-error);
 }
 
 .action-btn.danger:hover {
-  background: #dc2626;
-  border-color: #dc2626;
-  color: white;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
   transform: translateY(-2px);
 }
 
@@ -944,10 +945,10 @@ const handleDeleteUnit = async () => {
 }
 
 .unit-title-section {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .unit-header-row {
@@ -960,7 +961,7 @@ const handleDeleteUnit = async () => {
 .unit-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -972,18 +973,18 @@ const handleDeleteUnit = async () => {
 }
 
 .status-badge.occupied {
-  background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
+  background: var(--color-occupied-bg);
+  color: var(--color-occupied);
 }
 
 .status-badge.available {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: var(--color-available-bg);
+  color: var(--color-available);
 }
 
 .status-badge.overdue {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  background: var(--color-overdue-bg);
+  color: var(--color-overdue);
 }
 
 .unit-specs {
@@ -996,27 +997,27 @@ const handleDeleteUnit = async () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 0.9375rem;
 }
 
 .spec-item svg {
-  color: #002e5f;
+  color: var(--color-secondary);
 }
 
 .customer-section,
 .rental-section,
 .payment-history-section {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .section-header {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #f5f5f4;
+  border-bottom: 2px solid var(--color-border-light);
 }
 
 .section-header-content {
@@ -1028,7 +1029,7 @@ const handleDeleteUnit = async () => {
 .section-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
   display: flex;
   align-items: center;
@@ -1036,12 +1037,12 @@ const handleDeleteUnit = async () => {
 }
 
 .section-title svg {
-  color: #002e5f;
+  color: var(--color-secondary);
 }
 
 .assign-customer-btn {
   padding: 0.625rem 1rem;
-  background: #002e5f;
+  background: var(--gradient-primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -1052,17 +1053,17 @@ const handleDeleteUnit = async () => {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .assign-customer-btn:hover {
-  background: #001a3d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 46, 95, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .customer-card {
-  background: linear-gradient(180deg, #fafaf9 0%, #ffffff 100%);
-  border: 1px solid #e7e5e4;
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
 }
@@ -1073,14 +1074,14 @@ const handleDeleteUnit = async () => {
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .customer-avatar-large {
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
   display: flex;
   align-items: center;
@@ -1097,12 +1098,12 @@ const handleDeleteUnit = async () => {
 .customer-name {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0 0 0.25rem;
 }
 
 .customer-id {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 0.875rem;
   margin: 0;
 }
@@ -1121,7 +1122,7 @@ const handleDeleteUnit = async () => {
 
 .detail-label {
   font-size: 0.75rem;
-  color: #a8a29e;
+  color: var(--color-text-lighter);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1129,13 +1130,13 @@ const handleDeleteUnit = async () => {
 
 .detail-value {
   font-size: 0.9375rem;
-  color: #292524;
+  color: var(--color-text);
   font-weight: 500;
 }
 
 .rental-details-card {
-  background: linear-gradient(180deg, #fafaf9 0%, #ffffff 100%);
-  border: 1px solid #e7e5e4;
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
 }
@@ -1154,18 +1155,18 @@ const handleDeleteUnit = async () => {
 
 .rental-label {
   font-size: 0.875rem;
-  color: #78716c;
+  color: var(--color-text-light);
   font-weight: 500;
 }
 
 .rental-value {
   font-size: 1rem;
-  color: #292524;
+  color: var(--color-text);
   font-weight: 600;
 }
 
 .rental-value.price {
-  color: #002e5f;
+  color: var(--color-secondary);
   font-size: 1.5rem;
 }
 
@@ -1179,23 +1180,23 @@ const handleDeleteUnit = async () => {
 }
 
 .payment-badge.paid {
-  background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
+  background: var(--color-occupied-bg);
+  color: var(--color-occupied);
 }
 
 .payment-badge.pending {
-  background: rgba(251, 191, 36, 0.1);
-  color: #f59e0b;
+  background: var(--color-warning);
+  color: var(--color-text);
 }
 
 .payment-badge.overdue {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  background: var(--color-overdue-bg);
+  color: var(--color-overdue);
 }
 
 .payment-badge.available {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: var(--color-available-bg);
+  color: var(--color-available);
 }
 
 .unit-sidebar {
@@ -1205,16 +1206,16 @@ const handleDeleteUnit = async () => {
 }
 
 .sidebar-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebar-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0 0 1.25rem;
   display: flex;
   align-items: center;
@@ -1222,7 +1223,7 @@ const handleDeleteUnit = async () => {
 }
 
 .sidebar-title svg {
-  color: #002e5f;
+  color: var(--color-secondary);
 }
 
 .notes-list {
@@ -1233,7 +1234,7 @@ const handleDeleteUnit = async () => {
 }
 
 .note-item {
-  background: #fafaf9;
+  background: var(--color-surface-secondary);
   padding: 1rem;
   border-radius: 10px;
 }
@@ -1246,17 +1247,17 @@ const handleDeleteUnit = async () => {
 
 .note-author {
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   font-size: 0.875rem;
 }
 
 .note-date {
-  color: #a8a29e;
+  color: var(--color-text-lighter);
   font-size: 0.75rem;
 }
 
 .note-text {
-  color: #57534e;
+  color: var(--color-text-light);
   font-size: 0.875rem;
   line-height: 1.5;
   margin: 0;
@@ -1265,8 +1266,8 @@ const handleDeleteUnit = async () => {
 .add-note-btn {
   width: 100%;
   background: transparent;
-  border: 2px dashed #e7e5e4;
-  color: #6c6c78;
+  border: 2px dashed var(--color-border);
+  color: var(--color-text-light);
   padding: 0.75rem;
   border-radius: 10px;
   font-weight: 600;
@@ -1280,9 +1281,9 @@ const handleDeleteUnit = async () => {
 }
 
 .add-note-btn:hover {
-  border-color: #002e5f;
-  color: #002e5f;
-  background: rgba(37, 22, 249, 0.05);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  background: var(--color-hover);
 }
 
 .activity-list {
@@ -1301,57 +1302,36 @@ const handleDeleteUnit = async () => {
 }
 
 .activity-content p {
-  color: #57534e;
+  color: var(--color-text-light);
   font-size: 0.875rem;
   margin: 0 0 0.25rem;
   line-height: 1.5;
 }
 
 .activity-content strong {
-  color: #292524;
+  color: var(--color-text);
   font-weight: 600;
 }
 
 .activity-time {
-  color: #a8a29e;
+  color: var(--color-text-lighter);
   font-size: 0.75rem;
-}
-
-.error-text {
-  color: #dc2626;
-  background: #fee2e2;
-  padding: 1rem;
-  border-radius: 8px;
-  font-weight: 500;
 }
 
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .modal-container {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   max-width: 600px;
   width: 100%;
@@ -1359,19 +1339,7 @@ const handleDeleteUnit = async () => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-header {
@@ -1379,19 +1347,19 @@ const handleDeleteUnit = async () => {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  border-bottom: 2px solid #f5f5f4;
+  border-bottom: 2px solid var(--color-border-light);
 }
 
 .modal-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
 }
 
 .modal-subtitle {
   font-size: 0.875rem;
-  color: #78716c;
+  color: var(--color-text-light);
   margin: 0.25rem 0 0;
   font-weight: 500;
 }
@@ -1400,18 +1368,15 @@ const handleDeleteUnit = async () => {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #78716c;
+  color: var(--color-text-light);
   padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 8px;
   transition: all 0.2s;
 }
 
 .modal-close:hover {
-  background: #f5f5f4;
-  color: #292524;
+  background: var(--color-hover);
+  color: var(--color-text);
 }
 
 .modal-body {
@@ -1433,42 +1398,39 @@ const handleDeleteUnit = async () => {
   gap: 0.5rem;
 }
 
-.form-group.full-width {
-  grid-column: 1 / -1;
-}
-
 .form-label {
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   font-size: 0.875rem;
 }
 
 .form-hint {
   font-size: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-light);
   font-style: italic;
 }
 
 .form-input,
 .form-textarea {
   padding: 0.75rem 1rem;
-  border: 2px solid #e7e5e4;
+  border: 2px solid var(--color-input-border);
   border-radius: 10px;
   font-size: 0.9375rem;
-  color: #292524;
+  color: var(--color-text);
   transition: all 0.2s;
   font-family: inherit;
+  background: var(--color-input-bg);
 }
 
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #002e5f;
+  border-color: var(--color-secondary);
   box-shadow: 0 0 0 3px rgba(0, 46, 95, 0.1);
 }
 
 .form-input:read-only {
-  background: #f5f5f4;
+  background: var(--color-hover);
   cursor: pointer;
 }
 
@@ -1481,7 +1443,7 @@ const handleDeleteUnit = async () => {
   justify-content: flex-end;
   gap: 0.75rem;
   padding-top: 1.5rem;
-  border-top: 2px solid #f5f5f4;
+  border-top: 2px solid var(--color-border-light);
 }
 
 .btn-secondary,
@@ -1498,27 +1460,26 @@ const handleDeleteUnit = async () => {
 }
 
 .btn-secondary {
-  background: white;
-  border: 2px solid #e7e5e4;
-  color: #78716c;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-light);
 }
 
 .btn-secondary:hover {
-  border-color: #d6d3d1;
-  background: #fafaf9;
+  border-color: var(--color-border-light);
+  background: var(--color-surface-secondary);
 }
 
 .btn-primary {
-  background: #002e5f;
-  border: 2px solid #002e5f;
+  background: var(--gradient-primary);
+  border: 2px solid var(--color-secondary);
   color: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #001a3d;
-  border-color: #001a3d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 46, 95, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:disabled {
@@ -1532,13 +1493,13 @@ const handleDeleteUnit = async () => {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: #f5f5f4;
+  background: var(--color-surface-secondary);
   border-radius: 10px;
   margin-bottom: 1.5rem;
 }
 
 .search-box-modal svg {
-  color: #78716c;
+  color: var(--color-text-light);
   flex-shrink: 0;
 }
 
@@ -1548,11 +1509,11 @@ const handleDeleteUnit = async () => {
   border: none;
   outline: none;
   font-size: 0.9375rem;
-  color: #292524;
+  color: var(--color-text);
 }
 
 .search-input-modal::placeholder {
-  color: #a8a29e;
+  color: var(--color-text-lighter);
 }
 
 .customer-list {
@@ -1569,35 +1530,30 @@ const handleDeleteUnit = async () => {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: #fafaf9;
-  border: 2px solid #e7e5e4;
+  background: var(--gradient-surface);
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .customer-item:hover {
-  border-color: #002e5f;
-  background: #f5f5f4;
-}
-
-.customer-checkbox {
-  position: relative;
-  flex-shrink: 0;
+  border-color: var(--color-secondary);
+  background: var(--color-hover);
 }
 
 .checkbox-input {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #002e5f;
+  accent-color: var(--color-secondary);
 }
 
 .customer-avatar {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
   display: flex;
   align-items: center;
@@ -1614,13 +1570,13 @@ const handleDeleteUnit = async () => {
 
 .customer-name-text {
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   font-size: 0.9375rem;
   margin-bottom: 0.25rem;
 }
 
 .customer-email {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 0.875rem;
 }
 
@@ -1631,12 +1587,12 @@ const handleDeleteUnit = async () => {
   justify-content: center;
   padding: 3rem 1rem;
   text-align: center;
-  color: #78716c;
+  color: var(--color-text-light);
 }
 
 .empty-customers svg {
   margin-bottom: 1rem;
-  color: #d6d3d1;
+  color: var(--color-text-disabled);
 }
 
 .empty-customers p {
@@ -1644,14 +1600,13 @@ const handleDeleteUnit = async () => {
   font-size: 0.9375rem;
 }
 
-/* Selected Customer Info in Step 2 */
 .selected-customer-info {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border: 2px solid #002e5f;
+  background: var(--gradient-surface);
+  border: 2px solid var(--color-secondary);
   border-radius: 12px;
   margin-bottom: 1.5rem;
 }
@@ -1664,39 +1619,8 @@ const handleDeleteUnit = async () => {
   .unit-sidebar {
     order: -1;
   }
-}
 
-@media (max-width: 768px) {
-  .unit-detail-container {
-    padding: 1rem;
-  }
-
-  .unit-detail-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .header-actions {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .action-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .unit-title-section {
-    padding: 1.5rem;
-  }
-
-  .unit-title {
-    font-size: 1.5rem;
-  }
-
-  .customer-details-grid,
-  .rental-grid {
+  .contact-details-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1734,5 +1658,112 @@ const handleDeleteUnit = async () => {
     width: 100%;
     justify-content: center;
   }
+
+  .customer-avatar-large {
+    width: 60px;
+    height: 60px;
+    font-size: 1.25rem;
+  }
+
+  .customer-name-large {
+    font-size: 1.5rem;
+  }
+
+  .unit-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .search-input,
+  .form-input,
+  .form-textarea {
+    font-size: 0.875rem;
+  }
+
+  .unit-specs,
+  .rental-grid {
+    flex-direction: column;
+  }
+
+  .customer-list {
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .unit-detail-container {
+    padding: 1rem;
+  }
+
+  .unit-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .unit-title-section {
+    padding: 1.5rem;
+  }
+
+  .unit-title {
+    font-size: 1.25rem;
+  }
+
+  .unit-header-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .unit-specs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .customer-avatar-large {
+    width: 56px;
+    height: 56px;
+    font-size: 1.25rem;
+  }
+
+  .customer-name-large {
+    font-size: 1.25rem;
+  }
+
+  .customer-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search-input {
+    font-size: 0.875rem;
+  }
 }
 </style>
+
+ 
