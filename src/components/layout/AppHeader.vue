@@ -33,6 +33,45 @@
         </router-link>
       </div>
       <div class="header-actions">
+        <button 
+          class="theme-toggle-button" 
+          @click="toggleTheme"
+          :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        >
+          <!-- Sun icon for light mode -->
+          <svg
+            v-if="!isDark"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <!-- Moon icon for dark mode -->
+          <svg
+            v-else
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        
         <button class="profile-button">
           <div class="avatar">
             U
@@ -65,16 +104,25 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useThemeStore } from '@/stores/themeStore'
 
+const themeStore = useThemeStore()
+const isDark = computed(() => themeStore.isDark())
+
+const toggleTheme = () => {
+  themeStore.toggleTheme()
+}
 </script>
 
 <style scoped>
 .app-header {
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: var(--gradient-header);
+  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background 0.3s ease;
 }
 
 .header-content {
@@ -124,6 +172,44 @@
   align-items: center;
   gap: 0.75rem;
 }
+
+.theme-toggle-button {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem; /* Match profile & logout button padding */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  gap: 0.5rem; /* Consistency if text/icon combo ever added */
+}
+
+.theme-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-button svg {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-button:active svg {
+  transform: scale(0.9);
+}
+
+@media (max-width: 768px) {
+  .theme-toggle-button {
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+  }
+}
+
 
 .profile-button {
   background: rgba(255, 255, 255, 0.15);
@@ -193,6 +279,12 @@
     width: 40px;
     padding: 0.5rem;
     justify-content: center;
+  }
+  
+  .theme-toggle-button {
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
   }
 }
 </style>
