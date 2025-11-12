@@ -279,6 +279,8 @@ const updateCustomer = async () => {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .page-header {
@@ -291,7 +293,7 @@ const updateCustomer = async () => {
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #002e5f 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -299,12 +301,12 @@ const updateCustomer = async () => {
 }
 
 .page-subtitle {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 1rem;
 }
 
 .add-customer-btn {
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -316,12 +318,12 @@ const updateCustomer = async () => {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(22, 26, 249, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .add-customer-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(22, 26, 249, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .controls-section {
@@ -337,22 +339,27 @@ const updateCustomer = async () => {
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #a8a29e;
+  color: var(--color-text-lighter);
 }
 
 .search-input {
   width: 100%;
   padding: 0.875rem 1rem 0.875rem 3rem;
-  border: 2px solid #e7e5e4;
+  border: 2px solid var(--color-input-border);
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.2s ease;
-  background: white;
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
+}
+
+.search-input::placeholder {
+  color: var(--color-text-lighter);
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #002e5f;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(22, 26, 249, 0.1);
 }
 
@@ -363,9 +370,9 @@ const updateCustomer = async () => {
 }
 
 .customer-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
   overflow: hidden;
   display: flex;
@@ -375,8 +382,8 @@ const updateCustomer = async () => {
 
 .customer-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
-  border-color: #002e5f;
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-secondary);
 }
 
 .customer-card-header {
@@ -384,15 +391,15 @@ const updateCustomer = async () => {
   align-items: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: linear-gradient(180deg, #fafaf9 0%, #ffffff 100%);
-  border-bottom: 1px solid #e7e5e4;
+  background: var(--gradient-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .customer-avatar {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
   display: flex;
   align-items: center;
@@ -409,13 +416,13 @@ const updateCustomer = async () => {
 .customer-name {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0 0 0.25rem;
 }
 
 .customer-id {
   font-size: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-light);
   margin: 0;
 }
 
@@ -434,25 +441,25 @@ const updateCustomer = async () => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-light);
 }
 
 .info-row svg {
-  color: #002e5f;
+  color: var(--color-secondary);
   flex-shrink: 0;
 }
 
 .info-text {
   font-size: 0.875rem;
-  color: #57534e;
+  color: var(--color-text);
 }
 
 .customer-card-footer {
   display: flex;
   gap: 0.75rem;
   padding: 1.5rem;
-  background: white;
-  border-top: 1px solid #e7e5e4;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
 }
 
 .action-btn {
@@ -470,26 +477,26 @@ const updateCustomer = async () => {
 }
 
 .action-btn.secondary {
-  background: white;
-  border: 2px solid #e7e5e4;
-  color: #78716c;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-light);
 }
 
 .action-btn.secondary:hover {
-  border-color: #002e5f;
-  color: #002e5f;
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
   transform: translateY(-2px);
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   border: none;
   color: white;
 }
 
 .action-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(22, 56, 249, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 .empty-state {
@@ -503,12 +510,12 @@ const updateCustomer = async () => {
 }
 
 .empty-state svg {
-  color: #d6d3d1;
+  color: var(--color-text-disabled);
   margin-bottom: 1rem;
 }
 
 .empty-state p {
-  color: #a8a29e;
+  color: var(--color-text-lighter);
   font-size: 1rem;
   margin: 0;
 }
@@ -526,11 +533,11 @@ const updateCustomer = async () => {
 }
 
 .modal-content {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   max-width: 500px;
   width: 100%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-header {
@@ -538,13 +545,13 @@ const updateCustomer = async () => {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .modal-header h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -552,15 +559,15 @@ const updateCustomer = async () => {
   background: none;
   border: none;
   cursor: pointer;
-  color: #78716c;
+  color: var(--color-text-light);
   padding: 0.5rem;
   border-radius: 8px;
   transition: all 0.2s;
 }
 
 .close-btn:hover {
-  background: #f5f5f4;
-  color: #292524;
+  background: var(--color-hover);
+  color: var(--color-text);
 }
 
 .modal-form {
@@ -575,22 +582,28 @@ const updateCustomer = async () => {
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   margin-bottom: 0.5rem;
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid #e7e5e4;
+  border: 2px solid var(--color-input-border);
   border-radius: 10px;
   font-size: 1rem;
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
   transition: all 0.2s;
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-lighter);
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #002e5f;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(22, 26, 249, 0.1);
 }
 
@@ -613,25 +626,25 @@ const updateCustomer = async () => {
 }
 
 .btn-secondary {
-  background: white;
-  border: 2px solid #e7e5e4;
-  color: #78716c;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-light);
 }
 
 .btn-secondary:hover {
-  border-color: #dc2626;
-  color: #dc2626;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
-  box-shadow: 0 4px 12px rgba(22, 64, 249, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(22, 64, 249, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 768px) {
