@@ -98,12 +98,12 @@
 <style scoped>
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
-  border-right: 1px solid #e7e5e4;
+  background: var(--gradient-surface);
+  border-right: 1px solid var(--color-border);
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow-y: auto;
 }
@@ -121,7 +121,7 @@
 
 .nav-item {
   text-decoration: none;
-  color: #57534e;
+  color: var(--color-text-light);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -134,18 +134,23 @@
 
 .nav-item svg {
   flex-shrink: 0;
+  transition: color 0.2s ease;
 }
 
 .nav-item:hover {
-  background: linear-gradient(135deg, rgba(0, 81, 255, 0.3) 0%, rgba(0, 18, 97, 0.377) 100%);
-  color: #002e5f;
+  background: var(--color-hover);
+  color: var(--color-primary);
   transform: translateX(4px);
 }
 
 .nav-item.router-link-active {
-  background: linear-gradient(135deg, #1e1e1e 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 6, 94, 0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item.router-link-active svg {
+  color: white;
 }
 
 .nav-item.router-link-active::before {
@@ -156,7 +161,7 @@
   transform: translateY(-50%);
   width: 4px;
   height: 24px;
-  background: #002e5f;
+  background: var(--color-primary);
   border-radius: 0 4px 4px 0;
 }
 
@@ -165,7 +170,7 @@
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid #e7e5e4;
+    border-bottom: 1px solid var(--color-border);
     flex-direction: row;
   }
   

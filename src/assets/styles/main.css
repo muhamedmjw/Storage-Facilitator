@@ -1,17 +1,92 @@
-/* Base styles for Storage */
+/* src/assets/styles/main.css - Enhanced with Dark Theme Support */
 
+/* ============================================
+   CSS Variables for Light/Dark Themes
+   ============================================ */
+
+/* Light theme (default) */
 :root {
   --color-primary: #1E1E1E;
   --color-secondary: #002e5f;
   --color-background: #fafaf9;
   --color-surface: #ffffff;
+  --color-surface-secondary: #fafaf9;
   --color-error: #dc2626;
   --color-success: #16a34a;
   --color-warning: #eab308;
   --color-info: #0891b2;
   --color-text: #292524;
   --color-text-light: #78716c;
+  --color-text-lighter: #a8a29e;
+  --color-text-disabled: #d6d3d1;
+  --color-border: #e7e5e4;
+  --color-border-light: #f5f5f4;
+  --color-hover: #f5f5f4;
+  --color-input-bg: #ffffff;
+  --color-input-border: #e7e5e4;
+  
+  /* Shadows */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  --gradient-surface: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
+  --gradient-header: linear-gradient(135deg, #1E1E1E 0%, #002e5f 100%);
+  
+  /* Status colors */
+  --color-available: #0891b2;
+  --color-available-bg: rgba(8, 145, 178, 0.1);
+  --color-occupied: #16a34a;
+  --color-occupied-bg: rgba(22, 163, 74, 0.1);
+  --color-overdue: #dc2626;
+  --color-overdue-bg: rgba(220, 38, 38, 0.1);
 }
+
+/* Dark theme */
+:root.dark-theme {
+  --color-primary: #60a5fa;
+  --color-secondary: #3b82f6;
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-secondary: #334155;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #fbbf24;
+  --color-info: #06b6d4;
+  --color-text: #f1f5f9;
+  --color-text-light: #cbd5e1;
+  --color-text-lighter: #94a3b8;
+  --color-text-disabled: #64748b;
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+  --color-hover: #334155;
+  --color-input-bg: #1e293b;
+  --color-input-border: #334155;
+  
+  /* Shadows - darker for dark theme */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 12px 24px -4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  
+  /* Gradients - adjusted for dark theme */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  --gradient-surface: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+  --gradient-header: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  
+  /* Status colors - brighter for dark theme */
+  --color-available: #22d3ee;
+  --color-available-bg: rgba(34, 211, 238, 0.15);
+  --color-occupied: #4ade80;
+  --color-occupied-bg: rgba(74, 222, 128, 0.15);
+  --color-overdue: #f87171;
+  --color-overdue-bg: rgba(248, 113, 113, 0.15);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
 
 * {
   box-sizing: border-box;
@@ -24,16 +99,19 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   font-weight: 600;
+  color: var(--color-text);
 }
 
 a {
   color: var(--color-primary);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
@@ -55,9 +133,131 @@ button:hover {
   opacity: 0.9;
 }
 
-/* Utility classes */
+/* ============================================
+   Card & Surface Styles
+   ============================================ */
+
+.card,
+.stat-card,
+.section-card,
+.customer-card,
+.unit-card,
+.sidebar-card {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover,
+.stat-card:hover,
+.unit-card:hover,
+.customer-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   Text Styles
+   ============================================ */
+
+.page-title {
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+.page-subtitle,
+.section-subtitle,
+.customer-id,
+.detail-label,
+.info-label,
+.rental-label,
+.stat-label {
+  color: var(--color-text-light);
+  transition: color 0.3s ease;
+}
+
+/* ============================================
+   Border & Divider Styles
+   ============================================ */
+
+.section-header,
+.customer-header,
+.unit-card-header {
+  border-bottom-color: var(--color-border-light);
+}
+
+/* ============================================
+   Input & Form Styles
+   ============================================ */
+
+input,
+textarea,
+select {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-input-border);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-lighter);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-primary);
+}
+
+/* ============================================
+   Status Badges
+   ============================================ */
+
+.status-badge,
+.payment-badge,
+.unit-status {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.status-badge.available,
+.status-indicator.available {
+  background: var(--color-available-bg);
+  color: var(--color-available);
+}
+
+.status-badge.occupied,
+.status-indicator.occupied {
+  background: var(--color-occupied-bg);
+  color: var(--color-occupied);
+}
+
+.status-badge.overdue,
+.status-indicator.overdue {
+  background: var(--color-overdue-bg);
+  color: var(--color-overdue);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions for specific elements */
+button,
+a,
+.action-btn,
+.nav-item {
+  transition-property: background-color, border-color, color, transform, box-shadow;
 }

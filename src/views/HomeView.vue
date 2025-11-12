@@ -182,12 +182,13 @@
   )
 </script>
 
-
 <style scoped>
 .home-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .page-header {
@@ -197,7 +198,7 @@
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #002e5f 0%, #002e5f 100%);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -205,7 +206,7 @@
 }
 
 .page-subtitle {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 1rem;
 }
 
@@ -217,19 +218,19 @@
 }
 
 .stat-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .stat-icon {
@@ -240,6 +241,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: var(--gradient-primary);
+  color: white;
 }
 
 .stat-content {
@@ -249,13 +252,13 @@
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
   line-height: 1;
 }
 
 .stat-label {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 0.875rem;
   margin: 0.25rem 0 0;
 }
@@ -267,10 +270,10 @@
 }
 
 .section-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .section-header {
@@ -283,12 +286,12 @@
 .section-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #292524;
+  color: var(--color-text);
   margin: 0;
 }
 
 .view-all-link {
-  color: #002e5f;
+  color: var(--color-secondary);
   font-weight: 500;
   font-size: 0.875rem;
   text-decoration: none;
@@ -296,7 +299,7 @@
 }
 
 .view-all-link:hover {
-  color: #002e5f;
+  color: var(--color-secondary);
   transform: translateX(4px);
 }
 
@@ -306,8 +309,8 @@
 }
 
 .unit-card {
-  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
-  border: 1px solid #e7e5e4;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
   transition: all 0.3s ease;
@@ -315,8 +318,8 @@
 }
 
 .unit-card:hover {
-  border-color: #002e5f;
-  box-shadow: 0 8px 16px rgba(0, 6, 90, 0.15);
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -333,15 +336,12 @@
   font-size: 0.875rem;
   font-weight: 700;
   color: white;
-}
-
-.unit-badge.occupied {
-  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  background: var(--gradient-primary);
 }
 
 .unit-size {
-  background: rgba(0, 14, 95, 0.1);
-  color: #002e5f;
+  background: var(--color-surface-secondary);
+  color: var(--color-text);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -351,7 +351,7 @@
 .unit-customer {
   font-size: 1rem;
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   margin: 0 0 0.75rem;
 }
 
@@ -363,7 +363,7 @@
 }
 
 .info-item {
-  color: #78716c;
+  color: var(--color-text-light);
   font-size: 0.875rem;
 }
 
@@ -372,7 +372,7 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 0.75rem;
-  border-top: 1px solid #e7e5e4;
+  border-top: 1px solid var(--color-border);
 }
 
 .status-badge {
@@ -383,13 +383,13 @@
 }
 
 .status-badge.paid {
-  background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .next-payment {
   font-size: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-light);
 }
 
 .overdue-list {
@@ -404,15 +404,15 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
-  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
-  border: 2px solid #e7e5e4;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .overdue-item:hover {
-  border-color: #002e5f;
+  border-color: var(--color-secondary);
   transform: translateX(4px);
 }
 
@@ -423,20 +423,20 @@
 .overdue-title {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #292524;
+  color: var(--color-text);
   margin: 0 0 0.25rem;
 }
 
 .overdue-meta {
   font-size: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-light);
   margin: 0;
 }
 
 .overdue-amount {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #dc2626;
+  color: var(--color-error);
 }
 
 @media (max-width: 1024px) {
