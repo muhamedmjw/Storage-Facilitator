@@ -104,11 +104,13 @@
           <div class="demo-cards">
             <div class="demo-card">
               <strong>Admin</strong>
-              <span>admin@storage.com / admin123</span>
+              <span>admin@storage.com</span>
+              <span>admin123</span>
             </div>
             <div class="demo-card">
               <strong>Member</strong>
-              <span>member@storage.com / member123</span>
+              <span>member@storage.com</span>
+              <span>member123</span>
             </div>
           </div>
         </div>
@@ -234,6 +236,7 @@ const handleLogin = async () => {
 }
 
 .auth-title {
+  color: white;
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
