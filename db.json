@@ -4,13 +4,29 @@
       "id": "1",
       "name": "Admin User",
       "role": "admin",
-      "email": "admin@storage.com"
+      "email": "admin@storage.com",
+      "password": "admin123"
     },
     {
       "id": "2",
       "name": "Staff User",
-      "role": "staff",
-      "email": "staff@storage.com"
+      "role": "member",
+      "email": "member@storage.com",
+      "password": "member123"
+    },
+    {
+      "id": "f4b4",
+      "name": "qwe",
+      "email": "qwe@storage.com",
+      "password": "123456",
+      "role": "member"
+    },
+    {
+      "id": "c06f",
+      "name": "aso",
+      "email": "aso@gmail.com",
+      "password": "1234567890",
+      "role": "member"
     }
   ],
   "customers": [
@@ -149,14 +165,15 @@
       "description": "sdsa"
     },
     {
-      "id": "69dd",
       "unitNumber": "b3",
       "size": "5x10",
       "monthlyRate": 2345,
       "status": "available",
+      "paymentStatus": "available",
       "building": "asdfg",
       "accessInstructions": "asdf",
-      "description": "sdf"
+      "description": "sdf",
+      "id": "69dd"
     },
     {
       "id": "5900",

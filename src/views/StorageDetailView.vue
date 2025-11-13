@@ -28,37 +28,21 @@
         <button 
           class="action-btn secondary"
           @click="openEditModal"
+          :disabled="!canEdit"
+          :title="!canEdit ? getDisabledMessage() : 'Edit Unit'"
+          :class="{ 'btn-disabled': !canEdit }"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-          </svg>
+          <!-- ... svg icon -->
           Edit Unit
         </button>
         <button 
           class="action-btn danger"
           @click="handleDeleteUnit"
+          :disabled="!canDelete"
+          :title="!canDelete ? getDisabledMessage() : 'Delete Unit'"
+          :class="{ 'btn-disabled': !canDelete }"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-            <line x1="10" y1="11" x2="10" y2="17" />
-            <line x1="14" y1="11" x2="14" y2="17" />
-          </svg>
+          <!-- ... svg icon -->
           Delete Unit
         </button>
       </div>
@@ -590,10 +574,10 @@ import type { StorageUnit } from '@/services/storageService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
+import { usePermissions } from '@/composables/usePermissions'
 
-// Define Customer type to match your db.json
 
-
+const { canEdit, canDelete, getDisabledMessage } = usePermissions()
 const route = useRoute()
 const router = useRouter()
 const unit = ref<StorageUnit | null>(null)
@@ -1764,6 +1748,19 @@ const handleDeleteUnit = async () => {
     font-size: 0.875rem;
   }
 }
-</style>
 
- 
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.btn-disabled:hover {
+  transform: none !important;
+  border-color: var(--color-border) !important;
+}
+
+.action-btn.danger.btn-disabled:hover {
+  background: var(--color-surface) !important;
+  color: var(--color-error) !important;
+}
+</style>
