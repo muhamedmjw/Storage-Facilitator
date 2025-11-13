@@ -10,7 +10,7 @@
         </p>
       </div>
       <div class="footer-right">
-        <span class="version-badge">v2.0.0</span>
+        <span class="version-badge">v4.0.0</span>
         <div class="social-links">
           <a
             href="https://github.com/muhamedmjw/Web-Application-Milestone-Project"
