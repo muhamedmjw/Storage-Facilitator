@@ -137,7 +137,6 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue'
   import type { AxiosResponse } from 'axios'
@@ -187,8 +186,6 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  background: var(--color-background);
-  color: var(--color-text);
 }
 
 .page-header {
@@ -198,16 +195,19 @@
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  background: var(--gradient-primary);
+  background: var(--gradient-primary); /* same gradient as other views */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
+
 
 .page-subtitle {
   color: var(--color-text-light);
   font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 .stats-grid {
@@ -226,23 +226,12 @@
   gap: 1rem;
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
+  border: 1px solid var(--color-border);
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-}
-
-.stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: var(--gradient-primary);
-  color: white;
 }
 
 .stat-content {
@@ -255,12 +244,14 @@
   color: var(--color-text);
   margin: 0;
   line-height: 1;
+  transition: color 0.3s ease;
 }
 
 .stat-label {
   color: var(--color-text-light);
   font-size: 0.875rem;
   margin: 0.25rem 0 0;
+  transition: color 0.3s ease;
 }
 
 .content-grid {
@@ -274,6 +265,8 @@
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
 }
 
 .section-header {
@@ -288,6 +281,7 @@
   font-weight: 700;
   color: var(--color-text);
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .view-all-link {
@@ -299,7 +293,6 @@
 }
 
 .view-all-link:hover {
-  color: var(--color-secondary);
   transform: translateX(4px);
 }
 
@@ -309,7 +302,7 @@
 }
 
 .unit-card {
-  background: var(--color-surface);
+  background: var(--gradient-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
@@ -319,8 +312,8 @@
 
 .unit-card:hover {
   border-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-4px);
 }
 
 .unit-card-header {
@@ -336,16 +329,21 @@
   font-size: 0.875rem;
   font-weight: 700;
   color: white;
+}
+
+.unit-badge.occupied {
   background: var(--gradient-primary);
 }
 
 .unit-size {
-  background: var(--color-surface-secondary);
-  color: var(--color-text);
+  background: var(--color-hover);
+  color: var(--color-secondary);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
 }
 
 .unit-customer {
@@ -353,6 +351,7 @@
   font-weight: 600;
   color: var(--color-text);
   margin: 0 0 0.75rem;
+  transition: color 0.3s ease;
 }
 
 .unit-info {
@@ -365,31 +364,7 @@
 .info-item {
   color: var(--color-text-light);
   font-size: 0.875rem;
-}
-
-.unit-status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.status-badge.paid {
-  background: var(--color-success-bg);
-  color: var(--color-success);
-}
-
-.next-payment {
-  font-size: 0.75rem;
-  color: var(--color-text-light);
+  transition: color 0.3s ease;
 }
 
 .overdue-list {
@@ -404,7 +379,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
-  background: var(--color-surface);
+  background: var(--gradient-surface);
   border: 2px solid var(--color-border);
   border-radius: 10px;
   transition: all 0.2s ease;
@@ -412,7 +387,7 @@
 }
 
 .overdue-item:hover {
-  border-color: var(--color-secondary);
+  border-color: var(--color-primary);
   transform: translateX(4px);
 }
 
@@ -425,18 +400,28 @@
   font-weight: 600;
   color: var(--color-text);
   margin: 0 0 0.25rem;
+  transition: color 0.3s ease;
 }
 
 .overdue-meta {
   font-size: 0.75rem;
   color: var(--color-text-light);
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .overdue-amount {
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-error);
+  transition: color 0.3s ease;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-lighter);
+  transition: color 0.3s ease;
 }
 
 @media (max-width: 1024px) {
@@ -457,11 +442,6 @@
 
   .stat-card {
     padding: 1rem;
-  }
-
-  .stat-icon {
-    width: 48px;
-    height: 48px;
   }
 
   .stat-value {
