@@ -1,5 +1,43 @@
 <template>
   <div class="auth-container">
+    <!-- Theme Toggle Button -->
+    <button 
+      class="theme-toggle-floating" 
+      @click="toggleTheme"
+      :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+    >
+      <svg
+        v-if="!isDark"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg
+        v-else
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+
     <div class="auth-card">
       <div class="auth-header">
         <div class="logo-icon">
@@ -80,14 +118,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
+import { useThemeStore } from '@/stores/themeStore'
 import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const themeStore = useThemeStore()
 const { showToast } = useToast()
 
 const email = ref('')
@@ -95,6 +135,12 @@ const password = ref('')
 const showPassword = ref(false)
 const loading = ref(false)
 const errorMessage = ref('')
+
+const isDark = computed(() => themeStore.isDark())
+
+const toggleTheme = () => {
+  themeStore.toggleTheme()
+}
 
 const handleLogin = async () => {
   loading.value = true
@@ -126,6 +172,38 @@ const handleLogin = async () => {
   justify-content: center;
   background: var(--gradient-primary);
   padding: 2rem;
+  position: relative;
+}
+
+.theme-toggle-floating {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.theme-toggle-floating:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-floating svg {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-floating:active svg {
+  transform: scale(0.9);
 }
 
 .auth-card {
@@ -316,6 +394,11 @@ const handleLogin = async () => {
 @media (max-width: 768px) {
   .auth-container {
     padding: 1rem;
+  }
+
+  .theme-toggle-floating {
+    top: 1rem;
+    right: 1rem;
   }
 
   .auth-header {

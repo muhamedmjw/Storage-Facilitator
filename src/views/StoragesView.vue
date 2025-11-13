@@ -9,32 +9,18 @@
           Manage all storage units and rental assignments
         </p>
       </div>
-      <button
-        class="add-unit-btn"
-        @click="router.push('/add-unit')"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
+        <button 
+          class="add-unit-btn"
+          @click="handleAddUnit"
+          :disabled="!canAddUnit"
+          :title="!canAddUnit ? getDisabledMessage() : 'Add New Unit'"
+          :class="{ 'btn-disabled': !canAddUnit }"
         >
-          <line
-            x1="12"
-            y1="5"
-            x2="12"
-            y2="19"
-          />
-          <line
-            x1="5"
-            y1="12"
-            x2="19"
-            y2="12"
-          />
-        </svg>
-        Add Unit
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Add Storage Unit
       </button>
     </div>
 
@@ -206,12 +192,14 @@
   import { storageService, type StorageUnit } from '@/services/storageService'
   import { useToast } from '@/composables/useToast'
   import { useLoading } from '@/composables/useLoading'
+  import { usePermissions } from '@/composables/usePermissions'
 
   const router = useRouter()
   const units = ref<StorageUnit[]>([])
   const search = ref('')
   const { showToast } = useToast()
   const { startLoading, stopLoading } = useLoading()
+  const { canAddUnit, getDisabledMessage } = usePermissions()
 
   onMounted(async () => {
     startLoading()
@@ -245,6 +233,13 @@
       (u.unitNumber || '').toLowerCase().includes(term)
     )
   })
+
+  const handleAddUnit = () => {
+  if (canAddUnit.value) {
+    router.push('/add-unit')
+  }
+}
+
 </script>
 
 <style scoped>
@@ -648,5 +643,14 @@
   .filter-tab {
     flex-shrink: 0;
   }
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.btn-disabled:hover {
+  transform: none !important;
 }
 </style>

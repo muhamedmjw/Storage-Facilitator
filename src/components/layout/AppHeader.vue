@@ -222,7 +222,7 @@ const handleLogout = () => {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
