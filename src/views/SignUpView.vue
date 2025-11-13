@@ -137,8 +137,8 @@
         </button>
 
         <p class="auth-link">
-          Staff members can sign up for an account
-          <router-link to="/login">here</router-link>
+          Have an account?
+          <router-link to="/login"> Log in</router-link>
         </p>
       </form>
     </div>
