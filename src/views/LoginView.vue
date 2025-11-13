@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-container">
+  <div class="auth-container" :class="{ 'dark-mode': isDark }">
     <!-- Theme Toggle Button -->
     <button 
       class="theme-toggle-floating" 
@@ -170,9 +170,15 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f172a 100%);
   padding: 2rem;
   position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode background */
+.auth-container.dark-mode {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f172a 100%);
 }
 
 .theme-toggle-floating {
@@ -209,14 +215,14 @@ const handleLogin = async () => {
 .auth-card {
   background: var(--color-surface);
   border-radius: 20px;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   max-width: 450px;
   width: 100%;
   overflow: hidden;
 }
 
 .auth-header {
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #1e1e1e 0%, #002e5f 100%);
   padding: 3rem 2rem;
   text-align: center;
   color: white;
@@ -310,7 +316,7 @@ const handleLogin = async () => {
 .btn-primary {
   width: 100%;
   padding: 1rem;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #1e1e1e 0%, #002e5f 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -325,7 +331,7 @@ const handleLogin = async () => {
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary:disabled {
