@@ -31,7 +31,7 @@
 
     <div class="customers-grid">
       <div
-        v-for="customer in filteredCustomers"
+        v-for="customer in paginatedCustomers"
         :key="customer.id"
         class="customer-card"
       >
@@ -89,6 +89,38 @@
         <p>No customers found.</p>
       </div>
     </div>
+
+    <!-- Pagination -->
+    <div class="pagination" v-if="totalPages > 1">
+  <button
+    class="pagination-btn"
+    :disabled="page === 1"
+    @click="page--"
+  >
+    ‹ Prev
+  </button>
+
+  <div class="pagination-pages">
+    <button
+      v-for="p in totalPages"
+      :key="p"
+      class="pagination-page"
+      :class="{ active: p === page }"
+      @click="page = p"
+    >
+      {{ p }}
+    </button>
+  </div>
+
+  <button
+    class="pagination-btn"
+    :disabled="page === totalPages"
+    @click="page++"
+  >
+    Next ›
+  </button>
+</div>
+
 
     <!-- Add Customer Modal -->
     <div v-if="showAddModal" class="modal-overlay" @click="showAddModal = false">
@@ -167,13 +199,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
-
 
 const router = useRouter()
 const { showToast } = useToast()
@@ -184,6 +215,9 @@ const search = ref('')
 const showAddModal = ref(false)
 const showEditModal = ref(false)
 const editingCustomerId = ref<string | null>(null)
+
+const page = ref(1)
+const perPage = ref(6)
 
 const newCustomer = ref({
   name: '',
@@ -226,6 +260,15 @@ const filteredCustomers = computed(() => {
   )
 })
 
+const totalPages = computed(() =>
+  Math.ceil(filteredCustomers.value.length / perPage.value)
+)
+
+const paginatedCustomers = computed(() => {
+  const start = (page.value - 1) * perPage.value
+  return filteredCustomers.value.slice(start, start + perPage.value)
+})
+
 const addCustomer = async () => {
   startLoading()
   try {
@@ -255,8 +298,7 @@ const updateCustomer = async () => {
       `http://localhost:4000/customers/${editingCustomerId.value}`,
       editForm.value
     )
-    
-    // Update the customer in the list
+
     const index = customers.value.findIndex(c => c.id === editingCustomerId.value)
     if (index !== -1) {
       customers.value[index] = response.data
@@ -272,6 +314,11 @@ const updateCustomer = async () => {
     stopLoading()
   }
 }
+
+watch(search, () => {
+  page.value = 1
+})
+
 </script>
 
 <style scoped>
@@ -666,4 +713,52 @@ const updateCustomer = async () => {
     grid-template-columns: 1fr;
   }
 }
+.pagination {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pagination-btn,
+.pagination-page {
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover,
+.pagination-page:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px rgba(22, 26, 249, 0.25);
+  transform: translateY(-1px);
+}
+
+.pagination-page.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  cursor: default;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 0.5rem;
+}
+
 </style>
