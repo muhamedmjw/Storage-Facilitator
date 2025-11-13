@@ -20,6 +20,59 @@ export const useAuthStore = defineStore('auth', () => {
   const isMember = computed(() => user.value?.role === 'member')
 
   // Actions
+  function signup(name: string, email: string, password: string): Promise<{ success: boolean; message: string }> {
+    return new Promise((resolve) => {
+      // Mocked signup with validation
+      setTimeout(() => {
+        // Check if email already exists (in a real app, backend would handle this)
+        const existingEmails = ['admin@storage.com', 'member@storage.com']
+        
+        if (existingEmails.includes(email)) {
+          resolve({ success: false, message: 'Email already registered' })
+          return
+        }
+
+        // Validate inputs
+        if (!name || name.trim().length < 2) {
+          resolve({ success: false, message: 'Name must be at least 2 characters' })
+          return
+        }
+
+        if (!email || !email.includes('@')) {
+          resolve({ success: false, message: 'Invalid email address' })
+          return
+        }
+
+        if (!password || password.length < 6) {
+          resolve({ success: false, message: 'Password must be at least 6 characters' })
+          return
+        }
+
+        // Create new user (default role is 'member')
+        const newUser = {
+          id: `user-${Date.now()}`,
+          name: name.trim(),
+          email: email.trim(),
+          role: 'member' as const
+        }
+
+        const mockToken = `Bearer-${newUser.id}-${Date.now()}`
+        const expiry = Date.now() + (2 * 60 * 60 * 1000) // 2 hours
+
+        token.value = mockToken
+        tokenExpiry.value = expiry
+        user.value = newUser
+
+        localStorage.setItem('token', mockToken)
+        localStorage.setItem('tokenExpiry', expiry.toString())
+        localStorage.setItem('user', JSON.stringify(user.value))
+
+        setupAutoLogout()
+        resolve({ success: true, message: 'Account created successfully!' })
+      }, 800)
+    })
+  }
+
   function login(email: string, password: string): Promise<{ success: boolean; message: string }> {
     return new Promise((resolve) => {
       // Mocked authentication
@@ -68,7 +121,7 @@ export const useAuthStore = defineStore('auth', () => {
       }, 800)
     })
   }
-
+  
   function logout() {
     token.value = null
     user.value = null
@@ -121,6 +174,7 @@ export const useAuthStore = defineStore('auth', () => {
     userRole,
     isAdmin,
     isMember,
+    signup,  // Add signup to the return
     login,
     logout,
     checkTokenExpiry
