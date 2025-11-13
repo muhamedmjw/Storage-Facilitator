@@ -32,7 +32,7 @@
           <span class="logo-sub">Facility Management System</span>
         </router-link>
       </div>
-      <div class="header-actions">
+      <div class="header-actions" v-if="authStore.isAuthenticated">
         <button 
           class="theme-toggle-button" 
           @click="toggleTheme"
@@ -74,11 +74,13 @@
         
         <button class="profile-button">
           <div class="avatar">
-            U
+            {{ authStore.currentUser?.name?.charAt(0).toUpperCase() || 'U' }}
           </div>
-          <span>Profile</span>
+          <span>{{ authStore.currentUser?.name || 'Profile' }}</span>
+          <span class="user-role-badge">{{ authStore.userRole }}</span>
         </button>
-        <button class="logout-button">
+        
+        <button class="logout-button" @click="handleLogout">
           <svg
             width="18"
             height="18"
@@ -105,13 +107,26 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useThemeStore } from '@/stores/themeStore'
+import { useAuthStore } from '@/stores/authStore'
+import { useToast } from '@/composables/useToast'
 
+const router = useRouter()
 const themeStore = useThemeStore()
+const authStore = useAuthStore()
+const { showToast } = useToast()
+
 const isDark = computed(() => themeStore.isDark())
 
 const toggleTheme = () => {
   themeStore.toggleTheme()
+}
+
+const handleLogout = () => {
+  authStore.logout()
+  showToast('Successfully signed out', 'success')
+  router.push('/login')
 }
 </script>
 
@@ -178,7 +193,7 @@ const toggleTheme = () => {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 0.5rem 1rem; /* Match profile & logout button padding */
+  padding: 0.5rem 1rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -186,7 +201,7 @@ const toggleTheme = () => {
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
-  gap: 0.5rem; /* Consistency if text/icon combo ever added */
+  gap: 0.5rem;
 }
 
 .theme-toggle-button:hover {
@@ -202,15 +217,6 @@ const toggleTheme = () => {
   transform: scale(0.9);
 }
 
-@media (max-width: 768px) {
-  .theme-toggle-button {
-    width: 40px;
-    height: 40px;
-    padding: 0.5rem;
-  }
-}
-
-
 .profile-button {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
@@ -223,6 +229,7 @@ const toggleTheme = () => {
   gap: 0.5rem;
   font-weight: 500;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .profile-button:hover {
@@ -231,15 +238,24 @@ const toggleTheme = () => {
 }
 
 .avatar {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.875rem;
+}
+
+.user-role-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.125rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  font-weight: 600;
 }
 
 .logout-button {
@@ -254,6 +270,7 @@ const toggleTheme = () => {
   gap: 0.5rem;
   font-weight: 500;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .logout-button:hover {
@@ -271,7 +288,11 @@ const toggleTheme = () => {
   }
   
   .profile-button span,
-  .logout-button {
+  .user-role-badge {
+    display: none;
+  }
+  
+  .logout-button span {
     display: none;
   }
   
@@ -281,10 +302,21 @@ const toggleTheme = () => {
     justify-content: center;
   }
   
+  .logout-button {
+    width: 40px;
+    padding: 0.5rem;
+    justify-content: center;
+  }
+  
   .theme-toggle-button {
     width: 40px;
     height: 40px;
     padding: 0.5rem;
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
   }
 }
 </style>
