@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Actions
   function signup(name: string, email: string, password: string): Promise<{ success: boolean; message: string }> {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
       // Simulated delay (mock backend)
       setTimeout(async () => {
         // Mocked email validation
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
               role: 'member'
             })
           })
-        } catch (error) {
+        } catch {
           resolve({ success: false, message: 'Unable to save user to database.' })
           return
         }
@@ -93,8 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
     })
   }
 
-function login(email: string, password: string): Promise<{ success: boolean; message: string }> {
-  return new Promise(async (resolve) => {
+  async function login(email: string, password: string): Promise<{ success: boolean; message: string }> {
     try {
       const response = await fetch("http://localhost:4000/users");
       const users = await response.json();
@@ -104,8 +103,7 @@ function login(email: string, password: string): Promise<{ success: boolean; mes
       );
 
       if (!foundUser) {
-        resolve({ success: false, message: "Invalid email or password" });
-        return;
+        return { success: false, message: "Invalid email or password" };
       }
 
       const mockToken = `Bearer-${foundUser.id}-${Date.now()}`;
@@ -126,12 +124,11 @@ function login(email: string, password: string): Promise<{ success: boolean; mes
 
       setupAutoLogout();
 
-      resolve({ success: true, message: "Login successful!" });
-    } catch (error) {
-      resolve({ success: false, message: "Unable to connect to the server." });
+      return { success: true, message: "Login successful!" };
+    } catch {
+      return { success: false, message: "Unable to connect to the server." };
     }
-  });
-}
+  }
 
   
   function logout() {
