@@ -4,13 +4,15 @@
       "id": "1",
       "name": "Admin User",
       "role": "admin",
-      "email": "admin@storage.com"
+      "email": "admin@storage.com",
+      "password": "admin123"
     },
     {
       "id": "2",
       "name": "Staff User",
-      "role": "staff",
-      "email": "staff@storage.com"
+      "role": "member",
+      "email": "member@storage.com",
+      "password": "member123"
     },
     {
       "id": "f4b4",
