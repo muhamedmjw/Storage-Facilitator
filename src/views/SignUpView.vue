@@ -25,6 +25,7 @@
         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
       </svg>
+
       <svg
         v-else
         width="20"
@@ -43,9 +44,15 @@
         <div class="logo-icon">
           <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
             <rect width="32" height="32" rx="8" fill="#002e5f" />
-            <path d="M8 12h16M8 16h16M8 20h16M6 8h20v16H6z" stroke="white" stroke-width="2" stroke-linecap="round" />
+            <path
+              d="M8 12h16M8 16h16M8 20h16M6 8h20v16H6z"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </div>
+
         <h1 class="auth-title">Create Account</h1>
         <p class="auth-subtitle">Join Storage Facilitator</p>
       </div>
@@ -57,6 +64,7 @@
             <line x1="12" y1="8" x2="12" y2="12" />
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
+
           {{ errorMessage }}
         </div>
 
@@ -94,22 +102,44 @@
               required
               minlength="6"
             />
+
             <button type="button" @click="showPassword = !showPassword" class="toggle-password">
-              <svg v-if="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                v-if="!showPassword"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
-              <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+
+              <svg
+                v-else
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
                 <line x1="1" y1="1" x2="23" y2="23" />
               </svg>
             </button>
           </div>
+
           <p class="form-hint">Must be at least 6 characters</p>
         </div>
 
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
+
           <div class="password-wrapper">
             <input
               id="confirmPassword"
@@ -118,13 +148,33 @@
               placeholder="Re-enter your password"
               required
             />
+
             <button type="button" @click="showConfirmPassword = !showConfirmPassword" class="toggle-password">
-              <svg v-if="!showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                v-if="!showConfirmPassword"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
-              <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+
+              <svg
+                v-else
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
                 <line x1="1" y1="1" x2="23" y2="23" />
               </svg>
             </button>
@@ -178,19 +228,16 @@ const toggleTheme = () => {
 const handleSignUp = async () => {
   errorMessage.value = ''
 
-  // Validate name
   if (formData.value.name.trim().length < 2) {
     errorMessage.value = 'Name must be at least 2 characters'
     return
   }
 
-  // Validate passwords match
   if (formData.value.password !== formData.value.confirmPassword) {
     errorMessage.value = 'Passwords do not match'
     return
   }
 
-  // Validate password length
   if (formData.value.password.length < 6) {
     errorMessage.value = 'Password must be at least 6 characters'
     return
@@ -204,7 +251,7 @@ const handleSignUp = async () => {
       formData.value.email.trim(),
       formData.value.password
     )
-    
+
     if (result.success) {
       showToast(result.message, 'success')
       router.push('/')
