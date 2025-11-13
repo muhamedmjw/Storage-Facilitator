@@ -591,8 +591,6 @@ import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
 
-// Define Customer type to match your db.json
-
 
 const route = useRoute()
 const router = useRouter()
