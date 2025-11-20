@@ -51,7 +51,13 @@ const routes: Array<RouteRecordRaw> = [
     name: 'customer-details',
     component: () => import('@/views/CustomerDetailView.vue'),
     meta: { requiresAuth: true }
-  }
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: () => import('@/views/TransactionsView.vue'),
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = createRouter({

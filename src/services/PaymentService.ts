@@ -3,6 +3,7 @@ import type { Transaction, CreateTransactionRequest } from '@/types'
 
 class PaymentService {
   private mockMode = true // Set to false when you have real credentials
+  private baseURL = 'http://localhost:4000' // Your json-server port
 
   // Mock: Generate random payment code
   private generateCode(): string {
@@ -31,6 +32,8 @@ class PaymentService {
   async createPayment(_data: CreateTransactionRequest): Promise<any> {
     if (this.mockMode) {
       // Mock response simulating FIB API
+      await new Promise(resolve => setTimeout(resolve, 500)) // Simulate API delay
+      
       return {
         paymentId: this.generateId(),
         readableCode: this.generateCode(),
@@ -49,8 +52,10 @@ class PaymentService {
   }
 
   // Check payment status (Mock version)
-  async checkStatus(paymentId: string): Promise<any> {
+  async checkPaymentStatus(paymentId: string): Promise<any> {
     if (this.mockMode) {
+      await new Promise(resolve => setTimeout(resolve, 300)) // Simulate API delay
+      
       // Mock: randomly return PAID or UNPAID for demo
       const statuses = ['PAID', 'UNPAID', 'UNPAID', 'UNPAID'] // 25% chance PAID
       const status = statuses[Math.floor(Math.random() * statuses.length)]
@@ -76,7 +81,7 @@ class PaymentService {
   // Cancel payment (Mock version)
   async cancelPayment(paymentId: string): Promise<void> {
     if (this.mockMode) {
-      // Mock: simulate successful cancellation
+      await new Promise(resolve => setTimeout(resolve, 300))
       console.log('Mock: Payment cancelled:', paymentId)
       return
     }
@@ -89,7 +94,7 @@ class PaymentService {
   // Refund payment (Mock version)
   async refundPayment(paymentId: string): Promise<void> {
     if (this.mockMode) {
-      // Mock: simulate successful refund
+      await new Promise(resolve => setTimeout(resolve, 300))
       console.log('Mock: Payment refunded:', paymentId)
       return
     }
@@ -102,7 +107,7 @@ class PaymentService {
   // Get all transactions from local db
   async getAll(): Promise<Transaction[]> {
     try {
-      const response = await axios.get('http://localhost:3000/transactions')
+      const response = await axios.get(`${this.baseURL}/transactions`)
       return response.data
     } catch (error) {
       console.error('Error fetching transactions:', error)
@@ -112,22 +117,37 @@ class PaymentService {
 
   // Save transaction locally
   async save(transaction: Transaction): Promise<Transaction> {
-    const response = await axios.post('http://localhost:3000/transactions', transaction)
-    return response.data
+    try {
+      const response = await axios.post(`${this.baseURL}/transactions`, transaction)
+      return response.data
+    } catch (error) {
+      console.error('Error saving transaction:', error)
+      throw error
+    }
   }
 
   // Update transaction
   async update(id: string, data: Partial<Transaction>): Promise<Transaction> {
-    const response = await axios.patch(`http://localhost:3000/transactions/${id}`, {
-      ...data,
-      updatedAt: new Date().toISOString()
-    })
-    return response.data
+    try {
+      const response = await axios.patch(`${this.baseURL}/transactions/${id}`, {
+        ...data,
+        updatedAt: new Date().toISOString()
+      })
+      return response.data
+    } catch (error) {
+      console.error('Error updating transaction:', error)
+      throw error
+    }
   }
 
   // Delete transaction
   async delete(id: string): Promise<void> {
-    await axios.delete(`http://localhost:3000/transactions/${id}`)
+    try {
+      await axios.delete(`${this.baseURL}/transactions/${id}`)
+    } catch (error) {
+      console.error('Error deleting transaction:', error)
+      throw error
+    }
   }
 }
 

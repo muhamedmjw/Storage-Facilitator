@@ -274,5 +274,38 @@
       "date": "2025-10-10"
     }
   ],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "1763652705142",
+      "customerId": "b4ab",
+      "customerName": "First Last",
+      "storageId": "f10b",
+      "storageName": "A-1",
+      "amount": 50000,
+      "status": "PAID",
+      "paymentId": "be40504a-577b-4faa-8dbf-e2355d7ac63b",
+      "readableCode": "UKND-RXGT-QLXL",
+      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "validUntil": "2025-11-21T15:31:45.142Z",
+      "createdAt": "2025-11-20T15:31:45.142Z",
+      "updatedAt": "2025-11-20T15:32:38.494Z",
+      "paidAt": "2025-11-20T15:32:38.494Z"
+    },
+    {
+      "id": "1763652953534",
+      "customerId": "09fc",
+      "customerName": "asdfghjk",
+      "storageId": "ca81",
+      "storageName": "tre1",
+      "amount": 29,
+      "status": "UNPAID",
+      "paymentId": "f2a00502-30a4-46e6-8077-7440035b9e40",
+      "readableCode": "EYCB-AVVC-YTCQ",
+      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "validUntil": "2025-11-21T15:35:53.533Z",
+      "createdAt": "2025-11-20T15:35:53.534Z",
+      "updatedAt": "2025-11-20T15:36:06.321Z",
+      "paidAt": null
+    }
+  ]
 }
