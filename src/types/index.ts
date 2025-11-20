@@ -71,6 +71,7 @@ export interface Payment {
   notes?: string;
 }
 
+// Transaction Payment (for First Iraqi Bank API)
 export interface Transaction {
   id: string
   customerId: string
@@ -78,8 +79,12 @@ export interface Transaction {
   storageId: string
   storageName: string
   amount: number
-  status: 'pending' | 'completed' | 'failed' | 'cancelled'
-  transactionId?: string
+  status: 'UNPAID' | 'PAID' | 'DECLINED'
+  paymentId?: string
+  readableCode?: string
+  qrCode?: string
+  validUntil?: string
+  paidAt?: string
   createdAt: string
   updatedAt: string
 }

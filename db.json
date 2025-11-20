@@ -273,5 +273,6 @@
       "content": "Customer requested invoice copy.",
       "date": "2025-10-10"
     }
-  ]
+  ],
+  "transactions": []
 }
