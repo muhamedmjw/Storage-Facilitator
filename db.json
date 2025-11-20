@@ -9,117 +9,33 @@
     },
     {
       "id": "2",
-      "name": "Staff User",
+      "name": "Staff Member",
       "role": "member",
       "email": "member@storage.com",
       "password": "member123"
-    },
-    {
-      "id": "f4b4",
-      "name": "qwe",
-      "email": "qwe@storage.com",
-      "password": "123456",
-      "role": "member"
-    },
-    {
-      "id": "c06f",
-      "name": "aso",
-      "email": "aso@gmail.com",
-      "password": "1234567890",
-      "role": "member"
     }
   ],
   "customers": [
     {
-      "name": "First Last",
-      "email": "First_Last@gmail.com",
-      "phone": "07501231234",
-      "address": "TEST",
-      "id": "b4ab"
+      "id": "1",
+      "name": "John Smith",
+      "email": "john.smith@email.com",
+      "phone": "07501234567",
+      "address": "123 Main Street, Erbil"
     },
     {
-      "id": "80d7",
-      "name": "as",
-      "email": "asdf@adf",
-      "phone": "asdf",
-      "address": "asd"
+      "id": "2",
+      "name": "Sarah Johnson",
+      "email": "sarah.j@email.com",
+      "phone": "07509876543",
+      "address": "456 Park Avenue, Erbil"
     },
     {
-      "id": "d0c3",
-      "name": "asdf",
-      "email": "asdf@adf",
-      "phone": "`12345",
-      "address": "asdfg"
-    },
-    {
-      "id": "acce",
-      "name": "sdfg",
-      "email": "asdfg@df",
-      "phone": "asdfb",
-      "address": "sdf"
-    },
-    {
-      "id": "59b4",
-      "name": "sefdgb",
-      "email": "sdfgn@df",
-      "phone": "ddfgjhk",
-      "address": "asdfgh"
-    },
-    {
-      "id": "e940",
-      "name": "asdfg",
-      "email": "asfdg@ghj",
-      "phone": "123456ygh",
-      "address": "asdfgh"
-    },
-    {
-      "id": "09c1",
-      "name": "esfrgth",
-      "email": "ASDF@esdf",
-      "phone": "123456789",
-      "address": "fghjk"
-    },
-    {
-      "id": "d614",
-      "name": "234567",
-      "email": "ssrdtfgh2@dfg",
-      "phone": "12345",
-      "address": "asdfg"
-    },
-    {
-      "id": "763f",
-      "name": "12345tg",
-      "email": "sdfgh1@fghj",
-      "phone": "8765",
-      "address": "1234erf"
-    },
-    {
-      "id": "5430",
-      "name": "rtyui",
-      "email": "xcvbnm@kjh",
-      "phone": "34567890",
-      "address": "dfghyj"
-    },
-    {
-      "id": "09fc",
-      "name": "asdfghjk",
-      "email": "asdfg@fghj",
-      "phone": "12345678",
-      "address": "rtyhujikol"
-    },
-    {
-      "id": "e587",
-      "name": "rtygsudh",
-      "email": "dfghja@ghjk",
-      "phone": "sertfyguhunja",
-      "address": "ghjklm12"
-    },
-    {
-      "id": "2e90",
-      "name": "wserdtfygbhjakd",
-      "email": "34567yguba@gha",
-      "phone": "234567890",
-      "address": "asdfa"
+      "id": "3",
+      "name": "Ahmed Hassan",
+      "email": "ahmed.hassan@email.com",
+      "phone": "07502345678",
+      "address": "789 Garden Road, Erbil"
     }
   ],
   "buildings": [
@@ -138,174 +54,63 @@
   ],
   "storageUnits": [
     {
-      "unitNumber": "A-1",
+      "id": "1",
+      "unitNumber": "A-101",
       "size": "5x5",
-      "monthlyRate": 150,
+      "monthlyRate": 150000,
       "status": "occupied",
+      "building": "Main Facility",
+      "accessInstructions": "Ground floor, first corridor on the right",
+      "description": "Climate controlled, 24/7 access",
+      "customer": "John Smith",
+      "email": "john.smith@email.com",
+      "phone": "07501234567",
+      "address": "123 Main Street, Erbil",
       "paymentStatus": "paid",
-      "building": "Building A",
-      "accessInstructions": "Alpha One",
-      "description": "",
-      "customer": "First Last",
-      "email": "First_Last@gmail.com",
-      "phone": "07501231234",
-      "address": "TEST",
-      "startDate": "2025-11-10",
-      "nextPayment": "2025-12-10",
-      "id": "f10b"
+      "startDate": "2025-11-20",
+      "nextPayment": "2025-12-20",
+      "createdAt": "2025-11-20"
     },
     {
-      "id": "c845",
-      "unitNumber": "a1",
-      "size": "5x5",
-      "monthlyRate": 123,
-      "status": "available",
-      "building": "Building A",
-      "accessInstructions": "asdfs",
-      "description": "sdsa"
-    },
-    {
-      "unitNumber": "b3",
+      "id": "2",
+      "unitNumber": "A-102",
       "size": "5x10",
-      "monthlyRate": 2345,
+      "monthlyRate": 250000,
       "status": "available",
-      "paymentStatus": "available",
-      "building": "asdfg",
-      "accessInstructions": "asdf",
-      "description": "sdf",
-      "id": "69dd"
+      "building": "Main Facility",
+      "accessInstructions": "Ground floor, first corridor on the right",
+      "description": "Standard storage unit"
     },
     {
-      "id": "5900",
-      "unitNumber": "c2",
-      "size": "30x45",
-      "monthlyRate": 1234567,
+      "id": "3",
+      "unitNumber": "A-103",
+      "size": "10x10",
+      "monthlyRate": 400000,
       "status": "available",
-      "building": "hgfds",
-      "accessInstructions": "dfg",
-      "description": "bfdvsc"
+      "building": "Main Facility",
+      "accessInstructions": "Ground floor, second corridor",
+      "description": "Large unit with high ceiling"
     },
     {
-      "id": "d1f5",
-      "unitNumber": "sdfghd",
-      "size": "30x60",
-      "monthlyRate": 1257654,
-      "status": "reserved",
-      "building": "hgfds",
-      "accessInstructions": "da",
-      "description": "dfggfds"
-    },
-    {
-      "id": "ca81",
-      "unitNumber": "tre1",
-      "size": "30x60",
-      "monthlyRate": 876543,
-      "status": "reserved",
-      "building": "gfa",
-      "accessInstructions": "dsa",
-      "description": "jhgf"
-    },
-    {
-      "id": "29a0",
-      "unitNumber": "bu3",
-      "size": "5x10",
-      "monthlyRate": 5432,
-      "status": "reserved",
-      "building": "b8290w",
-      "accessInstructions": "gfds",
-      "description": "gfdsa"
-    },
-    {
-      "id": "fc3f",
-      "unitNumber": "98765",
-      "size": "30x45",
-      "monthlyRate": 54321,
-      "status": "reserved",
-      "building": "Building Af",
-      "accessInstructions": "ghjkl",
-      "description": "pohgf"
-    },
-    {
-      "id": "e882",
-      "unitNumber": "dfghja",
+      "id": "4",
+      "unitNumber": "B-201",
       "size": "5x5",
-      "monthlyRate": 54321,
-      "status": "reserved",
-      "building": "ga",
-      "accessInstructions": "gfdsa",
-      "description": "fa"
+      "monthlyRate": 150000,
+      "status": "occupied",
+      "building": "North Wing",
+      "accessInstructions": "Second floor, elevator access",
+      "description": "Climate controlled"
     },
     {
-      "id": "58e3",
-      "unitNumber": "D-4",
-      "size": "30x45",
-      "monthlyRate": 3456781,
+      "id": "5",
+      "unitNumber": "B-202",
+      "size": "10x15",
+      "monthlyRate": 550000,
       "status": "reserved",
-      "building": "Building Ae",
-      "accessInstructions": "fdsa",
-      "description": "fas"
+      "building": "North Wing",
+      "accessInstructions": "Second floor, elevator access",
+      "description": "Premium large unit"
     }
   ],
-  "rentals": [
-    {
-      "id": "1",
-      "customer_id": 1,
-      "unit_id": 2,
-      "start_date": "2025-10-01",
-      "end_date": "2026-10-01",
-      "status": "active"
-    }
-  ],
-  "payments": [
-    {
-      "id": "1",
-      "rental_id": 1,
-      "amount": 80,
-      "date": "2025-10-05",
-      "method": "cash"
-    }
-  ],
-  "notes": [
-    {
-      "id": "1",
-      "customer_id": 1,
-      "user_id": 2,
-      "content": "Customer requested invoice copy.",
-      "date": "2025-10-10"
-    }
-  ],
-  "transactions": [
-    {
-      "id": "1763652705142",
-      "customerId": "b4ab",
-      "customerName": "First Last",
-      "storageId": "f10b",
-      "storageName": "A-1",
-      "amount": 50000,
-      "status": "PAID",
-      "paymentId": "be40504a-577b-4faa-8dbf-e2355d7ac63b",
-      "readableCode": "UKND-RXGT-QLXL",
-      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
-      "validUntil": "2025-11-21T15:31:45.142Z",
-      "createdAt": "2025-11-20T15:31:45.142Z",
-      "updatedAt": "2025-11-20T15:32:38.494Z",
-      "paidAt": "2025-11-20T15:32:38.494Z"
-    },
-    {
-      "id": "1763652953534",
-      "customerId": "09fc",
-      "customerName": "asdfghjk",
-      "storageId": "ca81",
-      "storageName": "tre1",
-      "amount": 29,
-      "status": "UNPAID",
-      "paymentId": "f2a00502-30a4-46e6-8077-7440035b9e40",
-      "readableCode": "EYCB-AVVC-YTCQ",
-      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
-      "validUntil": "2025-11-21T15:35:53.533Z",
-      "createdAt": "2025-11-20T15:35:53.534Z",
-      "updatedAt": "2025-11-20T15:36:06.321Z",
-      "paidAt": null
-    }
-  ]
+  "transactions": []
 }
