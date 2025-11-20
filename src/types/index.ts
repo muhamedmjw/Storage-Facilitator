@@ -71,6 +71,26 @@ export interface Payment {
   notes?: string;
 }
 
+export interface Transaction {
+  id: string
+  customerId: string
+  customerName: string
+  storageId: string
+  storageName: string
+  amount: number
+  status: 'pending' | 'completed' | 'failed' | 'cancelled'
+  transactionId?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CreateTransactionRequest {
+  customerId: string
+  storageId: string
+  amount: number
+  description?: string
+}
+
 // Rental
 export interface Rental {
   id: string;
