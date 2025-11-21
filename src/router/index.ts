@@ -25,37 +25,37 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/storages',
     name: 'storages',
-    component: () => import('@/views/StoragesView.vue'),
+    component: () => import('@/views/Storage/StoragesView.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/storages/:id',
     name: 'storage-details',
-    component: () => import('@/views/StorageDetailView.vue'),
+    component: () => import('@/views/Storage/StorageDetailView.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/add-unit',
     name: 'add-unit',
-    component: () => import('@/views/AddStorageView.vue'),
+    component: () => import('@/views/Storage/AddStorageView.vue'),
     meta: { requiresAuth: true, roles: ['admin'] }
   },
   {
     path: '/customers',
     name: 'customers',
-    component: () => import('@/views/CustomersView.vue'),
+    component: () => import('@/views/Customer/CustomersView.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/customers/:id',
     name: 'customer-details',
-    component: () => import('@/views/CustomerDetailView.vue'),
+    component: () => import('@/views/Customer/CustomerDetailView.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/transactions',
     name: 'transactions',
-    component: () => import('@/views/TransactionsView.vue'),
+    component: () => import('@/views/Transaction/TransactionsView.vue'),
     meta: { requiresAuth: true }
   },
 ]

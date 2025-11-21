@@ -198,10 +198,11 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { customerService } from '@/services/customerService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
@@ -239,13 +240,15 @@ onMounted(async () => {
 
 const loadCustomers = async () => {
   startLoading()
+
   try {
-    const response = await axios.get('http://localhost:4000/customers')
-    customers.value = response.data
+    customers.value = await customerService.getAll()
     showToast('Customers loaded successfully!', 'success')
+
   } catch (error) {
     console.error('Failed to load customers:', error)
     showToast('Failed to load customers.', 'error')
+
   } finally {
     stopLoading()
   }
@@ -271,15 +274,22 @@ const paginatedCustomers = computed(() => {
 
 const addCustomer = async () => {
   startLoading()
+  
   try {
-    const response = await axios.post('http://localhost:4000/customers', newCustomer.value)
-    customers.value.push(response.data)
+    const customerToAdd = {
+      ...newCustomer.value,
+      createdAt: new Date().toISOString()
+    }
+    const added = await customerService.add(customerToAdd)
+    customers.value.push(added)
     showAddModal.value = false
     newCustomer.value = { name: '', email: '', phone: '', address: '' }
     showToast('Customer added successfully!', 'success')
+
   } catch (error) {
     console.error('Failed to add customer:', error)
     showToast('Failed to add customer.', 'error')
+
   } finally {
     stopLoading()
   }
@@ -291,25 +301,22 @@ const viewCustomer = (customerId: string) => {
 
 const updateCustomer = async () => {
   if (!editingCustomerId.value) return
-
   startLoading()
-  try {
-    const response = await axios.put(
-      `http://localhost:4000/customers/${editingCustomerId.value}`,
-      editForm.value
-    )
 
+  try {
+    const updated = await customerService.update(editingCustomerId.value, editForm.value)
     const index = customers.value.findIndex(c => c.id === editingCustomerId.value)
     if (index !== -1) {
-      customers.value[index] = response.data
+      customers.value[index] = updated
     }
-
     showEditModal.value = false
     editingCustomerId.value = null
     showToast('Customer updated successfully!', 'success')
+
   } catch (error) {
     console.error('Failed to update customer:', error)
     showToast('Failed to update customer.', 'error')
+
   } finally {
     stopLoading()
   }
@@ -320,6 +327,7 @@ watch(search, () => {
 })
 
 </script>
+
 
 <style scoped>
 .customers-container {

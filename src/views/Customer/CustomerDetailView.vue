@@ -198,10 +198,11 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import { customerService } from '@/services/customerService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer, StorageUnit } from '@/types'
@@ -229,43 +230,23 @@ onMounted(async () => {
 
 const loadCustomerData = async () => {
   startLoading()
+
   try {
     const customerId = route.params.id as string
-    
-    // Fetch customer details
-    const customerResponse = await axios.get(`http://localhost:4000/customers/${customerId}`)
-    customer.value = customerResponse.data
-
-    // Populate edit form
+    customer.value = await customerService.getById(customerId)
     editForm.value = {
       name: customer.value?.name ?? '',
       email: customer.value?.email ?? '',
       phone: customer.value?.phone ?? '',
       address: customer.value?.address ?? ''
     }
-
-    // Fetch all storage units and filter by customer name
-    const unitsResponse = await axios.get('http://localhost:4000/storageUnits')
-    
-    // Filter units where the customer field matches the customer's name
-    assignedUnits.value = unitsResponse.data.filter(
-      (unit: StorageUnit) => {
-        // Check if customer field exists and matches (case-insensitive and trimmed)
-        if (unit.customer && customer.value?.name) {
-          return unit.customer.trim().toLowerCase() === customer.value.name.trim().toLowerCase()
-        }
-        return false
-      }
-    )
-
-    console.log('Customer name:', customer.value?.name)
-    console.log('Assigned units:', assignedUnits.value)
-    
     showToast('Customer details loaded successfully!', 'success')
+    
   } catch (err) {
     error.value = 'Failed to load customer data.'
     showToast('Failed to load customer details.', 'error')
     console.error(err)
+
   } finally {
     stopLoading()
   }
@@ -273,43 +254,24 @@ const loadCustomerData = async () => {
 
 const updateCustomer = async () => {
   startLoading()
+
   try {
     const customerId = route.params.id as string
-    const oldCustomerName = customer.value?.name
-
-    await axios.put(`http://localhost:4000/customers/${customerId}`, editForm.value)
-    
-    // If the customer name changed, update all storage units that reference this customer
-    if (oldCustomerName && editForm.value.name !== oldCustomerName) {
-      const unitsResponse = await axios.get('http://localhost:4000/storageUnits')
-      const unitsToUpdate = unitsResponse.data.filter(
-        (unit: StorageUnit) => unit.customer === oldCustomerName
-      )
-
-      // Update each unit with the new customer name
-      for (const unit of unitsToUpdate) {
-        await axios.patch(`http://localhost:4000/storageUnits/${unit.id}`, {
-          customer: editForm.value.name
-        })
-      }
-    }
-
-    // Update local customer data
+    await customerService.update(customerId, editForm.value)
     if (customer.value) {
       customer.value.name = editForm.value.name
       customer.value.email = editForm.value.email
       customer.value.phone = editForm.value.phone
       customer.value.address = editForm.value.address
     }
-
-    // Reload customer data to refresh assigned units
     await loadCustomerData()
-
     showEditModal.value = false
     showToast('Customer updated successfully!', 'success')
+
   } catch (err) {
     showToast('Failed to update customer.', 'error')
     console.error(err)
+
   } finally {
     stopLoading()
   }
@@ -325,18 +287,20 @@ const deleteCustomer = async () => {
   startLoading()
   try {
     const customerId = route.params.id as string
-    await axios.delete(`http://localhost:4000/customers/${customerId}`)
-    
+    await customerService.delete(customerId)
     showToast('Customer deleted successfully!', 'success')
     router.push('/customers')
+
   } catch (err) {
     showToast('Failed to delete customer.', 'error')
     console.error(err)
+
   } finally {
     stopLoading()
   }
 }
 </script>
+
 
 <style scoped>
 .customer-detail-container {

@@ -354,6 +354,7 @@
   }
 </script>
 
+
 <style scoped>
 .add-storage-container {
   max-width: 1400px;

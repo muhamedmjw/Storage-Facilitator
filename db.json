@@ -17,18 +17,11 @@
   ],
   "customers": [
     {
-      "id": "1",
-      "name": "John Smith",
-      "email": "john.smith@email.com",
+      "name": "Test Test",
+      "email": "test.test@email.com",
       "phone": "07501234567",
-      "address": "123 Main Street, Erbil"
-    },
-    {
-      "id": "2",
-      "name": "Sarah Johnson",
-      "email": "sarah.j@email.com",
-      "phone": "07509876543",
-      "address": "456 Park Avenue, Erbil"
+      "address": "123 Main Street, Erbil",
+      "id": "1"
     },
     {
       "id": "3",
