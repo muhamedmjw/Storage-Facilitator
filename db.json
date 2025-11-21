@@ -62,14 +62,14 @@
       "building": "Main Facility",
       "accessInstructions": "Ground floor, first corridor on the right",
       "description": "Climate controlled, 24/7 access",
-      "customer": "John Smith",
-      "email": "john.smith@email.com",
-      "phone": "07501234567",
-      "address": "123 Main Street, Erbil",
+      "customer": "Ahmed Hassan",
+      "email": "ahmed.hassan@email.com",
+      "phone": "07502345678",
+      "address": "789 Garden Road, Erbil",
       "paymentStatus": "paid",
-      "startDate": "2025-11-20",
-      "nextPayment": "2025-12-20",
-      "createdAt": "2025-11-20"
+      "startDate": "2025-11-21",
+      "nextPayment": "2025-12-21",
+      "createdAt": "2025-11-21"
     },
     {
       "id": "2",
@@ -112,5 +112,22 @@
       "description": "Premium large unit"
     }
   ],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "1763737619412",
+      "customerId": "1",
+      "customerName": "Ahmed Hassan",
+      "storageId": "1",
+      "storageName": "A-101",
+      "amount": 150000,
+      "status": "DECLINED",
+      "paymentId": "b29a4308-2e98-4177-ad2a-f085bee54173",
+      "readableCode": "TBZR-IJZB-MNKW",
+      "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "validUntil": "2025-11-22T15:06:59.412Z",
+      "createdAt": "2025-11-21T15:06:59.412Z",
+      "updatedAt": "2025-11-21T15:14:33.785Z",
+      "paidAt": "2025-11-21T15:14:31.354Z"
+    }
+  ]
 }

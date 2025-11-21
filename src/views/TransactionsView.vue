@@ -120,21 +120,25 @@
         <form @submit.prevent="createPayment" class="modal-form">
           <div class="form-group">
             <label>Customer *</label>
-            <select v-model="form.customerId" required>
+            <select v-model="form.customerId" required @change="onCustomerChange">
               <option value="" disabled>Select customer</option>
-              <option v-for="c in customers" :key="c.id" :value="c.id">{{ c.name }}</option>
+              <option v-for="c in customersWithStorage" :key="c.id" :value="c.id">
+                {{ c.name }}
+              </option>
             </select>
           </div>
           <div class="form-group">
             <label>Storage Unit *</label>
-            <select v-model="form.storageId" required>
+            <select v-model="form.storageId" required @change="onStorageChange" :disabled="!form.customerId">
               <option value="" disabled>Select storage</option>
-              <option v-for="s in storages" :key="s.id" :value="s.id">{{ s.unitNumber }}</option>
+              <option v-for="s in customerStorages" :key="s.id" :value="s.id">
+                {{ s.unitNumber }} - {{ s.monthlyRate }} IQD
+              </option>
             </select>
           </div>
           <div class="form-group">
             <label>Amount (IQD) *</label>
-            <input v-model.number="form.amount" type="number" min="1" required>
+            <input v-model.number="form.amount" type="number" min="1" required readonly>
           </div>
           <div class="form-group">
             <label>Description</label>
@@ -191,30 +195,7 @@ const loadData = async () => {
     transactions.value = txData
 
     // Load customers
-    try {
-      const custResponse = await axios.get(`${API_URL}/customers`)
-      customers.value = custResponse.data
-      console.log('✅ Customers loaded:', customers.value.length)
-    } catch (err) {
-      console.warn('Could not load customers:', err)
-      customers.value = []
-    }
-
-    // Load storages - try different endpoint names
-    try {
-      const storResponse = await axios.get(`${API_URL}/storageUnits`)
-      storages.value = storResponse.data
-      console.log('✅ Storages loaded:', storages.value.length)
-    } catch {
-      try {
-        const storResponse = await axios.get(`${API_URL}/storages`)
-        storages.value = storResponse.data
-        console.log('✅ Storages loaded:', storages.value.length)
-      } catch (err2) {
-        console.warn('Could not load storages:', err2)
-        storages.value = []
-      }
-    }
+    await loadCustomersAndStorages()
 
     console.log('✅ Transactions loaded:', transactions.value.length)
     showToast('Data loaded successfully!', 'success')
@@ -223,6 +204,71 @@ const loadData = async () => {
     showToast('Some data could not be loaded', 'error')
   } finally {
     stopLoading()
+  }
+}
+
+// ✅ NEW: Separate function to reload customers and storages
+const loadCustomersAndStorages = async () => {
+  try {
+    const custResponse = await axios.get(`${API_URL}/customers`)
+    customers.value = custResponse.data
+    console.log('✅ Customers loaded:', customers.value.length)
+  } catch (err) {
+    console.warn('Could not load customers:', err)
+    customers.value = []
+  }
+
+  // Load storages - try different endpoint names
+  try {
+    const storResponse = await axios.get(`${API_URL}/storageUnits`)
+    storages.value = storResponse.data
+    console.log('✅ Storages loaded:', storages.value.length)
+  } catch {
+    try {
+      const storResponse = await axios.get(`${API_URL}/storages`)
+      storages.value = storResponse.data
+      console.log('✅ Storages loaded:', storages.value.length)
+    } catch (err2) {
+      console.warn('Could not load storages:', err2)
+      storages.value = []
+    }
+  }
+}
+
+// ✅ Only show customers who have at least one storage unit
+const customersWithStorage = computed(() => {
+  return customers.value.filter(customer => {
+    // Check if this customer has any storage units
+    return storages.value.some(storage => 
+      storage.customer === customer.name
+    )
+  })
+})
+
+// ✅ Get storage units for the selected customer only
+const customerStorages = computed(() => {
+  if (!form.value.customerId) return []
+  
+  const selectedCustomer = customers.value.find(c => c.id === form.value.customerId)
+  if (!selectedCustomer) return []
+
+  // Filter storages that belong to this customer
+  return storages.value.filter(storage =>
+    storage.customer === selectedCustomer.name 
+  )
+})
+
+// ✅ When customer changes, reset storage and amount
+const onCustomerChange = () => {
+  form.value.storageId = ''
+  form.value.amount = 0
+}
+
+// ✅ When storage is selected, auto-fill the monthly rent
+const onStorageChange = () => {
+  const selectedStorage = storages.value.find(s => s.id.toString() === form.value.storageId)
+  if (selectedStorage) {
+    form.value.amount = selectedStorage.monthlyRate
   }
 }
 
@@ -243,13 +289,15 @@ const paginatedTransactions = computed(() => {
   return filteredTransactions.value.slice(start, start + perPage.value)
 })
 
-const openCreateModal = () => {
-  if (customers.value.length === 0) {
-    showToast('No customers available. Please add customers first.', 'error')
-    return
-  }
-  if (storages.value.length === 0) {
-    showToast('No storage units available. Please add storage units first.', 'error')
+// ✅ MODIFIED: Reload data when opening modal to get latest customer assignments
+const openCreateModal = async () => {
+  // Reload customers and storages to get latest assignments
+  startLoading()
+  await loadCustomersAndStorages()
+  stopLoading()
+
+  if (customersWithStorage.value.length === 0) {
+    showToast('No customers with storage units available.', 'error')
     return
   }
   showCreateModal.value = true
@@ -311,15 +359,39 @@ const checkStatus = async (transaction: Transaction) => {
   if (!transaction.paymentId) return
   loading.value = true
   try {
+    // ✅ First, reload storage data to get latest customer assignments
+    await loadCustomersAndStorages()
+    
+    // ✅ Check if customer has been reassigned to this storage
+    const storage = storages.value.find(s => s.id.toString() === transaction.storageId)
+    let updatedCustomerName = transaction.customerName
+    
+    if (storage && storage.customer && storage.customer !== transaction.customerName) {
+      updatedCustomerName = storage.customer
+      console.log(`🔄 Customer reassigned: ${transaction.customerName} → ${storage.customer}`)
+    }
+    
+    // ✅ Check payment status with FIB
     const status = await paymentService.checkPaymentStatus(transaction.paymentId)
+    
+    // ✅ Update both status AND customer name
     const updated = await paymentService.update(transaction.id, {
       status: status.status,
-      paidAt: status.paidAt
+      paidAt: status.paidAt,
+      customerName: updatedCustomerName // Update customer name too
     })
+    
     const index = transactions.value.findIndex(t => t.id === transaction.id)
     if (index !== -1) transactions.value[index] = updated
-    showToast(`Status: ${status.status}`, 'success')
-  } catch {
+    
+    // ✅ Show appropriate message
+    if (updatedCustomerName !== transaction.customerName) {
+      showToast(`Status: ${status.status} | Customer updated to ${updatedCustomerName}`, 'success')
+    } else {
+      showToast(`Status: ${status.status}`, 'success')
+    }
+  } catch (error) {
+    console.error('Failed to check status:', error)
     showToast('Failed to check status', 'error')
   } finally {
     loading.value = false
@@ -370,6 +442,7 @@ const formatDate = (dateString: string) => {
 </script>
 
 <style scoped>
+/* Keep all your existing styles - they're perfect! */
 .transactions-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -728,6 +801,11 @@ const formatDate = (dateString: string) => {
   cursor: pointer;
 }
 
+.form-group select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .form-group input::placeholder {
   color: var(--color-text-lighter);
 }
@@ -737,6 +815,11 @@ const formatDate = (dateString: string) => {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(22, 26, 249, 0.1);
+}
+
+.form-group input[readonly] {
+  background-color: var(--color-hover);
+  cursor: not-allowed;
 }
 
 .modal-actions {
