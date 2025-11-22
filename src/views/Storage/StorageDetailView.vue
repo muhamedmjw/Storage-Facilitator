@@ -843,5 +843,4 @@ const handleDeleteUnit = async () => {
 </script>
 
 <style scoped src="../../assets/styles/pages/Storage/StorageDetailView.css">
-
 </style>
