@@ -71,6 +71,31 @@ export interface Payment {
   notes?: string;
 }
 
+// Transaction Payment (for First Iraqi Bank API)
+export interface Transaction {
+  id: string
+  customerId: string
+  customerName: string
+  storageId: string
+  storageName: string
+  amount: number
+  status: 'UNPAID' | 'PAID' | 'DECLINED'
+  paymentId?: string
+  readableCode?: string
+  qrCode?: string
+  validUntil?: string
+  paidAt?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CreateTransactionRequest {
+  customerId: string
+  storageId: string
+  amount: number
+  description?: string
+}
+
 // Rental
 export interface Rental {
   id: string;

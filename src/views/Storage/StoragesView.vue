@@ -205,22 +205,19 @@
     startLoading()
     try {
       const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
+
       if (Array.isArray(res.data)) {
         units.value = res.data
         showToast('Storage units loaded successfully!', 'success')
-      } else {
+      }
+      else {
         units.value = []
         showToast('No storage units found.', 'info')
       }
 
-      if (import.meta.env.DEV) {
-        console.log('Server returned:', res.data)
-      }
-    } catch (err: unknown) {
+      
+    } catch {
       showToast('Failed to load storage units.', 'error')
-      if (import.meta.env.DEV) {
-        console.error('Could not load units:', err)
-      }
       units.value = []
     } finally {
       stopLoading()
@@ -239,8 +236,8 @@
     router.push('/add-unit')
   }
 }
-
 </script>
+
 
 <style scoped>
 .units-container {

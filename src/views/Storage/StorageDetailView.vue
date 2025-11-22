@@ -623,14 +623,17 @@ const filteredCustomers = computed(() => {
 
 onMounted(async () => {
   startLoading()
+
   try {
     const id = route.params.id as string
     const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(id)
     unit.value = res.data
     showToast(`Loaded details for unit ${unit.value.unitNumber}`, 'success')
+
   } catch (err: unknown) {
     _error.value = err instanceof Error ? err.message : 'Failed to load unit data.'
     showToast('Failed to load unit details.', 'error')
+
   } finally {
     stopLoading()
   }
@@ -641,6 +644,7 @@ const loadCustomers = async () => {
   try {
     const response = await axios.get('http://localhost:4000/customers')
     customers.value = response.data
+    
   } catch (error) {
     console.error('Failed to load customers:', error)
     showToast('Failed to load customers.', 'error')

@@ -87,6 +87,25 @@
             <span>Customers</span>
           </router-link>
         </li>
+                <li>
+          <router-link
+            to="/transactions"
+            class="nav-item"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+            <span>Transactions</span>
+          </router-link>
+        </li>
       </ul>
     </nav>
   </aside>
