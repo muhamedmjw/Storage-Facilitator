@@ -310,7 +310,8 @@
 <script setup lang="ts">
   import { ref } from "vue"
   import { useRouter } from "vue-router"
-  import { storageService, type StorageUnit } from "@/services/storageService"
+  import { storageService } from '@/services/storageService'
+  import type { StorageUnit } from '@/types'
   import { useToast } from "@/composables/useToast"
   import { useLoading } from "@/composables/useLoading"
 
