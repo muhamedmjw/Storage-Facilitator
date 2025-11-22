@@ -2,16 +2,11 @@
 
 ## Introduction
 
-Storage is a lightweight and intuitive **storage facility management system** designed to simplify the day-to-day operations of small to medium-sized storage businesses. Many facilities still rely on outdated spreadsheets or paper records to track unit availability, rental agreements, and payments — which often leads to inefficiency, data loss, and errors. This project aims to provide a **modern web-based solution** that streamlines these processes without overwhelming users with unnecessary complexity.
+Storage is a lightweight and intuitive **storage facility management system** designed to simplify the day-to-day operations of small to medium-sized storage businesses. Many facilities still rely on outdated spreadsheets or paper records to track unit availability, rental agreements, and payments — which often leads to inefficiency, data loss, and errors. This project provides a **modern web-based solution** that streamlines these processes without overwhelming users with unnecessary complexity.
 
-The system allows managers and staff to easily view all storage units, assign them to customers, track payments, and access detailed records all from a single dashboard. By combining a clean interface with essential functionality, this project helps businesses **save time, reduce errors, and improve customer service**.
+The system allows managers and staff to easily view all storage units, assign them to customers, track payments, process transactions via FIB (First Iraqi Bank) payment integration, and access detailed records all from a single dashboard. By combining a clean interface with essential functionality, this project helps businesses **save time, reduce errors, and improve customer service**.
 
-Built with **Vue 3**, **TypeScript**, and **Vite**, the project emphasizes maintainability, scalability, and performance. Its modular design ensures that features like analytics, reporting, and online customer access can be easily added in future milestones. This project is part of an academic milestone.
-
----
-
-## Problem Statement
-Storage facility operators struggle with managing units, tracking rentals, monitoring payments, and maintaining customer records using outdated paper systems or complex enterprise software. These methods are time-consuming, error-prone, and lack real-time visibility into unit status. They need an intuitive, lightweight application that helps with facilitating operations without overwhelming staff with unnecessary features. This project is a modern, web-based platform designed to simplify the daily operations of self-storage facilities. It helps facility managers, staff, and owners efficiently manage unit availability, customer records, and rental payments all within a clean, intuitive interface built for speed and usability.
+Built with **Vue 3**, **TypeScript**, and **Vite**, the project emphasizes maintainability, scalability, and performance.
 
 ---
 
@@ -119,16 +114,79 @@ All type definitions are located in `src/types/index.ts`.
 - Status: Available, Occupied, or Reserved
 - Monthly rate and optional description
 
-**Rental** - Active rental agreements
-- Links customers to storage units
-- Tracks payment status and due dates
-
 **Payment** - Payment transaction records
 - Records payment amount, date, and method
 - Links to rental agreements
 
-**Note** - Internal staff notes about customers
-- Helps staff track communications and special requests
+---
+
+## Features
+
+### Core Features
+- **Dashboard Overview** - Real-time statistics on total units, available, occupied, and overdue units
+- **Storage Unit Management** - Create, view, edit, and delete storage units with detailed information
+- **Customer Management** - Full CRUD operations for customer profiles with contact details
+- **Customer Assignment** - Assign customers to storage units with rental start dates and automatic payment due date calculation
+- **Transaction Management** - Create and track payment transactions with status monitoring
+- **Role-Based Access Control** - Admin and Member roles with different permission levels
+- **Dark/Light Theme** - Toggle between dark and light modes with persistent preference
+- **Authentication System** - Login/Signup with session management and auto-logout
+
+### Technical Features
+- Toast notifications for user feedback
+- Global loading states
+- Search and filtering capabilities
+- Pagination for large datasets
+
+
+---
+
+## Project Structure
+
+```
+src/
+├── assets/
+│   └── styles/
+│       └── main.css          # Global styles with CSS variables for theming
+├── components/
+│   └── layout/
+│       ├── AppHeader.vue     # Header with logo, theme toggle, user info
+│       ├── AppSidebar.vue    # Navigation sidebar
+│       ├── AppFooter.vue     # Footer component
+│       └── AppLayout.vue     # Main layout wrapper with toast/loading
+├── composables/
+│   ├── useLoading.ts         # Global loading state management
+│   ├── usePermissions.ts     # Role-based permission checks
+│   └── useToast.ts           # Toast notification system
+├── router/
+│   └── index.ts              # Route definitions with guards
+├── services/
+│   ├── api.ts                # Axios instance with interceptors
+│   ├── customerService.ts    # Customer API operations
+│   ├── PaymentService.ts     # FIB payment integration (mock)
+│   └── storageService.ts     # Storage unit API operations
+├── stores/
+│   ├── authStore.ts          # Authentication state management
+│   ├── themeStore.ts         # Theme preference management
+│   └── index.ts              # Store exports
+├── types/
+│   └── index.ts              # TypeScript interfaces and enums
+├── views/
+│   ├── Customer/
+│   │   ├── CustomerDetailView.vue
+│   │   └── CustomersView.vue
+│   ├── Storage/
+│   │   ├── AddStorageView.vue
+│   │   ├── StorageDetailView.vue
+│   │   └── StoragesView.vue
+│   ├── Transaction/
+│   │   └── TransactionsView.vue
+│   ├── HomeView.vue
+│   ├── LoginView.vue
+│   └── SignUpView.vue
+├── App.vue                   # Root component
+└── main.ts                   # Application entry point
+```
 
 ---
 
@@ -139,58 +197,115 @@ All type definitions are located in `src/types/index.ts`.
 - npm or yarn
 
 ### Installation
-1. Clone the repository
+
+1. **Clone the repository**
 ```bash
 git clone https://github.com/muhamedmjw/Web-Application-Milestone-Project
 cd Web-Application-Milestone-Project
 ```
 
-2. Install dependencies
+2. **Install dependencies**
 ```bash
 npm install
-# or
-yarn
 ```
 
-3. Start the development server
+3. **Start the mock backend server**
+```bash
+npx json-server --watch db.json --port 4000
+```
+
+4. **Start the development server** (in a new terminal)
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open http://localhost:5173 in your browser
+5. **Open your browser**
+Navigate to `http://localhost:5173`
 
+### Demo Accounts
 
-5. Run the backend server
-`npx json-server --watch db.json --port 4000`
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@storage.com | admin123 |
+| Member | member@storage.com | member123 |
 
-### Available Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run type-check` - Run TypeScript type checking
-- `npm run lint` - Lint and fix code
+**Note:** Admin users have full access to create, edit, and delete storage units. Member users have read-only access with limited permissions.
+
+---
 
 ## Tech Stack
-- Vue 3 with Composition API
-- TypeScript for type safety
-- Vite for fast development
-- Vue Router for navigation
-- Pinia for state management
-- Axios for API requests
-- ESLint + Prettier for code quality
 
-## Project Structure
+| Category | Technology |
+|----------|------------|
+| Framework | Vue 3 (Composition API) |
+| Language | TypeScript |
+| Build Tool | Vite |
+| State Management | Pinia |
+| Routing | Vue Router |
+| HTTP Client | Axios |
+| Mock Backend | JSON Server |
+| Code Quality | ESLint + Prettier |
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run type-check` | Run TypeScript type checking |
+| `npm run lint` | Lint and fix code |
+
+---
+
+## API Endpoints (JSON Server)
+
+The application uses JSON Server as a mock backend. All data is stored in `db.json`.
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET/POST /users` | User accounts |
+| `GET/POST/PUT/DELETE /customers` | Customer management |
+| `GET/POST/PUT/DELETE /storageUnits` | Storage unit management |
+| `GET/POST/DELETE /transactions` | Payment transactions |
+| `GET /buildings` | Building information |
+
+
+---
+
+## Collaborators Guide
+
+### Setting Up Your Development Environment
+
+1. **Fork the repository** on GitHub
+
+2. **Clone your fork**
+```bash
+git clone https://github.com/YOUR_USERNAME/Web-Application-Milestone-Project
+cd Web-Application-Milestone-Project
 ```
-src/
-├── assets/          # Styles and static assets
-├── components/      # Reusable Vue components
-│   └── layout/      # Layout components (Header, Sidebar, Footer)
-├── router/          # Vue Router configuration
-├── stores/          # Pinia stores
-├── types/           # TypeScript type definitions
-├── views/           # Page components
-├── App.vue          # Root component
-└── main.ts          # Application entry point
+
+3. **Install dependencies**
+```bash
+npm install
 ```
+
+4. **Create a new branch for your feature**
+```bash
+git checkout -b feature/your-feature-name
+```
+
+5. **Commit your changes**
+```bash
+git add .
+git commit -m "feat: add your feature description"
+```
+
+6. **Push to your clone**
+```bash
+git push origin feature/your-feature-name
+```
+
+7. **Create a Pull Request** on GitHub
