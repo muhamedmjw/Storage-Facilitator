@@ -568,9 +568,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import type { AxiosResponse } from 'axios'
 import { storageService } from '@/services/storageService'
-import type { StorageUnit } from '@/services/storageService'
+import type { StorageUnit } from '@/types'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
@@ -591,7 +590,7 @@ const editForm = ref({
   unitNumber: '',
   size: '',
   monthlyRate: 0,
-  status: 'available' as 'available' | 'occupied' | 'overdue',
+  status: 'available' as 'available' | 'occupied' | 'overdue' | 'reserved',
   paymentStatus: 'available' as string,
   building: '',
   accessInstructions: '',
@@ -626,8 +625,7 @@ onMounted(async () => {
 
   try {
     const id = route.params.id as string
-    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(id)
-    unit.value = res.data
+    unit.value = await storageService.getUnitById(id)
     showToast(`Loaded details for unit ${unit.value.unitNumber}`, 'success')
 
   } catch (err: unknown) {
@@ -669,7 +667,7 @@ const openEditModal = () => {
       unitNumber: unit.value.unitNumber || '',
       size: unit.value.size || '',
       monthlyRate: unit.value.monthlyRate || 0,
-      status: unit.value.status || 'available',
+      status: (unit.value.status as 'available' | 'occupied' | 'overdue' | 'reserved') || 'available',
       paymentStatus: unit.value.paymentStatus || unit.value.status || 'available',
       building: unit.value.building || '',
       accessInstructions: unit.value.accessInstructions || '',
@@ -713,8 +711,7 @@ const handleUpdateUnit = async () => {
     await storageService.updateUnit(unit.value.id, payload)
     
     // Reload unit data
-    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(unit.value.id.toString())
-    unit.value = res.data
+    unit.value = await storageService.getUnitById(unit.value.id.toString())
     
     showToast('Storage unit updated successfully!', 'success')
     closeEditModal()
@@ -806,8 +803,7 @@ const handleAssignCustomer = async () => {
     await axios.patch(`http://localhost:4000/storageUnits/${unit.value.id}`, payload)
     
     // Reload unit data
-    const res: AxiosResponse<StorageUnit> = await storageService.getUnitById(unit.value.id.toString())
-    unit.value = res.data
+    unit.value = await storageService.getUnitById(unit.value.id.toString())
     
     showToast(`Customer ${selectedCustomer.name} assigned successfully!`, 'success')
     closeAssignCustomerModal()

@@ -31,11 +31,7 @@ export interface Building {
 }
 
 // Storage Unit
-export enum UnitStatus {
-  AVAILABLE = 'available',
-  OCCUPIED = 'occupied',
-  RESERVED = 'reserved'
-}
+export type UnitStatus = 'available' | 'occupied' | 'overdue' | 'reserved';
 
 export enum UnitSize {
   SMALL = '5x5',
@@ -45,16 +41,23 @@ export enum UnitSize {
 }
 
 export interface StorageUnit {
-  id: number
-  unitNumber: string
-  size: string
-  monthlyRate: number
-  status: 'available' | 'occupied' | 'overdue' | string
-  building?: string
-  unit?: string
-  customer?: string
+  id: number;
+  unitNumber: string;
+  size: string;
+  status: UnitStatus;
+  monthlyRate: number;
+  building?: string;
+  customer?: string;
+  startDate?: string;
+  nextPayment?: string;
+  accessInstructions?: string;
+  description?: string;
+  paymentStatus?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  createdAt?: string;
 }
-
 
 // Payment
 export enum PaymentStatus {
@@ -73,27 +76,27 @@ export interface Payment {
 
 // Transaction Payment (for First Iraqi Bank API)
 export interface Transaction {
-  id: string
-  customerId: string
-  customerName: string
-  storageId: string
-  storageName: string
-  amount: number
-  status: 'UNPAID' | 'PAID' | 'DECLINED'
-  paymentId?: string
-  readableCode?: string
-  qrCode?: string
-  validUntil?: string
-  paidAt?: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  customerId: string;
+  customerName: string;
+  storageId: string;
+  storageName: string;
+  amount: number;
+  status: 'UNPAID' | 'PAID' | 'DECLINED';
+  paymentId?: string;
+  readableCode?: string;
+  qrCode?: string;
+  validUntil?: string;
+  paidAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateTransactionRequest {
-  customerId: string
-  storageId: string
-  amount: number
-  description?: string
+  customerId: string;
+  storageId: string;
+  amount: number;
+  description?: string;
 }
 
 // Rental

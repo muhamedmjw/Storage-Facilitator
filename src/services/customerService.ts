@@ -1,31 +1,53 @@
-import axios from 'axios'
+import { api } from './api'
 import type { Customer } from '@/types'
 
-const API_URL = 'http://localhost:4000/customers'
-
 export const customerService = {
-  async getAll() {
-    const response = await axios.get<Customer[]>(API_URL)
-    return response.data
+  async getAll(): Promise<Customer[]> {
+    try {
+      const response = await api.get<Customer[]>('/customers')
+      return response.data
+    } catch (error) {
+      console.error('[CustomerService] Error fetching customers:', error)
+      throw error
+    }
   },
 
-  async add(customer: Omit<Customer, 'id'>) {
-    const response = await axios.post<Customer>(API_URL, customer)
-    return response.data
+  async getById(id: string): Promise<Customer> {
+    try {
+      const response = await api.get<Customer>(`/customers/${id}`)
+      return response.data
+    } catch (error) {
+      console.error(`[CustomerService] Error fetching customer ${id}:`, error)
+      throw error
+    }
   },
 
-  async update(id: string, customer: Partial<Customer>) {
-    const response = await axios.put<Customer>(`${API_URL}/${id}`, customer)
-    return response.data
+  async add(customer: Omit<Customer, 'id'>): Promise<Customer> {
+    try {
+      const response = await api.post<Customer>('/customers', customer)
+      return response.data
+    } catch (error) {
+      console.error('[CustomerService] Error adding customer:', error)
+      throw error
+    }
   },
 
-  async getById(id: string) {
-    const response = await axios.get<Customer>(`${API_URL}/${id}`)
-    return response.data
+  async update(id: string, customer: Partial<Customer>): Promise<Customer> {
+    try {
+      const response = await api.put<Customer>(`/customers/${id}`, customer)
+      return response.data
+    } catch (error) {
+      console.error(`[CustomerService] Error updating customer ${id}:`, error)
+      throw error
+    }
   },
 
-  async delete(id: string) {
-    const response = await axios.delete(`${API_URL}/${id}`)
-    return response.data
+  async delete(id: string): Promise<void> {
+    try {
+      await api.delete(`/customers/${id}`)
+    } catch (error) {
+      console.error(`[CustomerService] Error deleting customer ${id}:`, error)
+      throw error
+    }
   }
 }

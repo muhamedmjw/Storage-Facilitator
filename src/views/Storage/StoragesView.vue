@@ -188,8 +188,8 @@
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import type { AxiosResponse } from 'axios'
-  import { storageService, type StorageUnit } from '@/services/storageService'
+  import { storageService } from '@/services/storageService'
+  import type { StorageUnit } from '@/types'
   import { useToast } from '@/composables/useToast'
   import { useLoading } from '@/composables/useLoading'
   import { usePermissions } from '@/composables/usePermissions'
@@ -204,18 +204,15 @@
   onMounted(async () => {
     startLoading()
     try {
-      const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
-
-      if (Array.isArray(res.data)) {
-        units.value = res.data
-        showToast('Storage units loaded successfully!', 'success')
+      const data = await storageService.getUnits()
+      if (Array.isArray(data)) {
+        units.value = data
       }
       else {
         units.value = []
         showToast('No storage units found.', 'info')
       }
 
-      
     } catch {
       showToast('Failed to load storage units.', 'error')
       units.value = []

@@ -1,42 +1,53 @@
-import {api} from './api' // ✅ make default import consistent with your api.ts
-import type { AxiosResponse } from 'axios'
+import { api } from './api'
+import type { StorageUnit } from '@/types'
 
-export interface StorageUnit {
-  id: number
-  unitNumber: string
-  size: string
-  status: 'available' | 'occupied' | 'overdue'
-  monthlyRate: number
-  building?: string
-  customer?: string
-  startDate?: string
-  nextPayment?: string
-  accessInstructions?: string
-  description?: string
-  paymentStatus?: string
-  email?: string
-  phone?: string
-  address?: string
-  createdAt?: string
-}
-
-// ✅ Cleaned up & fully typed service
 export const storageService = {
-  getUnits: (): Promise<AxiosResponse<StorageUnit[]>> =>
-    api.get('/storageUnits'),
+  async getUnits(): Promise<StorageUnit[]> {
+    try {
+      const response = await api.get<StorageUnit[]>('/storageUnits')
+      return response.data
+    } catch (error) {
+      console.error('[StorageService] Error fetching units:', error)
+      throw error
+    }
+  },
 
-  getUnitById: (id: number | string): Promise<AxiosResponse<StorageUnit>> =>
-    api.get(`/storageUnits/${id}`),
+  async getUnitById(id: number | string): Promise<StorageUnit> {
+    try {
+      const response = await api.get<StorageUnit>(`/storageUnits/${id}`)
+      return response.data
+    } catch (error) {
+      console.error(`[StorageService] Error fetching unit ${id}:`, error)
+      throw error
+    }
+  },
 
-  addUnit: (data: Partial<StorageUnit>): Promise<AxiosResponse<StorageUnit>> =>
-    api.post('/storageUnits', data),
+  async addUnit(data: Partial<StorageUnit>): Promise<StorageUnit> {
+    try {
+      const response = await api.post<StorageUnit>('/storageUnits', data)
+      return response.data
+    } catch (error) {
+      console.error('[StorageService] Error adding unit:', error)
+      throw error
+    }
+  },
 
-  updateUnit: (
-    id: number | string,
-    data: Partial<StorageUnit>
-  ): Promise<AxiosResponse<StorageUnit>> =>
-    api.put(`/storageUnits/${id}`, data),
+  async updateUnit(id: number | string, data: Partial<StorageUnit>): Promise<StorageUnit> {
+    try {
+      const response = await api.put<StorageUnit>(`/storageUnits/${id}`, data)
+      return response.data
+    } catch (error) {
+      console.error(`[StorageService] Error updating unit ${id}:`, error)
+      throw error
+    }
+  },
 
-  deleteUnit: (id: number | string): Promise<AxiosResponse<void>> =>
-    api.delete(`/storageUnits/${id}`),
+  async deleteUnit(id: number | string): Promise<void> {
+    try {
+      await api.delete(`/storageUnits/${id}`)
+    } catch (error) {
+      console.error(`[StorageService] Error deleting unit ${id}:`, error)
+      throw error
+    }
+  }
 }

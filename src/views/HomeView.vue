@@ -139,9 +139,8 @@
 
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue'
-  import type { AxiosResponse } from 'axios'
   import { storageService } from '@/services/storageService'
-  import type { StorageUnit } from '@/services/storageService'
+  import type { StorageUnit } from '@/types'
   import { useToast } from '@/composables/useToast'
   import { useLoading } from '@/composables/useLoading'
 
@@ -153,12 +152,14 @@
   onMounted(async () => {
     startLoading()
     try {
-      const res: AxiosResponse<StorageUnit[]> = await storageService.getUnits()
-      units.value = Array.isArray(res.data) ? res.data : []
+      const data = await storageService.getUnits()
+      units.value = Array.isArray(data) ? data : []
       showToast('Home page loaded successfully!', 'success')
+
     } catch (err: unknown) {
       _error.value = err instanceof Error ? err.message : 'Failed to fetch units.'
       showToast('Failed to load storage units.', 'error')
+
     } finally {
       stopLoading()
     }
