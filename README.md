@@ -163,7 +163,7 @@ src/
 ├── services/
 │   ├── api.ts                # Axios instance with interceptors
 │   ├── customerService.ts    # Customer API operations
-│   ├── PaymentService.ts     # FIB payment integration (mock)
+│   ├── PaymentService.ts     # Transaction API operations
 │   └── storageService.ts     # Storage unit API operations
 ├── stores/
 │   ├── authStore.ts          # Authentication state management
