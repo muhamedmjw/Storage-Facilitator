@@ -74,7 +74,7 @@
             id="name"
             v-model="formData.name"
             type="text"
-            placeholder="John Doe"
+            placeholder=""
             required
             minlength="2"
           />
@@ -86,7 +86,7 @@
             id="email"
             v-model="formData.email"
             type="email"
-            placeholder="john@example.com"
+            placeholder="email@example.com"
             required
           />
         </div>
