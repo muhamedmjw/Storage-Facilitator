@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/signup',
     name: 'signup',
-    component: () => import('@/views/SignUpView.vue'),
+    component: () => import('@/views/SignupView.vue'),
     meta: { requiresAuth: false }
   },
   // Protected routes
