@@ -326,6 +326,6 @@ const deleteCustomer = async () => {
 </script>
 
 
-<style scoped src="../../assets/styles/pages/customer/CustomerDetailView.css">
+<style scoped src="../../assets/styles/pages/Customer/CustomerDetailView.css">
 
 </style>
