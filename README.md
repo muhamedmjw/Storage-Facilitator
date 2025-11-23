@@ -291,8 +291,8 @@ The application uses JSON Server as a mock backend. All data is stored in `db.js
 
 2. **Clone your fork**
 ```bash
-git clone https://github.com/YOUR_USERNAME/Web-Application-Milestone-Project
-cd Web-Application-Milestone-Project
+git clone https://github.com/muhamedmjw/Storage-Facilitator.git
+cd Storage-Facilitator-main
 ```
 
 3. **Install dependencies**
