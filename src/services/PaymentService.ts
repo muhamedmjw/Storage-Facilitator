@@ -15,41 +15,11 @@ let accessToken: string | null = null
 let tokenExpiry: number | null = null
 
 
-function generateMockQRCode(code: string): string {
-  const svg = `
-    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="200" fill="white"/>
-      <rect x="20" y="20" width="30" height="30" fill="black"/>
-      <rect x="60" y="20" width="30" height="30" fill="black"/>
-      <rect x="100" y="20" width="30" height="30" fill="black"/>
-      <rect x="140" y="20" width="30" height="30" fill="black"/>
+function generateMockQRCode(_code: string): string {
 
-      <rect x="20" y="60" width="30" height="30" fill="black"/>
-      <rect x="60" y="60" width="30" height="30" fill="black"/>
-      <rect x="100" y="60" width="30" height="30" fill="black"/>
-      <rect x="140" y="60" width="30" height="30" fill="black"/>
-
-      <rect x="20" y="100" width="30" height="30" fill="black"/>
-      <rect x="60" y="100" width="30" height="30" fill="black"/>
-      <rect x="100" y="100" width="30" height="30" fill="black"/>
-      <rect x="140" y="100" width="30" height="30" fill="black"/>
-
-      <rect x="20" y="140" width="30" height="30" fill="black"/>
-      <rect x="60" y="140" width="30" height="30" fill="black"/>
-      <rect x="100" y="140" width="30" height="30" fill="black"/>
-      <rect x="140" y="140" width="30" height="30" fill="black"/>
-      <text x="100" y="190" text-anchor="middle" font-size="12" fill="black">${code}</text>
-    </svg>
-  `
-  return `data:image/svg+xml;base64,${btoa(svg)}`
-
-    //   fibData = await fibRequest('/payments', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     monetaryValue: { amount: "150.00", currency: 'IQD' },
-    //     description: 'Storage rent payment'
-    //   })
-    // }) 
+  const imagePath = '../../public/images/mock-qr.png'
+  
+  return imagePath
 }
 
 function generatePaymentCode(): string {
