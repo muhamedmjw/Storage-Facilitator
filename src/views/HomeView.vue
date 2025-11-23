@@ -129,7 +129,7 @@
             v-if="overdueList.length === 0"
             class="empty-state"
           >
-            <p>No overdue payments</p>
+            <p>No overdue payments 🎉</p>
           </div>
         </div>
       </section>

@@ -329,6 +329,6 @@ watch(search, () => {
 </script>
 
 
-<style scoped src="../../assets/styles/pages/Customer/CustomersView.css">
+<style scoped src="../../assets/styles/pages/customer/CustomersView.css">
 
 </style>

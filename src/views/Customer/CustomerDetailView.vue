@@ -203,7 +203,6 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { customerService } from '@/services/customerService'
-import { storageService } from '@/services/storageService'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer, StorageUnit } from '@/types'
@@ -235,10 +234,6 @@ const loadCustomerData = async () => {
   try {
     const customerId = route.params.id as string
     customer.value = await customerService.getById(customerId)
-    
-    // Fetch assigned storage units for this customer
-    await loadAssignedUnits()
-    
     editForm.value = {
       name: customer.value?.name ?? '',
       email: customer.value?.email ?? '',
@@ -254,25 +249,6 @@ const loadCustomerData = async () => {
 
   } finally {
     stopLoading()
-  }
-}
-
-const loadAssignedUnits = async () => {
-  try {
-    if (!customer.value) return
-    
-    // Get all storage units
-    const allUnits = await storageService.getUnits()
-    
-    // Filter units assigned to this customer by matching customer name or email
-    assignedUnits.value = allUnits.filter(unit => 
-      unit.customer === customer.value?.name || 
-      unit.email === customer.value?.email
-    )
-    
-  } catch (err) {
-    console.error('Failed to load assigned units:', err)
-    assignedUnits.value = []
   }
 }
 
@@ -326,6 +302,6 @@ const deleteCustomer = async () => {
 </script>
 
 
-<style scoped src="../../assets/styles/pages/Customer/CustomerDetailView.css">
+<style scoped src="../../assets/styles/pages/customer/CustomerDetailView.css">
 
 </style>
