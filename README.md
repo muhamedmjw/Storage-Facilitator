@@ -79,24 +79,16 @@ These wireframes show the early design concepts for the application layout, incl
 
 ![Storage Facilitator ER Diagram](./docs/diagram/erd.png)
 
-*The diagram above shows the relationships between the 6 core entities in the Storage Facilitator system.*
+*The diagram above shows the relationships between all 7 core entities in the Storage Facilitator system.*
 
 **Key Relationships:**
-- Building to Storage Units: One Building contains many Storage Units (1:M).
-- Customer to Storage Units: One Customer can be associated with multiple Storage Units (1:M).
-    - Note: The StorageUnit entity directly links to the Customer via customerId, indicating current tenancy.
-- Customer to Transactions: One Customer can generate multiple Transactions (1:M).
-- Storage Unit to Transactions: One Storage Unit is associated with multiple historical Transactions (1:M).
-- User to Notes: One User (Staff) can create multiple Notes (1:M).
-- Customer to Notes: One Customer can have multiple Notes attached to their profile (1:M).
+- One Building contains many Storage Units (1:M)
+- One Customer can have multiple Rentals over time (1:M)
+- One Storage Unit can have multiple Rentals over time (1:M)
+- One Rental generates multiple Payments (1:M)
+- One Customer can have multiple Notes (1:M)
+- Staff members (Users) create Notes about customers (1:M)
 
-**Entity Breakdown:**
-- User: System access, roles, and authentication.
-- Note: Internal records created by Users regarding specific Customers.
-- Customer: Personal details and contact information.
-- Transaction: Financial records linking amounts, payment methods (qrCode), and status to specific Customers and Storage Units.
-- Building: Physical locations containing units.
-- StorageUnit: Specific rentable spaces, tracking size, rates, and current tenant info (customerId, nextPayment).
 ---
 
 ### Entity Types
@@ -291,8 +283,8 @@ The application uses JSON Server as a mock backend. All data is stored in `db.js
 
 2. **Clone your fork**
 ```bash
-git clone https://github.com/muhamedmjw/Storage-Facilitator.git
-cd Storage-Facilitator-main
+git clone https://github.com/YOUR_USERNAME/Web-Application-Milestone-Project
+cd Web-Application-Milestone-Project
 ```
 
 3. **Install dependencies**
