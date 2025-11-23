@@ -16,18 +16,33 @@
       :checked="isChecked"
       :disabled="disabled"
       :required="required"
+      :aria-label="ariaLabel || label"
+      :aria-describedby="describedBy"
+      :aria-invalid="error ? 'true' : 'false'"
+      :aria-required="required"
+      :aria-disabled="disabled"
       class="ui-radio__input"
       @change="handleChange"
     />
-    <span class="ui-radio__checkmark"></span>
+    <span class="ui-radio__checkmark" aria-hidden="true"></span>
     <span v-if="label" class="ui-radio__label">
       {{ label }}
-      <span v-if="required" class="ui-radio__required">*</span>
+      <span v-if="required" class="ui-radio__required" aria-label="required">*</span>
     </span>
     <slot></slot>
   </label>
-  <span v-if="error" class="ui-radio__error">{{ error }}</span>
-  <span v-else-if="hint" class="ui-radio__hint">{{ hint }}</span>
+  <span
+    v-if="error"
+    :id="errorId"
+    class="ui-radio__error"
+    role="alert"
+    aria-live="polite"
+  >{{ error }}</span>
+  <span
+    v-else-if="hint"
+    :id="hintId"
+    class="ui-radio__hint"
+  >{{ hint }}</span>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +58,7 @@ interface Props {
   disabled?: boolean
   required?: boolean
   id?: string
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,6 +72,15 @@ const emit = defineEmits<{
 }>()
 
 const radioId = computed(() => props.id || `ui-radio-${Math.random().toString(36).substr(2, 9)}`)
+const errorId = computed(() => `${radioId.value}-error`)
+const hintId = computed(() => `${radioId.value}-hint`)
+
+const describedBy = computed(() => {
+  const ids: string[] = []
+  if (props.error) ids.push(errorId.value)
+  if (props.hint && !props.error) ids.push(hintId.value)
+  return ids.length > 0 ? ids.join(' ') : undefined
+})
 
 const isChecked = computed(() => {
   return props.modelValue === props.value
@@ -120,8 +145,13 @@ const handleChange = (event: Event) => {
   background-color: var(--color-primary);
 }
 
-.ui-radio__input:focus ~ .ui-radio__checkmark {
-  box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.1);
+.ui-radio__input:focus-visible ~ .ui-radio__checkmark {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-radio__input:focus:not(:focus-visible) ~ .ui-radio__checkmark {
+  outline: none;
 }
 
 .ui-radio--error .ui-radio__checkmark {
@@ -154,3 +184,4 @@ const handleChange = (event: Event) => {
   margin-top: 0.375rem;
 }
 </style>
+

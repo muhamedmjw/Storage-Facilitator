@@ -14,18 +14,33 @@
       :checked="modelValue"
       :disabled="disabled"
       :required="required"
+      :aria-label="ariaLabel || label"
+      :aria-describedby="describedBy"
+      :aria-invalid="error ? 'true' : 'false'"
+      :aria-required="required"
+      :aria-disabled="disabled"
       class="ui-checkbox__input"
       @change="handleChange"
     />
-    <span class="ui-checkbox__checkmark"></span>
+    <span class="ui-checkbox__checkmark" aria-hidden="true"></span>
     <span v-if="label" class="ui-checkbox__label">
       {{ label }}
-      <span v-if="required" class="ui-checkbox__required">*</span>
+      <span v-if="required" class="ui-checkbox__required" aria-label="required">*</span>
     </span>
     <slot></slot>
   </label>
-  <span v-if="error" class="ui-checkbox__error">{{ error }}</span>
-  <span v-else-if="hint" class="ui-checkbox__hint">{{ hint }}</span>
+  <span
+    v-if="error"
+    :id="errorId"
+    class="ui-checkbox__error"
+    role="alert"
+    aria-live="polite"
+  >{{ error }}</span>
+  <span
+    v-else-if="hint"
+    :id="hintId"
+    class="ui-checkbox__hint"
+  >{{ hint }}</span>
 </template>
 
 <script setup lang="ts">
@@ -39,6 +54,7 @@ interface Props {
   disabled?: boolean
   required?: boolean
   id?: string
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,6 +68,15 @@ const emit = defineEmits<{
 }>()
 
 const checkboxId = computed(() => props.id || `ui-checkbox-${Math.random().toString(36).substr(2, 9)}`)
+const errorId = computed(() => `${checkboxId.value}-error`)
+const hintId = computed(() => `${checkboxId.value}-hint`)
+
+const describedBy = computed(() => {
+  const ids: string[] = []
+  if (props.error) ids.push(errorId.value)
+  if (props.hint && !props.error) ids.push(hintId.value)
+  return ids.length > 0 ? ids.join(' ') : undefined
+})
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -114,8 +139,13 @@ const handleChange = (event: Event) => {
   transform: rotate(45deg);
 }
 
-.ui-checkbox__input:focus ~ .ui-checkbox__checkmark {
-  box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.1);
+.ui-checkbox__input:focus-visible ~ .ui-checkbox__checkmark {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-checkbox__input:focus:not(:focus-visible) ~ .ui-checkbox__checkmark {
+  outline: none;
 }
 
 .ui-checkbox--error .ui-checkbox__checkmark {
@@ -148,3 +178,4 @@ const handleChange = (event: Event) => {
   margin-top: 0.375rem;
 }
 </style>
+

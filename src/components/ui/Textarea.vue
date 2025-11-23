@@ -12,6 +12,12 @@
       :readonly="readonly"
       :required="required"
       :rows="rows"
+      :aria-label="ariaLabel || label"
+      :aria-describedby="describedBy"
+      :aria-invalid="error ? 'true' : 'false'"
+      :aria-required="required"
+      :aria-disabled="disabled"
+      :maxlength="maxLength"
       :class="[
         'ui-textarea',
         {
@@ -23,9 +29,24 @@
       @focus="handleFocus"
     ></textarea>
     <div class="ui-textarea__footer">
-      <span v-if="error" class="ui-textarea__error">{{ error }}</span>
-      <span v-else-if="hint" class="ui-textarea__hint">{{ hint }}</span>
-      <span v-if="maxLength" class="ui-textarea__counter">
+      <span
+        v-if="error"
+        :id="errorId"
+        class="ui-textarea__error"
+        role="alert"
+        aria-live="polite"
+      >{{ error }}</span>
+      <span
+        v-else-if="hint"
+        :id="hintId"
+        class="ui-textarea__hint"
+      >{{ hint }}</span>
+      <span
+        v-if="maxLength"
+        :id="counterId"
+        class="ui-textarea__counter"
+        :aria-live="maxLength ? 'polite' : undefined"
+      >
         {{ currentLength }} / {{ maxLength }}
       </span>
     </div>
@@ -47,6 +68,7 @@ interface Props {
   rows?: number
   maxLength?: number
   id?: string
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -63,9 +85,20 @@ const emit = defineEmits<{
 }>()
 
 const textareaId = computed(() => props.id || `ui-textarea-${Math.random().toString(36).substr(2, 9)}`)
+const errorId = computed(() => `${textareaId.value}-error`)
+const hintId = computed(() => `${textareaId.value}-hint`)
+const counterId = computed(() => `${textareaId.value}-counter`)
 
 const currentLength = computed(() => {
   return props.modelValue?.length || 0
+})
+
+const describedBy = computed(() => {
+  const ids: string[] = []
+  if (props.error) ids.push(errorId.value)
+  if (props.hint && !props.error) ids.push(hintId.value)
+  if (props.maxLength) ids.push(counterId.value)
+  return ids.length > 0 ? ids.join(' ') : undefined
 })
 
 const handleInput = (event: Event) => {
@@ -121,6 +154,15 @@ const handleFocus = (event: FocusEvent) => {
   box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.1);
 }
 
+.ui-textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-textarea:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .ui-textarea--error {
   border-color: var(--color-error);
 }
@@ -162,3 +204,4 @@ const handleFocus = (event: FocusEvent) => {
   margin-left: auto;
 }
 </style>
+

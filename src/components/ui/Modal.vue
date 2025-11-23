@@ -1,8 +1,18 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="modelValue" class="ui-modal-overlay" @click="handleOverlayClick">
+      <div
+        v-if="modelValue"
+        class="ui-modal-overlay"
+        role="dialog"
+        :aria-modal="true"
+        :aria-labelledby="title ? modalTitleId : undefined"
+        :aria-describedby="modalBodyId"
+        @click="handleOverlayClick"
+        @keydown="handleKeyDown"
+      >
         <div
+          ref="modalRef"
           :class="[
             'ui-modal',
             `ui-modal--${size}`
@@ -10,19 +20,21 @@
           @click.stop
         >
           <div class="ui-modal__header">
-            <h2 v-if="title" class="ui-modal__title">{{ title }}</h2>
+            <h2 v-if="title" :id="modalTitleId" class="ui-modal__title">{{ title }}</h2>
             <button
               v-if="closable"
+              ref="closeButtonRef"
               class="ui-modal__close"
               @click="handleClose"
               aria-label="Close modal"
+              type="button"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
-          <div class="ui-modal__body">
+          <div :id="modalBodyId" class="ui-modal__body">
             <slot></slot>
           </div>
           <div v-if="$slots.footer" class="ui-modal__footer">
@@ -35,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+
 interface Props {
   modelValue: boolean
   title?: string
@@ -54,9 +68,20 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const modalRef = ref<HTMLElement | null>(null)
+const closeButtonRef = ref<HTMLButtonElement | null>(null)
+const previousActiveElement = ref<HTMLElement | null>(null)
+
+const modalTitleId = computed(() => `modal-title-${Math.random().toString(36).substr(2, 9)}`)
+const modalBodyId = computed(() => `modal-body-${Math.random().toString(36).substr(2, 9)}`)
+
 const handleClose = () => {
   emit('update:modelValue', false)
   emit('close')
+  // Restore focus to previous element
+  if (previousActiveElement.value) {
+    previousActiveElement.value.focus()
+  }
 }
 
 const handleOverlayClick = () => {
@@ -64,6 +89,70 @@ const handleOverlayClick = () => {
     handleClose()
   }
 }
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  // Close on Escape key
+  if (event.key === 'Escape' && props.closable) {
+    handleClose()
+  }
+  
+  // Trap focus within modal (Tab key)
+  if (event.key === 'Tab' && modalRef.value) {
+    const focusableElements = modalRef.value.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstElement = focusableElements[0] as HTMLElement
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+
+    if (event.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      }
+    } else {
+      // Tab
+      if (document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+  }
+}
+
+// Focus management
+watch(() => props.modelValue, async (isOpen) => {
+  if (isOpen) {
+    // Store current active element
+    previousActiveElement.value = document.activeElement as HTMLElement
+    
+    await nextTick()
+    // Focus first focusable element or close button
+    if (closeButtonRef.value) {
+      closeButtonRef.value.focus()
+    } else if (modalRef.value) {
+      const firstFocusable = modalRef.value.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      ) as HTMLElement
+      if (firstFocusable) {
+        firstFocusable.focus()
+      }
+    }
+  }
+})
+
+// Prevent body scroll when modal is open
+watch(() => props.modelValue, (isOpen) => {
+  if (isOpen) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
+onUnmounted(() => {
+  document.body.style.overflow = ''
+})
 </script>
 
 <script lang="ts">
@@ -148,6 +237,15 @@ export default {
   color: var(--color-text);
 }
 
+.ui-modal__close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-modal__close:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .ui-modal__body {
   padding: 1.5rem;
   overflow-y: auto;
@@ -185,3 +283,4 @@ export default {
   opacity: 0;
 }
 </style>
+

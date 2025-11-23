@@ -10,6 +10,11 @@
         :value="modelValue"
         :disabled="disabled"
         :required="required"
+        :aria-label="ariaLabel || label"
+        :aria-describedby="describedBy"
+        :aria-invalid="error ? 'true' : 'false'"
+        :aria-required="required"
+        :aria-disabled="disabled"
         :class="[
           'ui-select',
           {
@@ -29,14 +34,24 @@
           {{ getOptionLabel(option) }}
         </option>
       </select>
-      <span class="ui-select__icon">
+      <span class="ui-select__icon" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
     </div>
-    <span v-if="error" class="ui-select__error">{{ error }}</span>
-    <span v-else-if="hint" class="ui-select__hint">{{ hint }}</span>
+    <span
+      v-if="error"
+      :id="errorId"
+      class="ui-select__error"
+      role="alert"
+      aria-live="polite"
+    >{{ error }}</span>
+    <span
+      v-else-if="hint"
+      :id="hintId"
+      class="ui-select__hint"
+    >{{ hint }}</span>
   </div>
 </template>
 
@@ -56,6 +71,7 @@ interface Props {
   disabled?: boolean
   required?: boolean
   id?: string
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,6 +86,15 @@ const emit = defineEmits<{
 }>()
 
 const selectId = computed(() => props.id || `ui-select-${Math.random().toString(36).substr(2, 9)}`)
+const errorId = computed(() => `${selectId.value}-error`)
+const hintId = computed(() => `${selectId.value}-hint`)
+
+const describedBy = computed(() => {
+  const ids: string[] = []
+  if (props.error) ids.push(errorId.value)
+  if (props.hint && !props.error) ids.push(hintId.value)
+  return ids.length > 0 ? ids.join(' ') : undefined
+})
 
 const getOptionValue = (option: Option): OptionValue => {
   return typeof option === 'object' ? option.value : option
@@ -137,6 +162,15 @@ const handleFocus = (event: FocusEvent) => {
   box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.1);
 }
 
+.ui-select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-select:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .ui-select--error {
   border-color: var(--color-error);
 }
@@ -170,3 +204,4 @@ const handleFocus = (event: FocusEvent) => {
   color: var(--color-text-light);
 }
 </style>
+

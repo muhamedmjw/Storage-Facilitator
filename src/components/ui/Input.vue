@@ -2,10 +2,10 @@
   <div class="ui-input-wrapper">
     <label v-if="label" :for="inputId" class="ui-input__label">
       {{ label }}
-      <span v-if="required" class="ui-input__required">*</span>
+      <span v-if="required" class="ui-input__required" aria-label="required">*</span>
     </label>
     <div class="ui-input__container">
-      <span v-if="$slots.prefix" class="ui-input__prefix">
+      <span v-if="$slots.prefix" class="ui-input__prefix" aria-hidden="true">
         <slot name="prefix"></slot>
       </span>
       <input
@@ -16,6 +16,12 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :aria-label="ariaLabel || label"
+        :aria-describedby="describedBy"
+        :aria-invalid="error ? 'true' : 'false'"
+        :aria-required="required"
+        :aria-disabled="disabled"
+        :autocomplete="autocomplete"
         :class="[
           'ui-input',
           {
@@ -27,13 +33,24 @@
         @input="handleInput"
         @blur="handleBlur"
         @focus="handleFocus"
+        @keydown="handleKeyDown"
       />
-      <span v-if="$slots.suffix" class="ui-input__suffix">
+      <span v-if="$slots.suffix" class="ui-input__suffix" aria-hidden="true">
         <slot name="suffix"></slot>
       </span>
     </div>
-    <span v-if="error" class="ui-input__error">{{ error }}</span>
-    <span v-else-if="hint" class="ui-input__hint">{{ hint }}</span>
+    <span
+      v-if="error"
+      :id="errorId"
+      class="ui-input__error"
+      role="alert"
+      aria-live="polite"
+    >{{ error }}</span>
+    <span
+      v-else-if="hint"
+      :id="hintId"
+      class="ui-input__hint"
+    >{{ hint }}</span>
   </div>
 </template>
 
@@ -51,6 +68,8 @@ interface Props {
   readonly?: boolean
   required?: boolean
   id?: string
+  ariaLabel?: string
+  autocomplete?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -64,9 +83,19 @@ const emit = defineEmits<{
   'update:modelValue': [value: string | number]
   blur: [event: FocusEvent]
   focus: [event: FocusEvent]
+  keydown: [event: KeyboardEvent]
 }>()
 
 const inputId = computed(() => props.id || `ui-input-${Math.random().toString(36).substr(2, 9)}`)
+const errorId = computed(() => `${inputId.value}-error`)
+const hintId = computed(() => `${inputId.value}-hint`)
+
+const describedBy = computed(() => {
+  const ids: string[] = []
+  if (props.error) ids.push(errorId.value)
+  if (props.hint && !props.error) ids.push(hintId.value)
+  return ids.length > 0 ? ids.join(' ') : undefined
+})
 
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -79,6 +108,10 @@ const handleBlur = (event: FocusEvent) => {
 
 const handleFocus = (event: FocusEvent) => {
   emit('focus', event)
+}
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  emit('keydown', event)
 }
 </script>
 
@@ -123,6 +156,15 @@ const handleFocus = (event: FocusEvent) => {
 .ui-input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.1);
+}
+
+.ui-input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-input:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .ui-input--error {
@@ -179,3 +221,4 @@ const handleFocus = (event: FocusEvent) => {
   color: var(--color-text-light);
 }
 </style>
+

@@ -1,9 +1,10 @@
 <template>
   <div class="ui-tabs">
-    <div class="ui-tabs__header" role="tablist">
+    <div class="ui-tabs__header" role="tablist" :aria-label="ariaLabel">
       <button
-        v-for="tab in tabs"
+        v-for="(tab, index) in tabs"
         :key="tab.value"
+        :ref="el => { if (el) tabRefs[index] = el as HTMLButtonElement }"
         :class="[
           'ui-tabs__tab',
           {
@@ -11,20 +12,33 @@
           }
         ]"
         :aria-selected="modelValue === tab.value"
+        :aria-controls="`tabpanel-${index}`"
+        :id="`tab-${index}`"
+        :tabindex="modelValue === tab.value ? 0 : -1"
         role="tab"
+        type="button"
         @click="handleTabClick(tab.value)"
+        @keydown="(e) => handleKeyDown(e, index)"
       >
         {{ tab.label }}
-        <span v-if="tab.badge" class="ui-tabs__badge">{{ tab.badge }}</span>
+        <span v-if="tab.badge" class="ui-tabs__badge" aria-label="Badge: {{ tab.badge }}">{{ tab.badge }}</span>
       </button>
     </div>
-    <div class="ui-tabs__content">
+    <div
+      class="ui-tabs__content"
+      role="tabpanel"
+      :id="`tabpanel-${activeTabIndex}`"
+      :aria-labelledby="`tab-${activeTabIndex}`"
+      tabindex="0"
+    >
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, nextTick } from 'vue'
+
 interface Tab {
   label: string
   value: string | number
@@ -34,18 +48,63 @@ interface Tab {
 interface Props {
   modelValue: string | number
   tabs: Tab[]
+  ariaLabel?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  ariaLabel: 'Tabs'
+})
 
 const emit = defineEmits<{
   'update:modelValue': [value: string | number]
   change: [value: string | number]
 }>()
 
+const tabRefs = ref<(HTMLButtonElement | null)[]>([])
+
+const activeTabIndex = computed(() => {
+  return props.tabs.findIndex(tab => tab.value === props.modelValue)
+})
+
 const handleTabClick = (value: string | number) => {
   emit('update:modelValue', value)
   emit('change', value)
+}
+
+const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
+  let targetIndex = currentIndex
+
+  switch (event.key) {
+    case 'ArrowLeft':
+      event.preventDefault()
+      targetIndex = currentIndex > 0 ? currentIndex - 1 : props.tabs.length - 1
+      break
+    case 'ArrowRight':
+      event.preventDefault()
+      targetIndex = currentIndex < props.tabs.length - 1 ? currentIndex + 1 : 0
+      break
+    case 'Home':
+      event.preventDefault()
+      targetIndex = 0
+      break
+    case 'End':
+      event.preventDefault()
+      targetIndex = props.tabs.length - 1
+      break
+    default:
+      return
+  }
+
+  const targetTab = props.tabs[targetIndex]
+  if (targetTab) {
+    handleTabClick(targetTab.value)
+    // Focus the new tab
+    nextTick(() => {
+      if (tabRefs.value[targetIndex]) {
+        tabRefs.value[targetIndex]?.focus()
+      }
+    })
+  }
 }
 </script>
 
@@ -83,6 +142,16 @@ const handleTabClick = (value: string | number) => {
   color: var(--color-text);
 }
 
+.ui-tabs__tab:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.ui-tabs__tab:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .ui-tabs__tab--active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
@@ -111,3 +180,4 @@ const handleTabClick = (value: string | number) => {
   padding: 1.5rem 0;
 }
 </style>
+

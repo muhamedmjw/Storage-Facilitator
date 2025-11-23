@@ -8,7 +8,11 @@
         'ui-card--bordered': bordered
       }
     ]"
+    :role="clickable ? 'button' : undefined"
+    :tabindex="clickable ? 0 : undefined"
+    :aria-label="clickable ? ariaLabel : undefined"
     @click="handleClick"
+    @keydown="handleKeyDown"
   >
     <div v-if="$slots.header || title" class="ui-card__header">
       <slot name="header">
@@ -32,6 +36,7 @@ interface Props {
   hover?: boolean
   clickable?: boolean
   bordered?: boolean
+  ariaLabel?: string
 }
 
 withDefaults(defineProps<Props>(), {
@@ -41,11 +46,18 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
+  click: [event: MouseEvent | KeyboardEvent]
 }>()
 
 const handleClick = (event: MouseEvent) => {
   emit('click', event)
+}
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (props.clickable && (event.key === 'Enter' || event.key === ' ')) {
+    event.preventDefault()
+    emit('click', event)
+  }
 }
 </script>
 
@@ -74,6 +86,15 @@ const handleClick = (event: MouseEvent) => {
 .ui-card--clickable:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+.ui-card--clickable:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-card--clickable:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .ui-card__header {
@@ -106,3 +127,4 @@ const handleClick = (event: MouseEvent) => {
   background-color: var(--color-surface-secondary);
 }
 </style>
+

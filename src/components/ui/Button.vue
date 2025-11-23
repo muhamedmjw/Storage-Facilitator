@@ -11,11 +11,16 @@
       }
     ]"
     :disabled="disabled || loading"
+    :aria-label="ariaLabel"
+    :aria-busy="loading"
+    :aria-disabled="disabled || loading"
+    :type="type"
     @click="handleClick"
+    @keydown="handleKeyDown"
   >
-    <span v-if="loading" class="ui-button__spinner"></span>
+    <span v-if="loading" class="ui-button__spinner" aria-hidden="true"></span>
     <slot v-if="!loading"></slot>
-    <span v-else-if="loadingText">{{ loadingText }}</span>
+    <span v-else-if="loadingText" aria-live="polite">{{ loadingText }}</span>
   </button>
 </template>
 
@@ -27,6 +32,8 @@ interface Props {
   loading?: boolean
   loadingText?: string
   disabled?: boolean
+  ariaLabel?: string
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,15 +41,24 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   fullWidth: false,
   loading: false,
-  disabled: false
+  disabled: false,
+  type: 'button'
 })
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
+  click: [event: MouseEvent | KeyboardEvent]
 }>()
 
 const handleClick = (event: MouseEvent) => {
   if (!props.disabled && !props.loading) {
+    emit('click', event)
+  }
+}
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  // Handle Enter and Space keys for keyboard activation
+  if ((event.key === 'Enter' || event.key === ' ') && !props.disabled && !props.loading) {
+    event.preventDefault()
     emit('click', event)
   }
 }
@@ -67,6 +83,16 @@ const handleClick = (event: MouseEvent) => {
 .ui-button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+/* Focus states for accessibility */
+.ui-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.ui-button:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Variants */
@@ -182,3 +208,4 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 </style>
+
