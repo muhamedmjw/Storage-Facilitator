@@ -6,11 +6,7 @@
         <p class="page-subtitle">Manage customer payments and track transaction history</p>
       </div>
       <button class="create-payment-btn" @click="showCreateModal = true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="8" x2="12" y2="16"/>
-          <line x1="8" y1="12" x2="16" y2="12"/>
-        </svg>
+        <Plus class="icon" />
         Create Payment
       </button>
     </div>
@@ -75,10 +71,7 @@
             class="action-btn primary"
             @click.stop="checkPaymentStatus(transaction)"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="23 4 23 10 17 10"/>
-              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-            </svg>
+            <RotateCcw class="icon" />
             Refresh Status
           </button>
           <button 
@@ -92,10 +85,7 @@
       </div>
 
       <div v-if="filteredTransactions.length === 0" class="empty-state">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-          <line x1="1" y1="10" x2="23" y2="10"/>
-        </svg>
+        <X class="icon" />
         <p>No transactions found</p>
       </div>
     </div>
@@ -106,10 +96,7 @@
         <div class="modal-header">
           <h2>Create Payment Transaction</h2>
           <button class="close-btn" @click="showCreateModal = false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
+            <X class="icon" />
           </button>
         </div>
 
@@ -187,10 +174,7 @@
             <p class="modal-subtitle">Transaction ID: {{ selectedTransaction.id }}</p>
           </div>
           <button class="close-btn" @click="showViewModal = false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
+            <X class="icon" />
           </button>
         </div>
 
@@ -270,6 +254,7 @@ import { storageService } from '@/services/storageService'
 import type { Transaction, Customer, StorageUnit } from '@/types'
 import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
+import { Plus, RotateCcw, X } from 'lucide-vue-next'
 
 const _router = useRouter()
 const { showToast } = useToast()
