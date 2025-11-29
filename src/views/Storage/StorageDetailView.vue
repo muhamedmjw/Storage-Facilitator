@@ -5,22 +5,7 @@
         to="/storages"
         class="back-link"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <line
-            x1="19"
-            y1="12"
-            x2="5"
-            y2="12"
-          />
-          <polyline points="12 19 5 12 12 5" />
-        </svg>
+        <ArrowLeft class="back-icon" />
         Back to Units
       </router-link>
 
@@ -32,7 +17,6 @@
           :title="!canEdit ? getDisabledMessage() : 'Edit Unit'"
           :class="{ 'btn-disabled': !canEdit }"
         >
-          <!-- ... svg icon -->
           Edit Unit
         </button>
         <button 
@@ -42,7 +26,6 @@
           :title="!canDelete ? getDisabledMessage() : 'Delete Unit'"
           :class="{ 'btn-disabled': !canDelete }"
         >
-          <!-- ... svg icon -->
           Delete Unit
         </button>
       </div>
@@ -77,35 +60,11 @@
           </div>
           <div class="unit-specs">
             <div class="spec-item">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect
-                  x="3"
-                  y="3"
-                  width="18"
-                  height="18"
-                  rx="2"
-                />
-              </svg>
+              <Square class="icon" />
               <span>{{ unit?.size || 'Unknown size' }}</span>
             </div>
             <div class="spec-item">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M12 2v20M2 12h20" />
-              </svg>
+              <Building class="icon" />
               <span>{{ unit?.building || '—' }}</span>
             </div>
           </div>
@@ -116,40 +75,14 @@
           <div class="section-header">
             <div class="section-header-content">
               <h3 class="section-title">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle
-                    cx="12"
-                    cy="7"
-                    r="4"
-                  />
-                </svg>
+                <User class="icon" />
                 Customer Information
               </h3>
               <button 
                 class="assign-customer-btn"
                 @click="openAssignCustomerModal"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                  <circle cx="8.5" cy="7" r="4" />
-                  <line x1="20" y1="8" x2="20" y2="14" />
-                  <line x1="23" y1="11" x2="17" y2="11" />
-                </svg>
+                <Plus class="icon" />
                 Assign Customer
               </button>
             </div>
@@ -195,41 +128,7 @@
         <div class="rental-section">
           <div class="section-header">
             <h3 class="section-title">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect
-                  x="3"
-                  y="4"
-                  width="18"
-                  height="18"
-                  rx="2"
-                  ry="2"
-                />
-                <line
-                  x1="16"
-                  y1="2"
-                  x2="16"
-                  y2="6"
-                />
-                <line
-                  x1="8"
-                  y1="2"
-                  x2="8"
-                  y2="6"
-                />
-                <line
-                  x1="3"
-                  y1="10"
-                  x2="21"
-                  y2="10"
-                />
-              </svg>
+              <Calendar class="icon" />
               Rental Details
             </h3>
           </div>
@@ -266,21 +165,7 @@
       <div class="unit-sidebar">
         <div class="sidebar-card">
           <h3 class="sidebar-title">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-              />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+            <Clock class="icon" />
             Activity Log
           </h3>
           <div class="activity-list">
@@ -301,10 +186,7 @@
         <div class="modal-header">
           <h2 class="modal-title">Edit Storage Unit</h2>
           <button class="modal-close" @click="closeEditModal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X class="icon" />
           </button>
         </div>
 
@@ -397,9 +279,7 @@
               Cancel
             </button>
             <button type="submit" class="btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check class="icon" />
               Save Changes
             </button>
           </div>
@@ -416,19 +296,13 @@
             <p class="modal-subtitle">Step 1/2 - Select Customer</p>
           </div>
           <button class="modal-close" @click="closeAssignCustomerModal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+          <X class="icon" />
           </button>
         </div>
 
         <div class="modal-body">
           <div class="search-box-modal">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
+            <Search class="icon" />
             <input
               v-model="customerSearch"
               type="text"
@@ -465,10 +339,7 @@
           </div>
 
           <div v-if="filteredCustomers.length === 0" class="empty-customers">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+            <UserX class="icon" />
             <p>No customers found</p>
           </div>
 
@@ -483,9 +354,7 @@
               :disabled="!selectedCustomerId"
             >
               Next
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ArrowRight class="icon" />
             </button>
           </div>
         </div>
@@ -501,10 +370,7 @@
             <p class="modal-subtitle">Step 2/2 - Rental Details</p>
           </div>
           <button class="modal-close" @click="closeAssignCustomerModal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X class="icon" />
           </button>
         </div>
 
@@ -545,15 +411,11 @@
 
           <div class="modal-footer">
             <button type="button" class="btn-secondary" @click="goToStep1">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
+              <ArrowLeft class="icon" />
               Back
             </button>
             <button type="submit" class="btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check class="icon" />
               Assign Customer
             </button>
           </div>
@@ -574,6 +436,7 @@ import { useToast } from '@/composables/useToast'
 import { useLoading } from '@/composables/useLoading'
 import type { Customer } from '@/types'
 import { usePermissions } from '@/composables/usePermissions'
+import { ArrowLeft, Square, Building, User, Plus, Calendar, Clock, X, Check, Search, UserX, ArrowRight } from 'lucide-vue-next'
 
 
 const { canEdit, canDelete, getDisabledMessage } = usePermissions()

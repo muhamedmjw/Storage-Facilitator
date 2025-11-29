@@ -6,22 +6,7 @@
           to="/storages"
           class="back-link"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <line
-              x1="19"
-              y1="12"
-              x2="5"
-              y2="12"
-            />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
+          <ArrowLeft class="back-icon" />
           Back to Units
         </router-link>
         <h1 class="page-title">
@@ -41,22 +26,7 @@
         <!-- Basic Information Section -->
         <div class="form-section">
           <div class="section-header">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <rect
-                x="3"
-                y="3"
-                width="18"
-                height="18"
-                rx="2"
-              />
-            </svg>
+            <Square class="icon" />
             <h3 class="section-title">
               Basic Information
             </h3>
@@ -153,21 +123,7 @@
         <!-- Location Details Section -->
         <div class="form-section">
           <div class="section-header">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle
-                cx="12"
-                cy="10"
-                r="3"
-              />
-            </svg>
+            <MapPin class="icon" />
             <h3 class="section-title">
               Location Details
             </h3>
@@ -223,17 +179,7 @@
         <!-- Additional Information Section -->
         <div class="form-section">
           <div class="section-header">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-            </svg>
+            <NotepadText class="icon" />
             <h3 class="section-title">
               Additional Information
             </h3>
@@ -261,43 +207,14 @@
             class="btn-secondary"
             @click="$router.push('/storages')"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <line
-                x1="18"
-                y1="6"
-                x2="6"
-                y2="18"
-              />
-              <line
-                x1="6"
-                y1="6"
-                x2="18"
-                y2="18"
-              />
-            </svg>
+            <X class="icon" />
             Cancel
           </button>
           <button
             type="submit"
             class="btn-primary"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <Check class="icon" />
             Create Storage Unit
           </button>
         </div>
@@ -314,6 +231,7 @@
   import type { StorageUnit } from '@/types'
   import { useToast } from "@/composables/useToast"
   import { useLoading } from "@/composables/useLoading"
+  import { ArrowLeft, Square, MapPin, NotepadText, X, Check } from 'lucide-vue-next'
 
   const router = useRouter()
   const { showToast } = useToast()
