@@ -48,7 +48,7 @@
           <div class="transaction-details">
             <div class="detail-item">
               <span class="detail-label">Amount:</span>
-              <span class="detail-value amount">${{ transaction.amount.toFixed(2) }} IQD</span>
+              <span class="detail-value amount">{{ transaction.amount.toFixed(2) }} IQD</span>
             </div>
             <div class="detail-item">
               <span class="detail-label">Created:</span>
@@ -128,7 +128,7 @@
                 }}
               </option>
               <option v-for="unit in availableStorageUnits" :key="unit.id" :value="unit.id">
-                {{ unit.unitNumber }} - ${{ unit.monthlyRate }}/month
+                {{ unit.unitNumber }} - {{ unit.monthlyRate }} IQD/month
               </option>
             </select>
           </div>
@@ -204,7 +204,7 @@
             </div>
             <div class="info-item">
               <span class="info-label">Amount</span>
-              <span class="info-value amount">${{ selectedTransaction.amount }} IQD</span>
+              <span class="info-value amount">{{ selectedTransaction.amount }} IQD</span>
             </div>
             <div class="info-item">
               <span class="info-label">Status</span>
@@ -443,10 +443,20 @@ const cancelTransaction = async (transaction: Transaction) => {
     if (transaction.paymentId) {
       await paymentService.cancelPayment(transaction.paymentId)
     }
-    await paymentService.update(transaction.id, { status: 'DECLINED' })
     
-    // Reload data
-    await loadData()
+    const updated = await paymentService.update(transaction.id, { status: 'DECLINED' })
+    
+    // Update in the list directly instead of reloading
+    const index = transactions.value.findIndex(t => t.id === transaction.id)
+    if (index !== -1) {
+      transactions.value[index] = updated
+    }
+    
+    // Close modal if open
+    if (showViewModal.value && selectedTransaction.value?.id === transaction.id) {
+      showViewModal.value = false
+    }
+    
     showToast('Payment cancelled successfully', 'success')
   } catch (error) {
     console.error('Failed to cancel payment:', error)
@@ -455,6 +465,7 @@ const cancelTransaction = async (transaction: Transaction) => {
     stopLoading()
   }
 }
+
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString()
