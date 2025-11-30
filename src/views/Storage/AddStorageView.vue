@@ -85,7 +85,7 @@
               <label
                 for="monthlyRate"
                 class="form-label"
-              >Monthly Rate ($) *</label>
+              >Monthly Rate (IQD) *</label>
               <input
                 id="monthlyRate"
                 v-model="formData.monthlyRate"
