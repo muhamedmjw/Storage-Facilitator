@@ -1,14 +1,7 @@
 <template>
   <div class="auth-container" :class="{ 'dark-mode': isDark }">
     <!-- Theme Toggle Button -->
-    <button 
-      class="theme-toggle-floating" 
-      @click="toggleTheme"
-      :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-    >
-      <Sun v-if="!isDark" :size="20" />
-      <Moon v-else :size="20" />
-    </button>
+    <ThemeToggle />
 
     <div class="auth-card">
       <div class="auth-header">
@@ -89,7 +82,8 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { useThemeStore } from '@/stores/themeStore'
 import { useToast } from '@/composables/useToast'
-import { Sun, Moon, Warehouse, CircleX, Eye, EyeOff } from 'lucide-vue-next'
+import { Warehouse, CircleX, Eye, EyeOff } from 'lucide-vue-next'
+import ThemeToggle from '@/components/ThemeToggle.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -102,12 +96,8 @@ const password = ref('')
 const showPassword = ref(false)
 const loading = ref(false)
 const errorMessage = ref('')
-
 const isDark = computed(() => themeStore.isDark())
 
-const toggleTheme = () => {
-  themeStore.toggleTheme()
-}
 
 const handleLogin = async () => {
   loading.value = true
