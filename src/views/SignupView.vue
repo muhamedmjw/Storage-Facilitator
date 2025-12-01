@@ -159,6 +159,7 @@ const handleSignUp = async () => {
     }
   } catch {
     errorMessage.value = 'An error occurred. Please try again.'
+    
   } finally {
     loading.value = false
   }

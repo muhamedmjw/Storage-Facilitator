@@ -2,20 +2,6 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { User } from '@/types'
 
-// --- HELPER: FALLBACK DEMO USERS ---
-// Used when the backend connection fails
-const getFallbackUsers = () => {
-  const stored = localStorage.getItem('db_users')
-  const users = stored ? JSON.parse(stored) : []
-  
-  const demoUsers = [
-    { id: '1', name: 'Admin User', email: 'admin@storage.com', password: 'admin123', role: 'admin' },
-    { id: '2', name: 'Member User', email: 'member@storage.com', password: 'member123', role: 'member' }
-  ]
-  
-  return [...demoUsers, ...users]
-}
-
 export const useAuthStore = defineStore('auth', () => {
   // State
   const token = ref<string | null>(localStorage.getItem('token'))
@@ -33,145 +19,90 @@ export const useAuthStore = defineStore('auth', () => {
   const isAdmin = computed(() => user.value?.role === 'admin')
   const isMember = computed(() => user.value?.role === 'member')
 
-  // Actions
-  function signup(name: string, email: string, password: string): Promise<{ success: boolean; message: string }> {
-    return new Promise((resolve) => {
-      setTimeout(async () => {
-        
-        // --- VALIDATION (Shared) ---
-        if (!name || name.trim().length < 2) {
-          resolve({ success: false, message: 'Name must be at least 2 characters' })
-          return
-        }
-        if (!email || !email.includes('@')) {
-          resolve({ success: false, message: 'Invalid email address' })
-          return
-        }
-        if (!password || password.length < 6) {
-          resolve({ success: false, message: 'Password must be at least 6 characters' })
-          return
-        }
+  // SIGNUP – mock server only
+  async function signup(name: string, email: string, password: string): Promise<{ success: boolean; message: string }> {
+    // Basic validation
+    if (!name || name.trim().length < 2) {
+      return { success: false, message: 'Name must be at least 2 characters' }
+    }
+    if (!email || !email.includes('@')) {
+      return { success: false, message: 'Invalid email address' }
+    }
+    if (!password || password.length < 6) {
+      return { success: false, message: 'Password must be at least 6 characters' }
+    }
 
-        // --- ATTEMPT 1: REAL BACKEND ---
-        try {
-          // Check for existing email on server
-          const checkRes = await fetch('http://localhost:4000/users');
-          const serverUsers = await checkRes.json();
-          
-          if (serverUsers.some((u: any) => u.email === email)) {
-             resolve({ success: false, message: 'Email already registered' })
-             return
-          }
+    // 1) Check existing users
+    const checkRes = await fetch('http://localhost:4000/users')
+    if (!checkRes.ok) {
+      return { success: false, message: 'Cannot reach server' }
+    }
+    const serverUsers = await checkRes.json()
+    if (serverUsers.some((u: any) => u.email === email)) {
+      return { success: false, message: 'Email already registered' }
+    }
 
-          // Save to Server
-          await fetch('http://localhost:4000/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: name.trim(),
-              email: email.trim(),
-              password,
-              role: 'member'
-            })
-          })
-
-          // Setup Session
-          const newUser = { id: `user-${Date.now()}`, name: name.trim(), email: email.trim(), role: 'member' as const }
-          setupSession(newUser)
-          resolve({ success: true, message: 'Account created successfully (Server)!' })
-          return
-
-        } catch {
-          console.warn("Backend failed, switching to LocalStorage mode.");
-        }
-
-        // --- ATTEMPT 2: FALLBACK (LocalStorage) ---
-        // This runs if the `try` block above fails (e.g. on Vercel)
-        try {
-          const allUsers = getFallbackUsers()
-          
-          if (allUsers.some((u: any) => u.email === email)) {
-            resolve({ success: false, message: 'Email already registered' })
-            return
-          }
-
-          const newUser = {
-            id: `user-${Date.now()}`,
-            name: name.trim(),
-            email: email.trim(),
-            password, 
-            role: 'member'
-          }
-
-          // Save purely to browser storage
-          const currentStored = JSON.parse(localStorage.getItem('db_users') || '[]')
-          currentStored.push(newUser)
-          localStorage.setItem('db_users', JSON.stringify(currentStored))
-
-          // Setup Session
-          const { password: _, ...userSafe } = newUser
-          setupSession(userSafe as any)
-          
-          resolve({ success: true, message: 'Account created successfully (Demo Mode)!' })
-
-        } catch  {
-          resolve({ success: false, message: 'Unable to save user.' })
-        }
-
-      }, 800)
+    // 2) Create new user
+    const createRes = await fetch('http://localhost:4000/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name.trim(),
+        email: email.trim(),
+        password,
+        role: 'member'
+      })
     })
+
+    if (!createRes.ok) {
+      return { success: false, message: 'Failed to create user' }
+    }
+
+    const createdUser = await createRes.json()
+
+    // 3) Setup session (ignore password)
+    // Remove password before storing user data
+    const { password: _pw, ...safeUser } = createdUser
+    setupSession(safeUser)
+
+    return { success: true, message: 'Account created successfully!' }
   }
 
+  // LOGIN – mock server only
   async function login(email: string, password: string): Promise<{ success: boolean; message: string }> {
-    await new Promise(r => setTimeout(r, 500))
-
-    let foundUser = null;
-
-    // --- ATTEMPT 1: REAL BACKEND ---
-    try {
-      const response = await fetch("http://localhost:4000/users");
-      const users = await response.json();
-      foundUser = users.find((u: any) => u.email === email && u.password === password);
-    } catch {
-      console.warn("Backend unreachable, checking LocalStorage.");
+    const res = await fetch('http://localhost:4000/users')
+    if (!res.ok) {
+      return { success: false, message: 'Cannot reach server' }
     }
-
-    // --- ATTEMPT 2: FALLBACK (If backend failed or user not found there) ---
-    if (!foundUser) {
-       const localUsers = getFallbackUsers();
-       foundUser = localUsers.find((u: any) => u.email === email && u.password === password);
-    }
+    const users = await res.json()
+    const foundUser = users.find((u: any) => u.email === email && u.password === password)
 
     if (!foundUser) {
-      return { success: false, message: "Invalid email or password" };
+      return { success: false, message: 'Invalid email or password' }
     }
 
-    setupSession({
-      id: foundUser.id,
-      name: foundUser.name,
-      email: foundUser.email,
-      role: foundUser.role
-    })
+    const { password: _pw, ...safeUser } = foundUser
+    setupSession(safeUser)
 
-    return { success: true, message: "Login successful!" };
+    return { success: true, message: 'Login successful!' }
   }
 
-  // --- HELPER: SESSION SETUP (Used by both) ---
+  // SESSION
   function setupSession(userData: any) {
-     const mockToken = `Bearer-${userData.id}-${Date.now()}`
-     const expiry = Date.now() + (2 * 60 * 60 * 1000)
+    const mockToken = `Bearer-${userData.id}-${Date.now()}`
+    const expiry = Date.now() + 2 * 60 * 60 * 1000
 
-     token.value = mockToken
-     tokenExpiry.value = expiry
-     user.value = userData
+    token.value = mockToken
+    tokenExpiry.value = expiry
+    user.value = userData
 
-     localStorage.setItem("token", mockToken)
-     localStorage.setItem("tokenExpiry", expiry.toString())
-     localStorage.setItem("user", JSON.stringify(user.value))
+    localStorage.setItem('token', mockToken)
+    localStorage.setItem('tokenExpiry', expiry.toString())
+    localStorage.setItem('user', JSON.stringify(user.value))
 
-     setupAutoLogout()
+    setupAutoLogout()
   }
-  
+
   function logout() {
     token.value = null
     user.value = null
