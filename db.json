@@ -19,7 +19,7 @@
       "name": "Staff Member",
       "email": "member@storage.com",
       "password": "member123",
-      "role": "admin"
+      "role": "member"
     }
   ],
   "customers": [
