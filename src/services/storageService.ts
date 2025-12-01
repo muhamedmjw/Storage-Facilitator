@@ -14,6 +14,7 @@ export const storageService = {
     }
   },
 
+
   async getUnitById(id: number | string): Promise<StorageUnit> {
     try {
       const response = await api.get<StorageUnit>(`/storageUnits/${id}`)
@@ -25,6 +26,7 @@ export const storageService = {
 
     }
   },
+
 
   async addUnit(data: Partial<StorageUnit>): Promise<StorageUnit> {
     try {
@@ -38,6 +40,7 @@ export const storageService = {
     }
   },
 
+
   async updateUnit(id: number | string, data: Partial<StorageUnit>): Promise<StorageUnit> {
     try {
       const response = await api.put<StorageUnit>(`/storageUnits/${id}`, data)
@@ -50,6 +53,7 @@ export const storageService = {
     }
   },
 
+  
   async deleteUnit(id: number | string): Promise<void> {
     try {
       await api.delete(`/storageUnits/${id}`)

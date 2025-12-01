@@ -17,11 +17,14 @@ let accessToken: string | null = null
 let tokenExpiry: number | null = null
 
 async function getAccessToken(): Promise<string> {
+  // Return cached token if valid
   if (accessToken && tokenExpiry && Date.now() < tokenExpiry) {
     return accessToken ?? ''
   }
 
   try {
+    // {CORS_PROXY}: Using CORS proxy to bypass browser restrictions by adding CORS headers
+    // URL-encodes the FIB base URL so it can be safely passed as a query parameter to the CORS proxy.
     const authURL = `${CORS_PROXY}${encodeURIComponent(FIB_CONFIG.baseURL)}/auth/realms/fib-online-shop/protocol/openid-connect/token`
     
     console.log('[PaymentService] Attempting authentication...')
@@ -88,7 +91,6 @@ async function fibRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 }
 
 export const paymentService = {
-
   async createPayment(request: CreateTransactionRequest): Promise<Transaction> {
     try {
       console.log('[PaymentService] Creating payment...')

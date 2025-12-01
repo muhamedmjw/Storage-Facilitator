@@ -14,6 +14,7 @@ export const customerService = {
     }
   },
 
+
   async getById(id: string): Promise<Customer> {
     try {
       const response = await api.get<Customer>(`/customers/${id}`)
@@ -25,6 +26,7 @@ export const customerService = {
 
     }
   },
+
 
   async add(customer: Omit<Customer, 'id'>): Promise<Customer> {
     try {
@@ -38,6 +40,7 @@ export const customerService = {
     }
   },
 
+
   async update(id: string, customer: Partial<Customer>): Promise<Customer> {
     try {
       const response = await api.put<Customer>(`/customers/${id}`, customer)
@@ -50,6 +53,7 @@ export const customerService = {
     }
   },
 
+  
   async delete(id: string): Promise<void> {
     try {
       await api.delete(`/customers/${id}`)
@@ -57,7 +61,7 @@ export const customerService = {
     } catch (error) {
       console.error(`[CustomerService] Error deleting customer ${id}:`, error)
       throw error
-      
+
     }
   }
 }
